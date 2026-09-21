@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Fuqarolar Ovozi — Admin panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a1a2e;
+  --primary-light: #16213e;
+  --accent: #1a56db;
+  --accent-light: #e8effc;
+  --success: #16a34a;
+  --success-light: #dcfce7;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --warning: #d97706;
+  --warning-light: #fef3c7;
+  --info: #0891b2;
+  --info-light: #cffafe;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --border: #e2e8f0;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+
+/* ══════ HEADER ══════ */
+.header { background: linear-gradient(135deg, var(--primary) 0%, #0f3460 100%); color: #fff; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(26,26,46,0.3); }
+.header-inner { max-width: 1100px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 10px; }
+.header-brand { display: flex; align-items: center; gap: 10px; }
+.header-brand .shield { width: 32px; height: 32px; border-radius: 8px; background: url('https://data.daryo.uz/media/2019/11/800px-Bandera_de_Khiva_1917-1920.svg_.png') center/cover no-repeat; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+.header-brand h1 { font-size: 14px; font-weight: 700; }
+.header-brand p { font-size: 10px; opacity: 0.7; margin-top: 1px; }
+.admin-badge { display: none; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 16px; font-size: 11px; font-weight: 500; }
+.admin-badge.active { display: flex; }
+.admin-badge .logout { opacity: 0.5; cursor: pointer; font-size: 13px; transition: opacity 0.2s; }
+.admin-badge .logout:hover { opacity: 1; }
+
+/* ══════ CONTAINER ══════ */
+.container { max-width: 960px; margin: 0 auto; padding: 16px; flex: 1; width: 100%; }
+
+/* ══════ SCREENS ══════ */
+.screen { display: none; animation: fadeIn 0.3s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════ CARDS ══════ */
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; margin-bottom: 14px; border: 1px solid var(--border); }
+.card-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--bg); display: flex; align-items: center; gap: 6px; }
+
+/* ══════ FORMS ══════ */
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 11px; font-weight: 600; color: var(--text2); margin-bottom: 4px; }
+input, select, textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; transition: all 0.2s; background: #fff; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,86,219,0.08); }
+textarea { resize: vertical; min-height: 60px; }
+
+/* ══════ BUTTONS ══════ */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 9px 16px; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; white-space: nowrap; }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #1e40af; }
+.btn-success { background: var(--success); color: #fff; }
+.btn-success:hover { background: #15803d; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #b91c1c; }
+.btn-info { background: var(--info); color: #fff; }
+.btn-info:hover { background: #0e7490; }
+.btn-outline { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+.btn-outline:hover { background: var(--accent-light); }
+.btn-sm { padding: 6px 12px; font-size: 11px; border-radius: 6px; }
+.btn-block { width: 100%; }
+.btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ══════ LOGIN ══════ */
+.login-wrap { max-width: 380px; margin: 40px auto; }
+.login-header { text-align: center; margin-bottom: 20px; }
+.login-header .shield-lg { width: 64px; height: 64px; border-radius: 12px; background: url('https://data.daryo.uz/media/2019/11/800px-Bandera_de_Khiva_1917-1920.svg_.png') center/cover no-repeat; margin: 0 auto 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.login-header h2 { font-size: 20px; font-weight: 800; color: var(--text); }
+.login-header p { font-size: 12px; color: var(--text3); margin-top: 3px; }
+
+/* ══════ STATS ══════ */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.stat-card { background: var(--card); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); text-align: center; border-left: 4px solid var(--accent); transition: transform 0.2s; }
+.stat-card:hover { transform: translateY(-2px); }
+.stat-card .num { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1; }
+.stat-card .lbl { font-size: 10px; color: var(--text3); margin-top: 4px; font-weight: 500; }
+.stat-card.s-green { border-left-color: var(--success); }
+.stat-card.s-yellow { border-left-color: var(--warning); }
+.stat-card.s-red { border-left-color: var(--danger); }
+.stat-card.s-teal { border-left-color: var(--info); }
+
+/* ══════ TABS ══════ */
+.tabs { display: flex; gap: 0; margin-bottom: 14px; border-radius: 8px; overflow: hidden; background: var(--bg); padding: 3px; }
+.tab { flex: 1; padding: 7px 10px; background: transparent; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s; border: none; border-radius: 6px; font-family: inherit; color: var(--text2); text-align: center; }
+.tab.active { background: var(--primary); color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,0.2); }
+.tab:hover:not(.active) { background: #e2e8f0; }
+.tab .count { display: inline-block; background: rgba(0,0,0,0.08); padding: 0 5px; border-radius: 8px; font-size: 9px; margin-left: 3px; }
+.tab.active .count { background: rgba(255,255,255,0.2); }
+
+/* ══════ BADGES ══════ */
+.badge { display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+.badge-review { background: var(--warning-light); color: var(--warning); }
+.badge-voting { background: var(--info-light); color: var(--info); }
+.badge-accepted { background: var(--success-light); color: var(--success); }
+.badge-rejected { background: var(--danger-light); color: var(--danger); }
+.badge-implemented { background: #ede9fe; color: #7c3aed; }
+
+/* ══════ PROPOSAL ROW ══════ */
+.prop-row { border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; transition: all 0.2s; background: var(--card); }
+.prop-row:hover { border-color: #cbd5e1; }
+.pr-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
+.pr-title { font-size: 13px; font-weight: 600; }
+.pr-cat { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.pr-desc { font-size: 12px; color: var(--text2); margin-top: 6px; max-height: 36px; overflow: hidden; line-height: 1.4; }
+.pr-meta { display: flex; gap: 10px; font-size: 10px; color: var(--text3); margin-top: 6px; flex-wrap: wrap; }
+.pr-meta span { display: flex; align-items: center; gap: 2px; }
+.pr-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.pr-image { margin-top: 8px; }
+.pr-image img { max-width: 100px; max-height: 70px; border-radius: 6px; object-fit: cover; }
+.pr-note { font-size: 11px; color: #92400e; background: var(--warning-light); padding: 6px 10px; border-radius: 6px; margin-top: 6px; line-height: 1.4; }
+
+/* ══════ REVIEW PANEL ══════ */
+.review-panel { background: var(--accent-light); border: 1.5px solid #bfdbfe; border-radius: var(--radius); padding: 14px; margin-top: 10px; animation: slideDown 0.3s ease; }
+.review-panel h4 { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+.review-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════ CATEGORY STATS ══════ */
+.cat-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.cat-table th { background: var(--bg); padding: 8px 10px; text-align: left; font-weight: 600; font-size: 11px; color: var(--text2); }
+.cat-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.cat-table tr:hover { background: #f8fafc; }
+.cat-pct { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+.cat-pct.high { background: var(--success-light); color: var(--success); }
+.cat-pct.low { background: var(--danger-light); color: var(--danger); }
+
+/* ══════ EMPTY ══════ */
+.empty-state { text-align: center; padding: 32px 16px; color: var(--text3); }
+.empty-state .icon { font-size: 40px; margin-bottom: 8px; opacity: 0.6; }
+.empty-state p { font-size: 12px; }
+
+/* ══════ TOAST ══════ */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--primary); color: #fff; padding: 10px 20px; border-radius: 10px;
+  font-size: 12px; font-weight: 500; z-index: 999; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  opacity: 0; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); max-width: 90vw; text-align: center;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ══════ FOOTER ══════ */
+.footer { background: var(--primary); color: rgba(255,255,255,0.5); padding: 12px 16px; font-size: 10px; text-align: center; margin-top: auto; }
+
+/* ══════ RESPONSIVE ══════ */
+@media (max-width: 640px) {
+  .header-brand h1 { font-size: 12px; }
+  .header-brand p { display: none; }
+  .header-inner { height: 48px; }
+  .container { padding: 10px; }
+  .card { padding: 14px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-card .num { font-size: 22px; }
+  .tabs { overflow-x: auto; flex-wrap: nowrap; }
+  .tab { min-width: 0; padding: 6px 8px; font-size: 10px; white-space: nowrap; }
+  .pr-top { flex-direction: column; }
+  .pr-actions { flex-direction: column; }
+  .pr-actions .btn { width: 100%; }
+  .login-wrap { margin: 20px auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ HEADER ══════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="shield"></div>
+      <div>
+        <h1>Fuqarolar Ovozi</h1>
+        <p>Admin panel</p>
+      </div>
+    </div>
+    <div class="admin-badge" id="adminBadge">
+      <span>👨‍💼</span>
+      <span id="adminName">Admin</span>
+      <span class="logout" onclick="adminLogout()" title="Chiqish">🚪</span>
+    </div>
+  </div>
+</header>
+
+<div class="toast" id="toast"></div>
+
+<div class="container">
+
+  <!-- ═══ LOGIN ═══ -->
+  <div class="screen active" id="screen-login">
+    <div class="login-wrap">
+      <div class="login-header">
+        <div class="shield-lg"></div>
+        <h2>Admin panelga kirish</h2>
+        <p>MFY rahbarlari va boshqaruv uchun</p>
+      </div>
+      <div class="card">
+        <div class="form-group">
+          <label>Login</label>
+          <input type="text" id="adminLogin" placeholder="admin" value="admin" />
+        </div>
+        <div class="form-group">
+          <label>Parol</label>
+          <input type="password" id="adminPass" placeholder="••••••" value="admin123" />
+        </div>
+        <button class="btn btn-primary btn-block" onclick="adminLogin()">Kirish →</button>
+        <p style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;">Demo: admin / admin123</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div class="screen" id="screen-dashboard">
+    <div class="stats-grid" id="statsRow"></div>
+    <div class="card">
+      <div class="card-title">📋 Takliflar boshqaruvi</div>
+      <div class="tabs" id="statusTabs"></div>
+      <div id="proposalList"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 Kategoriyalar</div>
+      <div id="categoryStats"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">© 2026 Fuqarolar Ovozi — Admin panel</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+const DB = {
+  getUsers() { return JSON.parse(localStorage.getItem('fo_users') || '[]'); },
+  getProposals() { return JSON.parse(localStorage.getItem('fo_proposals') || '[]'); },
+  setProposals(p) { localStorage.setItem('fo_proposals', JSON.stringify(p)); }
+};
+
+(function seedAdminData() {
+  if (DB.getProposals().length > 0) return;
+  const n = Date.now();
+  DB.setProposals([
+    { id:'p1',userId:'demo',userName:'Aliev Alisher',category:'yoritish',title:"Ko'cha chiroqlarini almashtirish",desc:"Navoiy ko'chasidagi eski chiroqlar 6 oydan beri ishlamayapti.",addr:"Navoiy MFY, Navoiy ko'chasi",image:null,status:'voting',votesFor:34,votesAgainst:8,voters:[],adminComment:"Taklif asosli, mablag' ajratildi.",createdAt:n-604800000,reviewedAt:n-345600000,budget:"45 mln so'm"},
+    { id:'p2',userId:'demo',userName:'Karimova Zilola',category:'obodon',title:"Bolalar o'yin maydonchasi qurish",desc:"Bog'bon MFY hududida bolalar uchun o'yin maydonchasi yo'q.",addr:"Bog'bon MFY, Bog'bon ko'chasi",image:null,status:'review',votesFor:0,votesAgainst:0,voters:[],adminComment:'',createdAt:n-259200000,reviewedAt:null,budget:null},
+    { id:'p3',userId:'demo',userName:'Rahimov Bobur',category:'suv',title:'Ariq tozalash ishlari',desc:"Har yozda ariq to'lib qolib, suv toshib ketadi.",addr:"Istiqlol MFY, Amir Temur ko'chasi",image:null,status:'accepted',votesFor:56,votesAgainst:12,voters:[],adminComment:"Mahalla yig'inida ma'qullandi.",createdAt:n-864000000,reviewedAt:n-518400000,budget:"12 mln so'm"},
+    { id:'p4',userId:'demo',userName:'Saidova Nodira',category:'axlat',title:'Axlat konteynerlarini ko\'chirish',desc:"Maktab yonidagi axlat konteynerlari yomon hid tarqatmoqda.",addr:"Guliston MFY, Mustaqillik ko'chasi",image:null,status:'voting',votesFor:28,votesAgainst:15,voters:[],adminComment:"Tekshirildi, ko'chirish kerak.",createdAt:n-432000000,reviewedAt:n-172800000,budget:"5 mln so'm"},
+    { id:'p5',userId:'demo',userName:'Aliev Alisher',category:'yollar',title:"Yo'l yoritqichlarini ta'mirlash",desc:"Mahalla ichki yo'llarida 3 ta yoritqich sinib qolgan.",addr:"Navoiy MFY, Navoiy ko'chasi",image:null,status:'rejected',votesFor:5,votesAgainst:18,voters:[],adminComment:"Boshqa pudrat tashkiloti ishlaydi.",createdAt:n-950400000,reviewedAt:n-691200000,budget:null},
+    { id:'p6',userId:'demo',userName:'Karimova Zilola',category:'maktab',title:'Mahalla kutubxonasini ochish',desc:"Yoshlar uchun kutubxona tashkil qilish kerak.",addr:"Bog'bon MFY, Ibn Sino ko'chasi",image:null,status:'implemented',votesFor:67,votesAgainst:3,voters:[],adminComment:"Kutubxona ochildi. 500+ kitob.",createdAt:n-1209600000,reviewedAt:n-907200000,budget:"25 mln so'm"}
+  ]);
+})();
+
+let isLoggedIn = false;
+const STATUS_LIST = ['review', 'voting', 'accepted', 'rejected', 'implemented'];
+const STATUS_LABELS = {review:"Ko'rib chiqilmoqda",voting:"Ovozga qo'yilgan",accepted:"Qabul qilingan",rejected:"Rad etilgan",implemented:"Amalga oshirilgan"};
+const CAT_LABELS = {yollar:"Yo'llar",yoritish:"Yoritish",suv:"Suv",tozalik:"Tozalik",obodon:"Obodon",maktab:"Ta'lim",axlat:"Axlatxona",boshqa:"Boshqa"};
+
+// ═══════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════
+function adminLogin() {
+  const l = document.getElementById('adminLogin').value.trim();
+  const p = document.getElementById('adminPass').value.trim();
+  if (l === 'admin' && p === 'admin123') {
+    isLoggedIn = true;
+    document.getElementById('adminBadge').classList.add('active');
+    document.getElementById('adminName').textContent = 'MFY rahbari';
+    toast('Xush kelibsiz!');
+    renderDashboard();
+    showScreen('dashboard');
+  } else { toast('Login yoki parol noto\'g\'ri'); }
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+}
+
+// ═══════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════
+function renderDashboard() {
+  if (!isLoggedIn) return;
+  renderStats();
+  renderTabs();
+  renderProposals('review');
+  renderCategoryStats();
+}
+
+function renderStats() {
+  const props = DB.getProposals();
+  const all = props.length;
+  const review = props.filter(p => p.status === 'review').length;
+  const voting = props.filter(p => p.status === 'voting').length;
+  const accepted = props.filter(p => p.status === 'accepted').length;
+  const rejected = props.filter(p => p.status === 'rejected').length;
+  const done = props.filter(p => p.status === 'implemented').length;
+  const totalVotes = props.reduce((s, p) => s + p.votesFor + p.votesAgainst, 0);
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card"><div class="num">${all}</div><div class="lbl">Jami</div></div>
+    <div class="stat-card s-yellow"><div class="num">${review}</div><div class="lbl">Ko'rib chiqilmoqda</div></div>
+    <div class="stat-card"><div class="num">${voting}</div><div class="lbl">Ovozga qo'yilgan</div></div>
+    <div class="stat-card s-green"><div class="num">${accepted + done}</div><div class="lbl">Qabul qilingan</div></div>
+    <div class="stat-card s-red"><div class="num">${rejected}</div><div class="lbl">Rad etilgan</div></div>
+    <div class="stat-card s-teal"><div class="num">${totalVotes}</div><div class="lbl">Jami ovozlar</div></div>`;
+}
+
+function renderTabs() {
+  const props = DB.getProposals();
+  const counts = {};
+  STATUS_LIST.forEach(s => counts[s] = props.filter(p => p.status === s).length);
+  document.getElementById('statusTabs').innerHTML = STATUS_LIST.map((s, i) =>
+    `<button class="tab${i===0?' active':''}" onclick="renderProposals('${s}');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');">${STATUS_LABELS[s]} <span class="count">${counts[s]}</span></button>`
+  ).join('');
+}
+
+function renderProposals(status) {
+  let props = DB.getProposals().filter(p => p.status === status);
+  props.sort((a, b) => b.createdAt - a.createdAt);
+  const list = document.getElementById('proposalList');
+  if (props.length === 0) { list.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>Bu statusda takliflar yo\'q</p></div>'; return; }
+  list.innerHTML = props.map(p => `<div class="prop-row" id="prop-${p.id}">
+    <div class="pr-top"><div><div class="pr-title">${esc(p.title)}</div><div class="pr-cat">${CAT_LABELS[p.category]||p.category} · ${esc(p.userName)} · ${dateStr(p.createdAt)}</div></div><span class="badge badge-${p.status}">${STATUS_LABELS[p.status]}</span></div>
+    <div class="pr-desc">${esc(p.desc)}</div>
+    <div class="pr-meta"><span>📍 ${esc(p.addr)}</span>${p.votesFor>0||p.votesAgainst>0?`<span>👍 ${p.votesFor} · 👎 ${p.votesAgainst}</span>`:''}${p.budget?`<span>💰 ${esc(p.budget)}</span>`:''}</div>
+    ${p.image?`<div class="pr-image"><img src="${p.image}" alt="Rasm"/></div>`:''}
+    ${p.adminComment?`<div class="pr-note">🏛 ${esc(p.adminComment)}</div>`:''}
+    <div class="pr-actions">
+      ${status==='review'?`<button class="btn btn-success btn-sm" onclick="openReview('${p.id}','accept')">✅ Qabul qilish</button><button class="btn btn-danger btn-sm" onclick="openReview('${p.id}','reject')">❌ Rad etish</button>`:''}
+      ${status==='voting'?`<button class="btn btn-success btn-sm" onclick="setStatus('${p.id}','accepted')">✅ Yakunlash</button><button class="btn btn-info btn-sm" onclick="openReview('${p.id}','implement')">🏁 Amalga oshirildi</button>`:''}
+      ${status==='accepted'?`<button class="btn btn-info btn-sm" onclick="setStatus('${p.id}','implemented')">🏁 Amalga oshirildi</button>`:''}
+    </div>
+    <div id="review-${p.id}"></div>
+  </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// REVIEW
+// ═══════════════════════════════════════════
+function openReview(id, action) {
+  const c = document.getElementById('review-' + id);
+  const ex = c.querySelector('.review-panel');
+  if (ex) { ex.remove(); return; }
+  let title, label, placeholder, showBudget, btnLabel, btnClass, nextStatus;
+  if (action === 'accept') { title='✅ Qabul qilish'; label='Xulosa'; placeholder='Taklif haqida...'; showBudget=true; btnLabel='✅ Qabul qilish va ovozga qo\'yish'; btnClass='btn-success'; nextStatus='voting'; }
+  else if (action === 'reject') { title='❌ Rad etish'; label='Sabab'; placeholder='Nega rad etilayotganini yozing...'; showBudget=false; btnLabel='❌ Rad etish'; btnClass='btn-danger'; nextStatus='rejected'; }
+  else { title='🏁 Amalga oshirildi'; label='Izoh'; placeholder='Qanday amalga oshirildi...'; showBudget=false; btnLabel='🏁 Tasdiqlash'; btnClass='btn-info'; nextStatus='implemented'; }
+  const panel = document.createElement('div');
+  panel.className = 'review-panel';
+  panel.innerHTML = `<h4>${title}</h4>
+    <div class="form-group"><label>${label}</label><textarea id="rcomment-${id}" placeholder="${placeholder}"></textarea></div>
+    ${showBudget?`<div class="form-group"><label>Mablag'</label><input type="text" id="rbudget-${id}" placeholder="Masalan: 50 mln so'm"/></div>`:''}
+    <div class="review-actions"><button class="btn ${btnClass} btn-sm" onclick="setStatus('${id}','${nextStatus}')">${btnLabel}</button><button class="btn btn-outline btn-sm" onclick="this.closest('.review-panel').remove()">Bekor</button></div>`;
+  c.appendChild(panel);
+}
+
+function setStatus(id, newStatus) {
+  const props = DB.getProposals();
+  const p = props.find(x => x.id === id);
+  if (!p) return;
+  const commentEl = document.getElementById('rcomment-' + id);
+  const budgetEl = document.getElementById('rbudget-' + id);
+  p.status = newStatus;
+  if (commentEl && commentEl.value.trim()) p.adminComment = commentEl.value.trim();
+  if (budgetEl && budgetEl.value.trim()) p.budget = budgetEl.value.trim();
+  p.reviewedAt = Date.now();
+  DB.setProposals(props);
+  toast('Status o\'zgartirildi: ' + STATUS_LABELS[newStatus]);
+  renderDashboard();
+}
+
+// ═══════════════════════════════════════════
+// CATEGORY STATS
+// ═══════════════════════════════════════════
+function renderCategoryStats() {
+  const props = DB.getProposals();
+  const cats = {};
+  props.forEach(p => {
+    const c = CAT_LABELS[p.category] || p.category;
+    if (!cats[c]) cats[c] = {total:0,accepted:0,rejected:0};
+    cats[c].total++;
+    if (p.status==='accepted'||p.status==='implemented') cats[c].accepted++;
+    if (p.status==='rejected') cats[c].rejected++;
+  });
+  const entries = Object.entries(cats);
+  if (entries.length === 0) { document.getElementById('categoryStats').innerHTML = '<div class="empty-state"><p>Ma\'lumot yo\'q</p></div>'; return; }
+  let h = '<div style="overflow-x:auto"><table class="cat-table"><thead><tr><th>Kategoriya</th><th>Jami</th><th>Qabul</th><th>Rad</th><th>Muvaffaqiyat</th></tr></thead><tbody>';
+  entries.forEach(([name, d]) => {
+    const pct = d.total > 0 ? (d.accepted / d.total * 100).toFixed(0) : 0;
+    h += `<tr><td style="font-weight:600">${name}</td><td>${d.total}</td><td style="color:var(--success)">${d.accepted}</td><td style="color:var(--danger)">${d.rejected}</td><td><span class="cat-pct ${pct>50?'high':'low'}">${pct}%</span></td></tr>`;
+  });
+  h += '</tbody></table></div>';
+  document.getElementById('categoryStats').innerHTML = h;
+}
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function dateStr(ts) { return ts ? new Date(ts).toLocaleDateString('uz-UZ',{day:'numeric',month:'short',year:'numeric'}) : '—'; }
+function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function toast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 3000); }
+function adminLogout() { isLoggedIn = false; document.getElementById('adminBadge').classList.remove('active'); showScreen('login'); toast('Tizimdan chiqdingiz'); }
+
+document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && document.getElementById('screen-login').classList.contains('active')) adminLogin(); });
+</script>
+</body>
+</html>

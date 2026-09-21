@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Yangiboyev Shohjahon — IT Engineer · Finance | 3D Portfolio</title>
+<meta name="description" content="Yangiboyev Shohjahon — TDIU bitiruvchisi, IT muhandisi va moliyachi. Aloqabank / Xalq Bank amaliyoti, Fuqarolar Ovozi, Avtokredit kalkulyatori, Lingora. GPA 3.93." />
+<meta name="author" content="Shohjahon Yangiboyev" />
+<meta property="og:title" content="Yangiboyev Shohjahon — 3D Portfolio" />
+<meta property="og:description" content="IT Engineer · Finance Specialist. Realistik 3D minimalistik portfolio: loyihalar, sertifikatlar, ilmiy maqola." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Shohjahon Yangiboyev","jobTitle":"IT Engineer, Finance Specialist","alumniOf":"Tashkent State University of Economics","email":"mailto:shakhluv@gmail.com","telephone":"+998993881161","url":"https://github.com/wax-yv","knowsAbout":["Python","JavaScript","Flutter","Banking systems","Tableau"]}
+</script>
+<style>
+:root{
+  --bg:#05070d; --bg2:#0a0f1c; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.09); --text:#eef2f7; --muted:#9aa7bd; --faint:#64748b;
+  --accent:#7fb0ff; --accent2:#d4af37; --green:#34d399; --radius:18px;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+#bg3d{position:fixed;inset:0;z-index:0}
+#vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 90% 70% at 50% 0%,transparent 40%,rgba(5,7,13,.55) 100%),linear-gradient(to bottom,rgba(5,7,13,.25),rgba(5,7,13,.88) 85%)}
+::selection{background:rgba(127,176,255,.3)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(5,7,13,.62);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 20px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:800;letter-spacing:.5px;font-size:15px;display:flex;align-items:center;gap:10px;color:var(--text)}
+.brand-mark{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#1a56db,#7fb0ff);font-size:15px;color:#fff;font-weight:800}
+.brand small{font-weight:500;color:var(--muted);font-size:11px;display:block;line-height:1.2}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links a{color:var(--muted);font-size:13px;font-weight:500;padding:8px 12px;border-radius:10px}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06);text-decoration:none}
+.lang{display:flex;gap:6px}
+.lang button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 11px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;font-family:var(--font);transition:.2s}
+.lang button:hover{border-color:var(--accent);color:var(--text)}
+.lang button.active{background:var(--text);color:#0a0a0a;border-color:var(--text)}
+/* LAYOUT */
+main{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:110px 20px 40px}
+section{margin-bottom:22px;scroll-margin-top:84px}
+.card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+.card h2{font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.card h2::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+/* HERO */
+.hero{min-height:62vh;display:flex;flex-direction:column;justify-content:center;padding:20px 4px 30px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--green);background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);padding:7px 14px;border-radius:100px;width:fit-content;margin-bottom:20px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(38px,6.5vw,68px);font-weight:800;letter-spacing:-1.5px;line-height:1.04;margin-bottom:10px}
+.hero h1 .grad{background:linear-gradient(100deg,#7fb0ff,#d4af37);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-role{font-size:clamp(15px,2.4vw,20px);color:var(--muted);font-weight:500;margin-bottom:14px}
+.hero-about{max-width:680px;color:#c4cede;font-size:15px;margin-bottom:26px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;border:1px solid transparent;font-family:var(--font);transition:.2s;text-decoration:none}
+.btn-primary{background:#eef2f7;color:#0a0a0a}
+.btn-primary:hover{background:#fff;transform:translateY(-1px);text-decoration:none}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--accent);text-decoration:none}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:720px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+.stat b{font-size:26px;font-weight:800;display:block;letter-spacing:-.5px}
+.stat span{font-size:12px;color:var(--muted)}
+.contact-line{margin-top:22px;font-family:var(--mono);font-size:12.5px;color:var(--faint);display:flex;gap:16px;flex-wrap:wrap}
+.contact-line a{color:var(--muted)}
+/* GRID / TAGS */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tags{display:flex;flex-wrap:wrap;gap:9px}
+.tag{background:var(--card2);border:1px solid var(--border);padding:8px 14px;border-radius:10px;font-size:13px;transition:.2s}
+.tag:hover{border-color:var(--accent);transform:translateY(-1px)}
+.timeline-item{border-left:2px solid rgba(127,176,255,.3);padding:0 0 20px 20px;position:relative;margin-left:6px}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-item::before{content:'';position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px rgba(127,176,255,.7)}
+.timeline-item strong{font-size:15px}
+.timeline-item .meta{font-size:12.5px;color:var(--accent);font-family:var(--mono);margin:3px 0 6px}
+.timeline-item p{font-size:14px;color:#c4cede}
+.proj{border:1px solid var(--border);border-radius:14px;padding:20px;background:rgba(255,255,255,.025);transition:.25s;margin-bottom:12px}
+.proj:hover{border-color:rgba(127,176,255,.45);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.proj:last-child{margin-bottom:0}
+.proj h3{font-size:16px;margin-bottom:6px}
+.proj p{font-size:13.5px;color:#c4cede;margin-bottom:10px}
+.proj .tech{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.proj .tech span{font-family:var(--mono);font-size:11px;background:rgba(127,176,255,.1);border:1px solid rgba(127,176,255,.25);color:var(--accent);padding:3px 9px;border-radius:6px}
+.proj-links{display:flex;gap:10px}
+.proj-links a{font-size:13px;font-weight:600}
+.cert{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);font-size:14px;flex-wrap:wrap}
+.cert:last-child{border:none;padding-bottom:0}
+.cert small{color:var(--muted);display:block;font-size:12px;margin-top:2px;font-family:var(--mono)}
+.cert a{font-size:12.5px;white-space:nowrap;align-self:center}
+.article-box{background:linear-gradient(135deg,rgba(212,175,55,.1),rgba(127,176,255,.07));border:1px solid rgba(212,175,55,.3);border-radius:14px;padding:20px}
+.article-box h3{font-size:15.5px;margin-bottom:6px}
+.article-box p{font-size:13.5px;color:#c4cede}
+.article-box .j{font-family:var(--mono);font-size:11.5px;color:var(--accent2);margin-top:10px}
+footer{position:relative;z-index:2;text-align:center;padding:30px 20px 46px;color:var(--faint);font-size:12.5px}
+footer .mono{font-family:var(--mono);font-size:11.5px;margin-top:6px}
+.hint{position:fixed;bottom:16px;right:18px;z-index:3;font-family:var(--mono);font-size:10.5px;color:var(--faint);background:rgba(5,7,13,.6);border:1px solid var(--border);padding:6px 12px;border-radius:8px;backdrop-filter:blur(8px)}
+@media(max-width:760px){
+  .nav-links{display:none}
+  .grid2{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .card{padding:20px}
+  main{padding-top:96px}
+  .hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<canvas id="bg3d"></canvas>
+<div id="vignette"></div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand"><span class="brand-mark">◈</span><span>SY<small id="brand-sub">IT · Finance</small></span></div>
+    <div class="nav-links">
+      <a href="#about" data-i18n="nav_about">Haqida</a>
+      <a href="#skills" data-i18n="nav_skills">Ko'nikmalar</a>
+      <a href="#exp" data-i18n="nav_exp">Tajriba</a>
+      <a href="#projects" data-i18n="nav_proj">Loyihalar</a>
+      <a href="#certs" data-i18n="nav_certs">Sertifikatlar</a>
+      <a href="#contact" data-i18n="nav_contact">Aloqa</a>
+    </div>
+    <div class="lang">
+      <button data-lang="uz" class="active">UZ</button>
+      <button data-lang="ru">RU</button>
+      <button data-lang="en">EN</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge"><span class="dot"></span><span id="intro-line">Realistik 3D · Vercel-ready</span></div>
+    <h1><span id="hero-name">Yangiboyev Shohjahon</span><br /><span class="grad" id="hero-role">IT Engineer · Finance</span></h1>
+    <p class="hero-about" id="hero-about"></p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#projects" id="cta-projects">▸ Loyihalarni ko'rish</a>
+      <a class="btn btn-ghost" href="#contact" id="cta-contact">✉ Bog'lanish</a>
+      <a class="btn btn-ghost" href="assets/cv.pdf" download id="cta-cv">⬇ CV (PDF)</a>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="contact-line" id="contact-line"></div>
+  </div>
+
+  <section id="about" class="reveal"><div class="card">
+    <h2 data-i18n="sec_about">Haqida</h2>
+    <p id="about-text" style="color:#c4cede;font-size:14.5px"></p>
+    <div id="langs" class="tags" style="margin-top:16px"></div>
+  </div></section>
+
+  <section id="skills" class="reveal"><div class="card">
+    <h2 data-i18n="sec_skills">Ko'nikmalar</h2>
+    <div id="skills" class="tags"></div>
+  </div></section>
+
+  <section id="exp" class="reveal"><div class="grid2">
+    <div class="card"><h2 data-i18n="sec_exp">Tajriba</h2><div id="experience"></div></div>
+    <div class="card"><h2 data-i18n="sec_edu">Ta'lim</h2><div id="education"></div>
+      <div style="margin-top:18px"><h2 data-i18n="sec_article" style="margin-bottom:12px">Ilmiy maqola</h2><div class="article-box" id="article"></div></div>
+    </div>
+  </div></section>
+
+  <section id="projects" class="reveal"><div class="card">
+    <h2 data-i18n="sec_projects">Loyihalar</h2>
+    <div id="projects-list"></div>
+  </div></section>
+
+  <section id="certs" class="reveal"><div class="card">
+    <h2 data-i18n="sec_certs">Sertifikatlar</h2>
+    <div id="certs"></div>
+  </div></section>
+
+  <section id="contact" class="reveal"><div class="card">
+    <h2 data-i18n="sec_contact">Aloqa</h2>
+    <p style="color:#c4cede;font-size:14.5px;margin-bottom:16px" id="contact-text"></p>
+    <div class="cta" style="margin:0">
+      <a class="btn btn-primary" id="btn-email" href="mailto:shakhluv@gmail.com">✉ Email yozish</a>
+      <a class="btn btn-ghost" id="btn-phone" href="tel:+998993881161">☎ +998 99 388 11 61</a>
+      <a class="btn btn-ghost" href="https://github.com/wax-yv" target="_blank" rel="noopener">⬢ GitHub</a>
+    </div>
+  </div></section>
+</main>
+
+<footer>
+  <div>© 2026 Yangiboyev Shohjahon · <span id="foot-loc">Toshkent, O'zbekiston</span></div>
+  <div class="mono">Three.js · Static · Vercel-ready · UZ/RU/EN</div>
+</footer>
+<div class="hint">drag to orbit · scroll to zoom</div>
+
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ---------- 3D SCENE ---------- */
+const canvas = document.getElementById('bg3d');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x05070d);
+scene.fog = new THREE.Fog(0x05070d, 12, 32);
+
+const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 100);
+camera.position.set(4.2, 2.2, 7);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance = 3.5;
+controls.maxDistance = 13;
+controls.enablePan = false;
+controls.maxPolarAngle = Math.PI * 0.62;
+
+scene.add(new THREE.HemisphereLight(0xbdd2ff, 0x0a0a12, 0.85));
+const key = new THREE.DirectionalLight(0xffffff, 1.6);
+key.position.set(5, 9, 6);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+key.shadow.camera.left = -8; key.shadow.camera.right = 8;
+key.shadow.camera.top = 8; key.shadow.camera.bottom = -8;
+scene.add(key);
+const rim = new THREE.PointLight(0x7fb0ff, 22, 30);
+rim.position.set(-6, 3, -4);
+scene.add(rim);
+const gold = new THREE.PointLight(0xd4af37, 12, 25);
+gold.position.set(5, -1, -5);
+scene.add(gold);
+
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(60, 60),
+  new THREE.MeshStandardMaterial({ color: 0x070b14, roughness: 0.95, metalness: 0 })
+);
+ground.rotation.x = -Math.PI / 2;
+ground.position.y = -2.2;
+ground.receiveShadow = true;
+scene.add(ground);
+const grid = new THREE.GridHelper(60, 60, 0x1a2b4a, 0x0d1626);
+grid.position.y = -2.19;
+grid.material.transparent = true;
+grid.material.opacity = 0.5;
+scene.add(grid);
+
+// Hero object: torus knot (glass/metal)
+const knot = new THREE.Mesh(
+  new THREE.TorusKnotGeometry(1.05, 0.3, 280, 48),
+  new THREE.MeshPhysicalMaterial({
+    color: 0x8ab4f8, metalness: 0.55, roughness: 0.22,
+    clearcoat: 0.8, clearcoatRoughness: 0.12,
+    envMapIntensity: 1.3, emissive: 0x0a1a3a, emissiveIntensity: 0.35
+  })
+);
+knot.castShadow = true;
+knot.position.set(1.6, 0.3, 0);
+scene.add(knot);
+
+const cage = new THREE.Mesh(
+  new THREE.IcosahedronGeometry(2.1, 1),
+  new THREE.MeshBasicMaterial({ color: 0x2a4a7a, wireframe: true, transparent: true, opacity: 0.35 })
+);
+cage.position.copy(knot.position);
+scene.add(cage);
+
+// Floating shards
+const shards = [];
+const shardGeo = new THREE.OctahedronGeometry(0.14);
+const shardMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.3, emissive: 0x3a2c00, emissiveIntensity: 0.4 });
+for (let i = 0; i < 26; i++) {
+  const m = new THREE.Mesh(shardGeo, shardMat.clone());
+  m.position.set((Math.random() - 0.5) * 14, Math.random() * 5 - 2, (Math.random() - 0.5) * 10 - 1);
+  m.rotation.set(Math.random() * 3, Math.random() * 3, 0);
+  m.castShadow = true;
+  m.userData = { s: 0.4 + Math.random() * 0.9, o: Math.random() * Math.PI * 2, y: m.position.y };
+  shards.push(m); scene.add(m);
+}
+
+// Starfield
+{
+  const N = 1300, pos = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) {
+    pos[i * 3] = (Math.random() - 0.5) * 50;
+    pos[i * 3 + 1] = Math.random() * 22 - 4;
+    pos[i * 3 + 2] = (Math.random() - 0.5) * 40 - 5;
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  scene.add(new THREE.Points(g, new THREE.PointsMaterial({ color: 0x9db8e8, size: 0.035, transparent: true, opacity: 0.75 })));
+}
+
+let mx = 0, my = 0;
+addEventListener('pointermove', e => {
+  mx = (e.clientX / innerWidth - 0.5);
+  my = (e.clientY / innerHeight - 0.5);
+}, { passive: true });
+
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+  if (!reduceMotion) {
+    knot.rotation.y += 0.0032;
+    knot.rotation.x = Math.sin(t * 0.25) * 0.12;
+    knot.position.y = 0.3 + Math.sin(t * 0.7) * 0.12;
+    cage.rotation.y -= 0.0011;
+    cage.rotation.z = Math.sin(t * 0.15) * 0.08;
+    cage.position.y = knot.position.y;
+    for (const s of shards) {
+      s.rotation.x += 0.004 * s.userData.s;
+      s.rotation.y += 0.006 * s.userData.s;
+      s.position.y = s.userData.y + Math.sin(t * s.userData.s + s.userData.o) * 0.35;
+    }
+  }
+  // parallax + scroll drift
+  camera.position.x += ((4.2 + mx * 1.4) - camera.position.x) * 0.03;
+  camera.position.y += ((2.2 - my * 0.9 - scrollY * 0.0009) - camera.position.y) * 0.03;
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+/* ---------- I18N + CONTENT ---------- */
+const STR = {
+  uz: { nav_about: 'Haqida', nav_skills: "Ko'nikmalar", nav_exp: 'Tajriba', nav_proj: 'Loyihalar', nav_certs: 'Sertifikatlar', nav_contact: 'Aloqa', sec_about: 'Haqida', sec_skills: "Ko'nikmalar", sec_exp: 'Tajriba', sec_edu: "Ta'lim", sec_article: 'Ilmiy maqola', sec_projects: 'Loyihalar', sec_certs: 'Sertifikatlar', sec_contact: 'Aloqa', cta_p: '▸ Loyihalarni ko‘rish', cta_c: '✉ Bog‘lanish', demo: 'Jonli demo', admin: 'Admin panel', contact_t: 'Bank, davlat muassasasi yoki IT jamoada ishlashga tayyorman. Email yoki telefon orqali bog‘laning — 24 soat ichida javob beraman.' },
+  ru: { nav_about: 'О себе', nav_skills: 'Навыки', nav_exp: 'Опыт', nav_proj: 'Проекты', nav_certs: 'Сертификаты', nav_contact: 'Контакты', sec_about: 'О себе', sec_skills: 'Навыки', sec_exp: 'Опыт', sec_edu: 'Образование', sec_article: 'Научная статья', sec_projects: 'Проекты', sec_certs: 'Сертификаты', sec_contact: 'Контакты', cta_p: '▸ Смотреть проекты', cta_c: '✉ Связаться', demo: 'Живое демо', admin: 'Админ-панель', contact_t: 'Открыт к работе в банке, госструктуре или IT-команде. Напишите на email или позвоните — отвечу в течение 24 часов.' },
+  en: { nav_about: 'About', nav_skills: 'Skills', nav_exp: 'Experience', nav_proj: 'Projects', nav_certs: 'Certificates', nav_contact: 'Contact', sec_about: 'About', sec_skills: 'Skills', sec_exp: 'Experience', sec_edu: 'Education', sec_article: 'Journal paper', sec_projects: 'Projects', sec_certs: 'Certificates', sec_contact: 'Contact', cta_p: '▸ View projects', cta_c: '✉ Get in touch', demo: 'Live demo', admin: 'Admin panel', contact_t: 'Open to roles in banking, public sector or IT teams. Email or call — I reply within 24 hours.' }
+};
+
+let DATA = null;
+let LANG = localStorage.getItem('pf-lang') || 'uz';
+
+async function load() {
+  const r = await fetch('data.json', { cache: 'no-cache' });
+  DATA = await r.json();
+  applyLang(LANG);
+}
+function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+function applyLang(l) {
+  LANG = l;
+  localStorage.setItem('pf-lang', l);
+  document.documentElement.lang = l;
+  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  const t = STR[l];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.dataset.i18n;
+    if (t[k]) el.textContent = t[k];
+  });
+  if (!DATA) return;
+  document.getElementById('intro-line').textContent = DATA.intro[l];
+  document.getElementById('hero-name').textContent = DATA.name[l];
+  document.getElementById('hero-role').textContent = DATA.title[l];
+  document.getElementById('hero-about').textContent = DATA.about[l].split('.')[0] + '.';
+  document.getElementById('about-text').textContent = DATA.about[l];
+  document.getElementById('cta-projects').textContent = t.cta_p;
+  document.getElementById('cta-contact').textContent = t.cta_c;
+  document.getElementById('brand-sub').textContent = DATA.title[l].split('·')[0].trim().slice(0, 22);
+  document.getElementById('foot-loc').textContent = DATA.contact.location[l];
+  document.getElementById('contact-text').textContent = t.contact_t;
+
+  const c = DATA.contact;
+  document.getElementById('contact-line').innerHTML =
+    `<span>✉ <a href="mailto:${c.email}">${c.email}</a></span><span>☎ <a href="tel:+998993881161">${c.phone}</a></span><span>⬢ <a href="https://${c.github}" target="_blank" rel="noopener">${c.github}</a></span><span>◈ ${esc(c.location[l])}</span>`;
+
+  document.getElementById('stats').innerHTML = DATA.stats.map(s =>
+    `<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label[l])}</span></div>`).join('');
+
+  document.getElementById('langs').innerHTML = DATA.languages.map(x =>
+    `<span class="tag">🌐 ${esc(x.name[l])} · <b>${esc(x.level)}</b></span>`).join('');
+
+  document.getElementById('skills').innerHTML = DATA.skills[l].map(s =>
+    `<span class="tag">${esc(s)}</span>`).join('');
+
+  document.getElementById('experience').innerHTML = DATA.experience.map(e =>
+    `<div class="timeline-item"><strong>${esc(e.role[l])}</strong><div class="meta">${esc(e.company[l])} · ${esc(e.period[l])}</div><p>${esc(e.desc[l])}</p></div>`).join('');
+
+  document.getElementById('education').innerHTML = DATA.education.map(e =>
+    `<div class="timeline-item"><strong>${esc(e.degree[l])}</strong><div class="meta">${esc(e.university[l])} · ${esc(e.period)} · GPA ${esc(e.gpa)}</div></div>`).join('');
+
+  const a = DATA.article;
+  document.getElementById('article').innerHTML =
+    `<h3>📄 ${esc(a.title)}</h3><p>${esc(a.desc[l])}</p><div class="j">${esc(a.journal)} · ${esc(a.advisor)}</div>`;
+
+  document.getElementById('projects-list').innerHTML = DATA.projects.map(p => {
+    const links = [];
+    if (p.link) links.push(`<a href="${p.link}" target="_blank" rel="noopener">▸ ${t.demo}</a>`);
+    if (p.admin) links.push(`<a href="${p.admin}" target="_blank" rel="noopener">⚙ ${t.admin}</a>`);
+    return `<div class="proj"><h3>${esc(p.title[l])}</h3><p>${esc(p.desc[l])}</p>
+      <div class="tech">${(p.tech || []).map(x => `<span>${esc(x)}</span>`).join('')}</div>
+      <div class="proj-links">${links.join('')}</div></div>`;
+  }).join('');
+
+  document.getElementById('certs').innerHTML = DATA.certificates.map(x =>
+    `<div class="cert"><div><strong>${esc(x.name)}</strong><small>${esc(x.issuer)} · ${esc(x.date)}</small></div>
+    ${String(x.id).startsWith('coursera') ? `<a href="https://${esc(x.id)}" target="_blank" rel="noopener">Verify ↗</a>` : `<small style="align-self:center">${esc(x.id)}</small>`}</div>`).join('');
+}
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => applyLang(b.dataset.lang));
+
+/* reveal on scroll */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+}), { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+load().catch(() => {
+  document.getElementById('hero-about').textContent = 'data.json yuklanmadi — Vercel da файл yonida ekanini tekshiring.';
+});
+</script>
+</body>
+</html>

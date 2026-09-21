@@ -1,0 +1,104 @@
+{
+  "name": {
+    "uz": "Yangiboyev Shohjahon",
+    "ru": "Янгибоев Шохжахон",
+    "en": "Shohjahon Yangiboyev"
+  },
+  "title": {
+    "uz": "Axborot texnologiyalari muhandisi · Moliyachi",
+    "ru": "Инженер информационных технологий · Финансист",
+    "en": "IT Engineer · Finance Specialist"
+  },
+  "contact": {
+    "phone": "+998 99 388 11 61",
+    "email": "shakhluv@gmail.com",
+    "github": "github.com/wax-yv",
+    "location": {
+      "uz": "Toshkent, O'zbekiston",
+      "ru": "Ташкент, Узбекистан",
+      "en": "Tashkent, Uzbekistan"
+    }
+  },
+  "about": {
+    "uz": "TDIU'ni Axborot tizimlari va texnologiyalari (moliya-bank yo'nalishi) bo'yicha tamomlaganman (GPA 3.93). Aloqabank va Xalq bankida amaliyot o'taganman: Colvir, KATM, MyID, OneID tizimlari bilan ishladim, kredit undiruvi amaliyotchisi sifatida ham ishladim. Aloqabank uchun avtokredit kalkulyatori va Fuqarolar Ovozi platformasini yozdim. Maqsad — bank yoki davlat muassasasida IT assistant specialist sifatida ishlash.",
+    "ru": "Выпускник ТДИУ по направлению «Информационные системы и технологии» (финансы и банки, GPA 3.93). Стажировка в Aloqabank и Xalq Bank: работа с Colvir, KATM, MyID, OneID, практика кредитного взыскания. Разработал автокредитный калькулятор для Aloqabank и платформу «Голос граждан». Цель — позиция IT-ассистента в банке или госструктуре.",
+    "en": "TDIU graduate in Information Systems and Technologies (finance & banking, GPA 3.93). Intern at Aloqabank and Xalq Bank: hands-on with Colvir, KATM, MyID, OneID systems plus credit-collection practice. Built an auto-loan calculator for Aloqabank and the Citizens Voice platform. Goal — IT Assistant Specialist role in banking or public sector."
+  },
+  "stats": [
+    { "value": "3.93", "label": { "uz": "GPA · TDIU", "ru": "GPA · ТДИУ", "en": "GPA · TSUE" } },
+    { "value": "3+", "label": { "uz": "Loyiha", "ru": "Проекта", "en": "Projects" } },
+    { "value": "4", "label": { "uz": "Sertifikat", "ru": "Сертификата", "en": "Certificates" } },
+    { "value": "1", "label": { "uz": "Ilmiy maqola", "ru": "Научная статья", "en": "Journal paper" } }
+  ],
+  "skills": {
+    "uz": ["Python", "HTML / CSS / JavaScript", "Dart (Flutter)", "Three.js (3D web)", "Colvir / KATM / MyID / OneID", "Tableau Public", "Git / GitHub", "Tez moslashuvchanlik", "Mas'uliyatlilik", "Jamoada ishlash", "Liderlik salohiyati"],
+    "ru": ["Python", "HTML / CSS / JavaScript", "Dart (Flutter)", "Three.js (3D web)", "Colvir / KATM / MyID / OneID", "Tableau Public", "Git / GitHub", "Быстрая адаптация", "Ответственность", "Работа в команде", "Лидерский потенциал"],
+    "en": ["Python", "HTML / CSS / JavaScript", "Dart (Flutter)", "Three.js (3D web)", "Colvir / KATM / MyID / OneID", "Tableau Public", "Git / GitHub", "Fast adaptability", "Responsibility", "Teamwork", "Leadership"]
+  },
+  "languages": [
+    { "name": { "uz": "O'zbek tili", "ru": "Узбекский", "en": "Uzbek" }, "level": "Native" },
+    { "name": { "uz": "Ingliz tili", "ru": "Английский", "en": "English" }, "level": "B1" },
+    { "name": { "uz": "Rus tili", "ru": "Русский", "en": "Russian" }, "level": "A2" },
+    { "name": { "uz": "Italyan tili", "ru": "Итальянский", "en": "Italian" }, "level": "A1 · Lingora loyihasi" }
+  ],
+  "education": [
+    {
+      "degree": { "uz": "Axborot texnologiyalari muhandisi, moliyachi", "ru": "Инженер ИТ, финансист", "en": "IT Engineer, Finance Specialist" },
+      "university": { "uz": "Toshkent Davlat Iqtisodiyot universiteti", "ru": "Ташкентский государственный экономический университет", "en": "Tashkent State University of Economics" },
+      "period": "2022 – 2026",
+      "gpa": "3.93"
+    }
+  ],
+  "experience": [
+    {
+      "role": { "uz": "Amaliyotchi — bank tizimlari", "ru": "Стажёр — банковские системы", "en": "Intern — banking systems" },
+      "company": { "uz": "Aloqabank / Xalq bank", "ru": "Aloqabank / Xalq Bank", "en": "Aloqabank / Xalq Bank" },
+      "period": { "uz": "2024", "ru": "2024", "en": "2024" },
+      "desc": { "uz": "Colvir, KATM, MyID, OneID tizimlari bilan ishlash. Kredit undiruvi amaliyotchisi vazifalari. Avtokredit kalkulyatori va hujjatlar oqimini avtomatlashtirish.", "ru": "Работа с Colvir, KATM, MyID, OneID. Практика кредитного взыскания. Автокредитный калькулятор и автоматизация документооборота.", "en": "Worked with Colvir, KATM, MyID, OneID. Credit-collection practice. Auto-loan calculator and document-flow automation." }
+    }
+  ],
+  "projects": [
+    {
+      "title": { "uz": "Fuqarolar Ovozi — mahalla demokratiya platformasi", "ru": "Голос граждан — платформа махалли", "en": "Citizens Voice — neighborhood platform" },
+      "desc": { "uz": "MFY takliflari, ovoz berish (rozi/qarshi), status kuzatuvi. Foydalanuvchi + admin panel. 12 ta demo taklif bilan.", "ru": "Предложения махалли, голосование, отслеживание статуса. Панели пользователя и админа. 12 демо-предложений.", "en": "Proposals, voting, status tracking. User + admin panels. 12 seeded demo proposals." },
+      "tech": ["HTML", "CSS", "JavaScript", "LocalStorage"],
+      "link": "projects/fuqarolar-ovoz.html",
+      "admin": "projects/fuqarolar-ovoz-admin.html"
+    },
+    {
+      "title": { "uz": "Avtokredit kalkulyatori — Aloqabank", "ru": "Автокредитный калькулятор — Aloqabank", "en": "Auto-loan calculator — Aloqabank" },
+      "desc": { "uz": "Annuitet hisoblash, 3 oylik imtiyozli davr, to'lov grafigi, shartnoma loyihasi, hujjatlar ro'yxati. Chia/Urganch filiali.", "ru": "Аннуитетный расчёт, льготный период 3 мес., график платежей, проект договора, список документов.", "en": "Annuity schedule, 3-month grace period, payment table, draft contract, document checklist." },
+      "tech": ["HTML", "CSS", "JavaScript"],
+      "link": "projects/avtokredit-kalkulyator.html",
+      "admin": ""
+    },
+    {
+      "title": { "uz": "Lingora — italyan tili o'quv ilovasi", "ru": "Lingora — приложение итальянского", "en": "Lingora — Italian learning app" },
+      "desc": { "uz": "CILS/CEFR sertifikatiga tayyorlovchi Flutter ilova. Ishlab chiqilmoqda.", "ru": "Flutter-приложение для подготовки к CILS/CEFR. В разработке.", "en": "Flutter app for CILS/CEFR exam prep. In development." },
+      "tech": ["Dart", "Flutter"],
+      "link": "",
+      "admin": ""
+    }
+  ],
+  "certificates": [
+    { "name": "Introduction to Generative AI", "issuer": "Google Cloud", "date": "2025-03-06", "id": "coursera.org/verify/VT7M4QIZ2FPR" },
+    { "name": "Data Science Math Skills", "issuer": "Duke University", "date": "2025-03-06", "id": "coursera.org/verify/VFWYZ205UXZT" },
+    { "name": "Tableau Public for Project Management and Beyond", "issuer": "Coursera Project Network", "date": "2024-03-16", "id": "coursera.org/verify/8ASYAYREMR3Q" },
+    { "name": "No-Code yo'nalishi — oltin sertifikat", "issuer": "Ustoz AI", "date": "2024", "id": "Ustoz AI" }
+  ],
+  "article": {
+    "title": "Milliy va xalqaro moliyaviy hisobotlarning farqi (MHXS/IFRS)",
+    "journal": "«Modern education and development» xalqaro jurnali, 05.05.2024, 81–85-betlar",
+    "advisor": "Ilmiy rahbar: Obidov Rahmonali",
+    "desc": {
+      "uz": "MHXSga o'tish zaruriyati, PF-4720 va PQ-4611 tahlili, 150+ mamlakat tajribasi bo'yicha ilmiy xulosa va takliflar.",
+      "ru": "Необходимость перехода на МСФО, анализ PF-4720 и PQ-4611, выводы на основе опыта 150+ стран.",
+      "en": "Need for IFRS transition, analysis of PF-4720 and PQ-4611, findings based on 150+ countries."
+    }
+  },
+  "intro": {
+    "uz": "Realistik 3D · minimalistik · Vercel-ready portfolio",
+    "ru": "Реалистичное 3D · минималистичное · Vercel-ready портфолио",
+    "en": "Realistic 3D · minimalist · Vercel-ready portfolio"
+  }
+}

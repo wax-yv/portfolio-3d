@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avtokredit Kalkulyatori — Aloqabank</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, Helvetica, sans-serif; background: #f4f6f9; color: #333; padding: 16px; }
+.wrap { max-width: 760px; margin: 0 auto; }
+
+header { background: #00529b; color: #fff; padding: 18px 22px; border-radius: 6px 6px 0 0; }
+header h1 { font-size: 20px; }
+header p { font-size: 13px; opacity: 0.9; margin-top: 3px; }
+
+.box { background: #fff; padding: 20px; border: 1px solid #e0e6ed; margin-bottom: 16px; }
+.box.first { border-radius: 0 0 6px 6px; border-top: none; }
+.box:not(.first) { border-radius: 6px; }
+
+h2 { color: #00529b; font-size: 16px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #e0e6ed; }
+label { display: block; font-size: 13px; margin-bottom: 4px; color: #555; }
+input, select { width: 100%; padding: 9px 11px; border: 1px solid #d0d7e0; border-radius: 4px; font-size: 14px; margin-bottom: 12px; font-family: inherit; }
+input:focus, select:focus { outline: none; border-color: #00529b; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+
+button { background: #00529b; color: #fff; border: none; padding: 10px 22px; border-radius: 4px; font-size: 14px; cursor: pointer; font-family: inherit; }
+button:hover { background: #003e75; }
+button.alt { background: #f0f4f8; color: #00529b; border: 1px solid #d0d7e0; }
+button.alt:hover { background: #e0e8f0; }
+
+.result { background: #f0f7ff; border: 1px solid #b3d4f5; padding: 14px 16px; border-radius: 4px; }
+.result .lbl { font-size: 13px; color: #555; }
+.result .big { font-size: 28px; font-weight: bold; color: #00529b; margin: 4px 0 10px 0; }
+.result table { width: 100%; }
+.result td { padding: 4px 0; font-size: 13px; border-bottom: 1px dashed #d0d7e0; }
+.result td:first-child { color: #555; }
+.result td:last-child { font-weight: bold; text-align: right; }
+.result tr:last-child td { border: none; }
+
+.grafik { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+.grafik th, .grafik td { border: 1px solid #d0d7e0; padding: 6px 8px; text-align: right; }
+.grafik th { background: #00529b; color: #fff; text-align: center; }
+.grafik td:first-child { text-align: center; }
+.grafik tr.imt { background: #fffbe6; }
+.grafik tfoot td { background: #f0f4f8; font-weight: bold; }
+
+ol.docs { padding: 8px 16px 8px 32px; background: #f4f6f9; border-radius: 4px; }
+ol.docs li { padding: 4px 0; font-size: 13.5px; }
+
+.hidden { display: none; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.shartnoma { line-height: 1.7; font-size: 14px; }
+.shartnoma h3 { color: #00529b; text-align: center; margin-bottom: 8px; }
+.shartnoma p { margin-bottom: 8px; }
+.shartnoma .imzo { width: 100%; margin-top: 18px; border: none; }
+.shartnoma .imzo td { border: none; padding: 4px 6px; }
+
+.fname { text-align: center; padding: 14px; font-size: 13px; color: #666; }
+
+@media print {
+  body { background: #fff; padding: 0; }
+  .no-print, header { display: none; }
+  .box { border: none; padding: 12px 0; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Avtokredit Kalkulyatori</h1>
+  <p>AT "Aloqabank" — Xorazm viloyati Urganch shahar filiali</p>
+</header>
+
+<div class="box first no-print">
+  <h2>Kredit shartlari</h2>
+
+  <label>Mijoz F.I.Sh.</label>
+  <input type="text" id="fish" placeholder="Yangiboev Shohjahon Ergash o'g'li'" />
+
+  <div class="row">
+    <div>
+      <label>Avtomashina narxi (so'm)</label>
+      <input type="number" id="narx" value="120000000" min="30000000" step="1000000" />
+    </div>
+    <div>
+      <label>Tarif</label>
+      <select id="tarif">
+        <option value="36-20-24.9">3 yil · 20% badal · 24,9%</option>
+        <option value="36-36-23.9">3 yil · 36% badal · 23,9%</option>
+        <option value="36-50-22.9">3 yil · 50% badal · 22,9%</option>
+        <option value="48-30-25.0" selected>4 yil · 30% badal · 25,0%</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label>Oilaviy holat</label>
+      <select id="oila">
+        <option value="boydoq">Bo'ydoq</option>
+        <option value="turmush">Turmush qurgan</option>
+      </select>
+    </div>
+    <div>
+      <label>Daromad turi</label>
+      <select id="daromad">
+        <option value="rasmiy">Rasmiy ish haqi</option>
+        <option value="norasmiy">Norasmiy / tadbirkor</option>
+      </select>
+    </div>
+  </div>
+
+  <button onclick="hisobla()">HISOBLASH</button>
+</div>
+
+<div id="natija" class="hidden">
+
+  <div class="box">
+    <h2>Natija</h2>
+    <div class="result">
+      <div class="lbl">Oylik to'lov (4-oydan boshlab)</div>
+      <div class="big" id="oylik">—</div>
+      <table>
+        <tr><td>Kredit summasi</td><td id="r-kredit">—</td></tr>
+        <tr><td>Boshlang'ich badal</td><td id="r-badal">—</td></tr>
+        <tr><td>Yillik foiz stavkasi</td><td id="r-foiz">—</td></tr>
+        <tr><td>Imtiyozli davr (1–3 oy)</td><td id="r-imt">—</td></tr>
+        <tr><td>Foiz to'lovi (jami)</td><td id="r-foizum">—</td></tr>
+        <tr><td>Umumiy to'lov</td><td id="r-um">—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2>Kerakli hujjatlar</h2>
+    <ol class="docs" id="docs"></ol>
+  </div>
+
+  <div class="box no-print">
+    <h2>Amallar</h2>
+    <div class="actions">
+      <button onclick="grafikKor()">To'lov grafigi</button>
+      <button class="alt" onclick="shartnomaKor()">Shartnoma loyihasi</button>
+    </div>
+  </div>
+
+  <div id="grafik" class="hidden box">
+    <h2>To'lov grafigi</h2>
+    <div style="overflow-x:auto;"><table class="grafik" id="grafikTable"></table></div>
+    <button class="no-print" style="margin-top:12px;" onclick="window.print()">Chop etish / PDF</button>
+  </div>
+
+  <div id="shartnoma" class="hidden box">
+    <h2>Kredit shartnomasi (loyiha)</h2>
+    <div class="shartnoma" id="shartnomaText"></div>
+    <button class="no-print" style="margin-top:12px;" onclick="window.print()">Chop etish / PDF</button>
+  </div>
+
+</div>
+
+<div class="fname">
+  Yangiboev Shohjahon · ATT61/22 · TDIU "Raqamli iqtisodiyot va axborot texnologiyalari fakulteti"
+</div>
+
+</div>
+
+<script>
+function fmt(n) { return Math.round(n).toLocaleString('ru-RU').replace(/,/g, ' '); }
+
+let oxirgi = null;
+
+// === LocalStorage: oxirgi kiritilgan qiymatlarni saqlash ===
+const STORAGE_KEY = 'avtokredit_oxirgi';
+
+function saqla() {
+  const data = {
+    fish: document.getElementById('fish').value,
+    narx: document.getElementById('narx').value,
+    tarif: document.getElementById('tarif').value,
+    oila: document.getElementById('oila').value,
+    daromad: document.getElementById('daromad').value
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function tikla() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    if (d.fish) document.getElementById('fish').value = d.fish;
+    if (d.narx) document.getElementById('narx').value = d.narx;
+    if (d.tarif) document.getElementById('tarif').value = d.tarif;
+    if (d.oila) document.getElementById('oila').value = d.oila;
+    if (d.daromad) document.getElementById('daromad').value = d.daromad;
+  } catch (e) { /* ignore */ }
+}
+
+document.addEventListener('DOMContentLoaded', tikla);
+['fish','narx','tarif','oila','daromad'].forEach(id =>
+  document.getElementById(id).addEventListener('change', saqla)
+);
+
+function hisobla() {
+  const fish = document.getElementById('fish').value.trim() || 'Mijoz';
+  const narx = parseFloat(document.getElementById('narx').value) || 0;
+  const [mS, bS, fS] = document.getElementById('tarif').value.split('-');
+  const muddat = parseInt(mS), badalFoiz = parseInt(bS), yFoiz = parseFloat(fS);
+  const oila = document.getElementById('oila').value;
+  const daromad = document.getElementById('daromad').value;
+
+  if (narx < 30000000) { alert("Narx kamida 30 000 000 so'm bo'lishi kerak"); return; }
+  saqla();
+
+  const badal = narx * badalFoiz / 100;
+  const kredit = narx - badal;
+  const oF = yFoiz / 100 / 12;
+  const n = muddat - 3;
+  const oylik = kredit * oF * Math.pow(1+oF, n) / (Math.pow(1+oF, n) - 1);
+  const imt = kredit * oF;
+  const umumiy = imt * 3 + oylik * n;
+  const foizUm = umumiy - kredit;
+
+  // Grafik qatorlari
+  const rows = [];
+  let q = kredit;
+  for (let i = 1; i <= muddat; i++) {
+    const fT = q * oF;
+    let aT, oT;
+    if (i <= 3) { aT = 0; oT = fT; }
+    else { oT = oylik; aT = oT - fT; q -= aT; }
+    rows.push({ i, aT, fT, oT, q: Math.max(0, q) });
+  }
+
+  oxirgi = { fish, narx, badal, badalFoiz, kredit, muddat, yFoiz, oylik, imt, umumiy, foizUm, rows, oila, daromad };
+
+  document.getElementById('oylik').textContent = fmt(oylik) + " so'm";
+  document.getElementById('r-kredit').textContent = fmt(kredit) + " so'm";
+  document.getElementById('r-badal').textContent = fmt(badal) + " so'm (" + badalFoiz + "%)";
+  document.getElementById('r-foiz').textContent = yFoiz.toFixed(1) + "%";
+  document.getElementById('r-imt').textContent = fmt(imt) + " so'm/oy";
+  document.getElementById('r-um').textContent = fmt(umumiy) + " so'm";
+  document.getElementById('r-foizum').textContent = fmt(foizUm) + " so'm";
+
+  // Hujjatlar — mijoz toifasiga qarab
+  const docs = [
+    "Pasport nusxasi va haydovchilik guvohnomasi",
+    "Avtosalon bilan oldi-sotdi shartnomasi",
+    "Kredit olish bo'yicha rasmiy ariza"
+  ];
+  docs.push(daromad === 'rasmiy' ? "Daromad ma'lumotnomasi (DSQ bazasidan)" : "Bank kartasi tranzaksiyalari (alternativ skoring)");
+  docs.push("Oylik to'lov grafigi (annuitet)", "Kredit shartnomasi", "Pulni bankdan chiqarish bo'yicha mijoz arizasi", "Garov dalolatnomasi", "Garov shartnomasi");
+  if (oila === 'turmush') docs.push("Turmush o'rtog'ining yozma rozilik shartnomasi");
+  docs.push("Taqiq kartasi (YHXX bazasi)", "Avtomashina sug'urta polisi (KASKO)", "Sug'urta to'lovi va boshlang'ich badal kvitansiyasi", "Pulni avtosalon hisob raqamiga o'tkazish topshiriqnomasi");
+  document.getElementById('docs').innerHTML = docs.map(d => '<li>' + d + '</li>').join('');
+
+  document.getElementById('natija').classList.remove('hidden');
+  document.getElementById('grafik').classList.add('hidden');
+  document.getElementById('shartnoma').classList.add('hidden');
+  document.getElementById('natija').scrollIntoView({behavior:'smooth'});
+}
+
+function grafikKor() {
+  if (!oxirgi) return;
+  const h = oxirgi;
+  let html = '<thead><tr><th>Oy</th><th>Asosiy qarz</th><th>Foiz</th><th>Oylik to\'lov</th><th>Qoldiq qarz</th></tr></thead><tbody>';
+  h.rows.forEach(r => {
+    const cls = r.i <= 3 ? ' class="imt"' : '';
+    html += '<tr' + cls + '><td>' + r.i + (r.i <= 3 ? ' (imt.)' : '') + '</td><td>' + fmt(r.aT) + '</td><td>' + fmt(r.fT) + '</td><td><b>' + fmt(r.oT) + '</b></td><td>' + fmt(r.q) + '</td></tr>';
+  });
+  html += '</tbody><tfoot><tr><td>JAMI</td><td>' + fmt(h.kredit) + '</td><td>' + fmt(h.foizUm) + '</td><td>' + fmt(h.umumiy) + '</td><td>—</td></tr></tfoot>';
+  document.getElementById('grafikTable').innerHTML = html;
+  document.getElementById('grafik').classList.remove('hidden');
+  document.getElementById('shartnoma').classList.add('hidden');
+  document.getElementById('grafik').scrollIntoView({behavior:'smooth'});
+}
+
+function shartnomaKor() {
+  if (!oxirgi) return;
+  const h = oxirgi;
+  const sana = new Date().toLocaleDateString('uz-UZ');
+  const num = Date.now().toString().slice(-6);
+  document.getElementById('shartnomaText').innerHTML =
+    '<h3>AVTOKREDIT SHARTNOMASI</h3>' +
+    '<p style="text-align:center; font-size:12px; color:#666;">№ AK-' + num + ' · ' + sana + '</p>' +
+    '<p><b>1. Tomonlar:</b> AT "Aloqabank" Xorazm viloyati Urganch shahar filiali (Bank) va <b>' + h.fish + '</b> (Qarz oluvchi).</p>' +
+    '<p><b>2. Predmet:</b> Bank Qarz oluvchiga avtomashina xarid qilish uchun <b>' + fmt(h.kredit) + ' so\'m</b> kredit ajratadi.</p>' +
+    '<p><b>3. Avto narxi:</b> ' + fmt(h.narx) + ' so\'m. Boshlang\'ich badal: ' + h.badalFoiz + '% (' + fmt(h.badal) + ' so\'m).</p>' +
+    '<p><b>4. Foiz:</b> Yillik <b>' + h.yFoiz + '%</b>.</p>' +
+    '<p><b>5. Muddat:</b> <b>' + h.muddat + ' oy</b>, shu jumladan birinchi 3 oy imtiyozli (faqat foiz to\'lanadi).</p>' +
+    '<p><b>6. To\'lov:</b> Imtiyozli davrda ' + fmt(h.imt) + ' so\'m/oy. Asosiy davrda ' + fmt(h.oylik) + ' so\'m/oy (annuitet).</p>' +
+    '<p><b>7. Umumiy to\'lov:</b> ' + fmt(h.umumiy) + ' so\'m (foiz: ' + fmt(h.foizUm) + ' so\'m).</p>' +
+    '<p><b>8. Ta\'minot:</b> Avtomashina bank foydasiga garovga qo\'yiladi. KASKO sug\'urta polisi majburiy.' +
+    (h.oila === 'turmush' ? ' Turmush o\'rtog\'ining yozma roziligi olinadi.' : '') + '</p>' +
+    '<p><b>9. Pulni o\'tkazish:</b> Kredit summasi avtosalonning hisob raqamiga to\'g\'ridan-to\'g\'ri o\'tkaziladi.</p>' +
+    '<table class="imzo"><tr>' +
+    '<td><b>Bank vakili:</b><br>__________ / Masharipov A. /</td>' +
+    '<td><b>Qarz oluvchi:</b><br>__________ / ' + h.fish + ' /</td>' +
+    '</tr></table>';
+  document.getElementById('shartnoma').classList.remove('hidden');
+  document.getElementById('grafik').classList.add('hidden');
+  document.getElementById('shartnoma').scrollIntoView({behavior:'smooth'});
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Fuqarolar Ovozi — Demokratik ishtirok platformasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a56db;
+  --primary-dark: #1242b0;
+  --primary-light: #e8effc;
+  --success: #16a34a;
+  --success-light: #dcfce7;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --warning: #d97706;
+  --warning-light: #fef3c7;
+  --info: #0891b2;
+  --info-light: #cffafe;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --border: #e2e8f0;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+
+/* ══════ HEADER ══════ */
+.header { background: linear-gradient(135deg, var(--primary) 0%, #1e3a8a 100%); color: #fff; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(26,86,219,0.25); }
+.header-inner { max-width: 1100px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.header-brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.header-brand .flag { width: 40px; height: 28px; border-radius: 4px; background: url('https://data.daryo.uz/media/2019/11/800px-Bandera_de_Khiva_1917-1920.svg_.png') center/cover no-repeat; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+.header-brand h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+.header-brand p { font-size: 10px; opacity: 0.8; margin-top: 1px; }
+.user-badge { display: none; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+.user-badge:hover { background: rgba(255,255,255,0.25); }
+.user-badge.active { display: flex; }
+.user-badge .logout { opacity: 0.6; font-size: 14px; margin-left: 4px; transition: opacity 0.2s; }
+.user-badge .logout:hover { opacity: 1; }
+
+/* ══════ CONTAINER ══════ */
+.container { max-width: 800px; margin: 0 auto; padding: 16px; flex: 1; width: 100%; }
+
+/* ══════ SCREENS ══════ */
+.screen { display: none; animation: fadeIn 0.3s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════ CARDS ══════ */
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; margin-bottom: 14px; border: 1px solid var(--border); }
+.card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--bg); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+
+/* ══════ FORMS ══════ */
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 5px; }
+.form-row { display: flex; gap: 10px; }
+.form-row .form-group { flex: 1; }
+input, select, textarea {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 14px; font-family: inherit; transition: all 0.2s; background: #fff; color: var(--text);
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,86,219,0.1); }
+input::placeholder, textarea::placeholder { color: var(--text3); }
+textarea { resize: vertical; min-height: 80px; }
+
+/* ══════ BUTTONS ══════ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 11px 20px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; font-family: inherit; white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); box-shadow: 0 4px 12px rgba(26,86,219,0.3); }
+.btn-success { background: var(--success); color: #fff; }
+.btn-success:hover { background: #15803d; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #b91c1c; }
+.btn-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
+.btn-outline:hover { background: var(--primary-light); }
+.btn-sm { padding: 7px 14px; font-size: 12px; border-radius: 6px; }
+.btn-block { width: 100%; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+.btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ══════ LOGIN ══════ */
+.login-wrap { max-width: 420px; margin: 20px auto; }
+.login-header { text-align: center; margin-bottom: 20px; }
+.login-header .logo-flag { width: 80px; height: 56px; border-radius: 8px; background: url('https://data.daryo.uz/media/2019/11/800px-Bandera_de_Khiva_1917-1920.svg_.png') center/cover no-repeat; margin: 0 auto 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.login-header h2 { font-size: 22px; font-weight: 800; color: var(--text); }
+.login-header p { font-size: 13px; color: var(--text3); margin-top: 4px; }
+.passport-row { display: flex; gap: 8px; }
+.passport-row input:first-child { width: 64px; text-transform: uppercase; text-align: center; font-weight: 700; letter-spacing: 1px; }
+.passport-row input:last-child { flex: 1; }
+.phone-row { display: flex; gap: 8px; }
+.phone-prefix { width: 72px; flex-shrink: 0; text-align: center; font-weight: 600; background: var(--bg); }
+.address-preview { background: var(--primary-light); border: 1px dashed var(--primary); border-radius: 10px; padding: 14px; margin-top: 12px; display: none; animation: slideDown 0.3s ease; }
+.address-preview.show { display: block; }
+.address-preview h4 { font-size: 12px; color: var(--primary); font-weight: 700; margin-bottom: 6px; }
+.address-preview p { font-size: 12px; color: var(--text2); line-height: 1.6; }
+.mfy-badge { display: inline-block; background: var(--primary); color: #fff; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-top: 6px; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════ DASHBOARD ══════ */
+.dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+.dash-user { display: flex; align-items: center; gap: 10px; }
+.dash-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #3b82f6); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; }
+.dash-info h3 { font-size: 14px; font-weight: 700; }
+.dash-info p { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.dash-mfy { display: inline-block; background: var(--primary-light); color: var(--primary); padding: 2px 8px; border-radius: 8px; font-size: 10px; font-weight: 600; margin-top: 2px; }
+
+/* ══════ PROPOSAL CARDS ══════ */
+.proposal-card {
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px;
+  margin-bottom: 10px; transition: all 0.2s; cursor: pointer; background: var(--card);
+}
+.proposal-card:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(26,86,219,0.08); transform: translateY(-1px); }
+.proposal-card:active { transform: scale(0.99); }
+.p-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+.p-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.p-mine { font-size: 9px; background: var(--success-light); color: var(--success); padding: 1px 6px; border-radius: 4px; font-weight: 600; margin-left: 4px; white-space: nowrap; }
+.p-cat { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.p-desc { font-size: 12.5px; color: var(--text2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5; margin-bottom: 10px; }
+.p-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+.p-stat { display: flex; gap: 10px; font-size: 11px; color: var(--text3); }
+.p-stat span { display: flex; align-items: center; gap: 3px; }
+.p-date { font-size: 10px; color: var(--text3); }
+
+/* ══════ BADGES ══════ */
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+.badge-review { background: var(--warning-light); color: var(--warning); }
+.badge-voting { background: var(--info-light); color: var(--info); }
+.badge-accepted { background: var(--success-light); color: var(--success); }
+.badge-rejected { background: var(--danger-light); color: var(--danger); }
+.badge-implemented { background: #ede9fe; color: #7c3aed; }
+
+/* ══════ DETAIL ══════ */
+.detail-header { margin-bottom: 14px; }
+.back-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--primary); cursor: pointer; font-weight: 500; margin-bottom: 10px; }
+.back-btn:hover { text-decoration: underline; }
+.detail-title { font-size: 18px; font-weight: 700; line-height: 1.3; }
+.detail-meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 11px; color: var(--text3); margin: 10px 0; }
+.detail-meta span { display: flex; align-items: center; gap: 3px; }
+.detail-desc { font-size: 14px; color: var(--text2); line-height: 1.7; margin: 12px 0; }
+.detail-img { margin: 12px 0; }
+.detail-img img { max-width: 100%; max-height: 280px; border-radius: 10px; object-fit: cover; }
+
+/* ══════ VOTE ══════ */
+.vote-box { background: var(--primary-light); border: 1.5px solid #bfdbfe; border-radius: var(--radius); padding: 18px; margin: 16px 0; text-align: center; }
+.vote-box h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 14px; }
+.vote-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.vote-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 14px 24px; border: 2px solid var(--border); border-radius: 12px;
+  cursor: pointer; transition: all 0.2s; background: #fff; min-width: 120px;
+}
+.vote-btn:hover { border-color: var(--primary); }
+.vote-btn:active { transform: scale(0.96); }
+.vote-btn .v-icon { font-size: 28px; }
+.vote-btn .v-label { font-size: 11px; font-weight: 700; color: var(--text2); }
+.vote-btn .v-count { font-size: 22px; font-weight: 800; color: var(--text); }
+.vote-btn.vote-for:hover, .vote-btn.vote-for.selected { border-color: var(--success); background: var(--success-light); }
+.vote-btn.vote-against:hover, .vote-btn.vote-against.selected { border-color: var(--danger); background: var(--danger-light); }
+.vote-btn.vote-for.selected .v-count { color: var(--success); }
+.vote-btn.vote-against.selected .v-count { color: var(--danger); }
+.vote-bar { margin-top: 14px; height: 8px; border-radius: 4px; background: #e2e8f0; overflow: hidden; display: flex; }
+.vb-for { background: var(--success); transition: width 0.6s ease; }
+.vb-against { background: var(--danger); transition: width 0.6s ease; }
+.vote-pct { display: flex; justify-content: space-between; font-size: 11px; color: var(--text3); margin-top: 6px; font-weight: 600; }
+.vote-hint { font-size: 11px; color: var(--text3); margin-top: 10px; }
+
+/* ══════ ADMIN NOTE ══════ */
+.admin-note { background: var(--warning-light); border: 1px solid #fcd34d; border-radius: 8px; padding: 12px 14px; margin: 10px 0; font-size: 12.5px; color: #92400e; line-height: 1.5; }
+.admin-note strong { color: #78350f; }
+
+/* ══════ EMPTY ══════ */
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text3); }
+.empty-state .icon { font-size: 48px; margin-bottom: 10px; opacity: 0.7; }
+.empty-state p { font-size: 13px; margin-bottom: 4px; }
+.empty-state .sub { font-size: 11px; color: var(--text3); margin-bottom: 12px; }
+
+/* ══════ TOAST ══════ */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--text); color: #fff; padding: 12px 24px; border-radius: 10px;
+  font-size: 13px; font-weight: 500; z-index: 999; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  opacity: 0; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); max-width: 90vw; text-align: center;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ══════ FOOTER ══════ */
+.footer { background: var(--text); color: rgba(255,255,255,0.6); padding: 14px 16px; font-size: 11px; text-align: center; margin-top: auto; }
+
+/* ══════ SCREEN TRANSITIONS ══════ */
+.screen.slide-in { animation: slideIn 0.3s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+/* ══════ RESPONSIVE ══════ */
+@media (max-width: 640px) {
+  .header-brand h1 { font-size: 14px; }
+  .header-brand p { font-size: 9px; }
+  .header-inner { height: 52px; }
+  .container { padding: 12px; }
+  .card { padding: 16px; }
+  .form-row { flex-direction: column; gap: 0; }
+  .passport-row { flex-direction: row; }
+  .phone-row { flex-direction: row; }
+  .dash-header { flex-direction: column; align-items: flex-start; }
+  .btn-group { flex-direction: column; }
+  .btn-group .btn { width: 100%; }
+  .vote-btn { min-width: 100px; padding: 10px 16px; }
+  .vote-btn .v-icon { font-size: 22px; }
+  .vote-btn .v-count { font-size: 18px; }
+  .detail-title { font-size: 16px; }
+  .login-wrap { margin: 10px auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ HEADER ══════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-brand" onclick="if(currentUser)goTo('dashboard')">
+      <div class="flag"></div>
+      <div>
+        <h1>Fuqarolar Ovozi</h1>
+        <p>Demokratik ishtirok platformasi</p>
+      </div>
+    </div>
+    <div class="user-badge" id="userBadge" onclick="goTo('dashboard')">
+      <span id="badgeName">Ism</span>
+      <span style="opacity:0.4">|</span>
+      <span id="badgeMfy" style="font-size:10px;opacity:0.8;">MFY</span>
+      <span class="logout" onclick="event.stopPropagation();logoutUser()" title="Chiqish">🚪</span>
+    </div>
+  </div>
+</header>
+
+<div class="toast" id="toast"></div>
+
+<div class="container">
+
+  <!-- ═══ SCREEN: LOGIN ═══ -->
+  <div class="screen active" id="screen-login">
+    <div class="login-wrap">
+      <div class="login-header">
+        <div class="logo-flag"></div>
+        <h2>Fuqarolar Ovozi</h2>
+        <p>Platformaga kirish uchun ma'lumotlaringizni kiriting</p>
+      </div>
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ism</label>
+            <input type="text" id="regName" placeholder="Ismingiz" />
+          </div>
+          <div class="form-group">
+            <label>Familiya</label>
+            <input type="text" id="regSurname" placeholder="Familiyangiz" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Passport seriyasi va raqami</label>
+          <div class="passport-row">
+            <input type="text" id="regPassportS" placeholder="AB" maxlength="2" />
+            <input type="text" id="regPassportN" placeholder="1234567" maxlength="7" inputmode="numeric" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Telefon raqam</label>
+          <div class="phone-row">
+            <input class="phone-prefix" type="text" value="+998" disabled />
+            <input type="text" id="regPhone" placeholder="99 123 45 67" maxlength="9" inputmode="numeric" />
+          </div>
+        </div>
+        <div class="address-preview" id="addressPreview">
+          <h4>📌 Sizning manzilingiz</h4>
+          <p id="previewAddress"></p>
+          <span class="mfy-badge" id="previewMfy"></span>
+        </div>
+        <button class="btn btn-primary btn-block" style="margin-top:14px;" onclick="handleRegister()">Kirish →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: DASHBOARD ═══ -->
+  <div class="screen" id="screen-dashboard">
+    <div class="dash-header">
+      <div class="dash-user">
+        <div class="dash-avatar" id="dashAvatar">SH</div>
+        <div class="dash-info">
+          <h3 id="dashName">Ism Familiya</h3>
+          <p id="dashLocation">Viloyat, Tuman</p>
+          <span class="dash-mfy" id="dashMfy">MFY nomi</span>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="goTo('new')">➕ Yangi taklif</button>
+        <button class="btn btn-outline" onclick="goTo('my')">📄 Mening takliflarim</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>📋 Faol takliflar</span>
+        <select id="filterStatus" onchange="renderDashboard()" style="width:auto;padding:5px 10px;font-size:11px;border-radius:6px;">
+          <option value="all">Barchasi</option>
+          <option value="review">Ko'rib chiqilmoqda</option>
+          <option value="voting">Ovozga qo'yilgan</option>
+          <option value="accepted">Qabul qilingan</option>
+          <option value="rejected">Rad etilgan</option>
+          <option value="implemented">Amalga oshirilgan</option>
+        </select>
+      </div>
+      <div id="proposalList"></div>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: NEW PROPOSAL ═══ -->
+  <div class="screen" id="screen-new">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+        <span style="cursor:pointer;color:var(--primary);font-size:18px;" onclick="goTo('dashboard')">←</span>
+        <div class="card-title" style="border:none;padding:0;margin:0;">Yangi taklif</div>
+      </div>
+
+      <div class="form-group">
+        <label>Kategoriya</label>
+        <select id="propCat">
+          <option value="">— Tanlang —</option>
+          <option value="yollar">🛣️ Yo'llar va transport</option>
+          <option value="yoritish">💡 Ko'cha yoritish</option>
+          <option value="suv">💧 Suv ta'minoti</option>
+          <option value="tozalik">🧹 Sanitariya va tozalik</option>
+          <option value="obodon">🌳 Obodonlashtirish</option>
+          <option value="maktab">📚 Ta'lim va sport</option>
+          <option value="axlat">🗑️ Axlatxona / chiqindi</option>
+          <option value="boshqa">📌 Boshqa</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Sarlavha</label>
+        <input type="text" id="propTitle" placeholder="Taklifingiz sarlavhasi (qisqa)" maxlength="100" />
+      </div>
+      <div class="form-group">
+        <label>Batafsil tavsif</label>
+        <textarea id="propDesc" placeholder="Muammoni batafsil yozing..." maxlength="500"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Manzil</label>
+        <input type="text" id="propAddr" placeholder="MFY, ko'cha" />
+      </div>
+      <div class="form-group">
+        <label>Rasm (ixtiyoriy)</label>
+        <input type="file" id="propImage" accept="image/*" style="padding:8px;" />
+      </div>
+      <button class="btn btn-primary btn-block" onclick="submitProposal()">Taklifni yuborish →</button>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: DETAIL ═══ -->
+  <div class="screen" id="screen-detail">
+    <div class="card" id="detailWrap">
+      <div class="detail-header">
+        <div class="back-btn" onclick="goTo('dashboard')">← Barcha takliflar</div>
+        <span class="badge" id="detBadge"></span>
+      </div>
+      <div id="detailBody"></div>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: MY PROPOSALS ═══ -->
+  <div class="screen" id="screen-my">
+    <div class="card">
+      <div class="card-title">
+        <span>📄 Mening takliflarim</span>
+        <span style="cursor:pointer;color:var(--primary);font-size:13px;" onclick="goTo('dashboard')">← Ortga</span>
+      </div>
+      <div id="myProposalList"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  © 2026 Fuqarolar Ovozi · Mahalla fuqarolar yig'ini
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+const DB = {
+  getUsers() { return JSON.parse(localStorage.getItem('fo_users') || '[]'); },
+  setUsers(u) { localStorage.setItem('fo_users', JSON.stringify(u)); },
+  getProposals() { return JSON.parse(localStorage.getItem('fo_proposals') || '[]'); },
+  setProposals(p) { localStorage.setItem('fo_proposals', JSON.stringify(p)); },
+  getCurrentUser() { return JSON.parse(sessionStorage.getItem('fo_user') || 'null'); },
+  setCurrentUser(u) { sessionStorage.setItem('fo_user', JSON.stringify(u)); },
+  logout() { sessionStorage.removeItem('fo_user'); }
+};
+
+const REGIONS = [
+  { name: 'Xorazm viloyati', districts: ['Urganch shahri', 'Xiva tumani', "Bog'ot tumani", 'Yangibozor tumani'] },
+  { name: 'Buxoro viloyati', districts: ['Buxoro shahri', 'Kogon tumani', "G'ijduvon tumani", 'Shofirkon tumani'] },
+  { name: 'Samarqand viloyati', districts: ['Samarqand shahri', 'Urgut tumani', 'Payariq tumani', 'Ishtixon tumani'] },
+  { name: 'Toshkent shahri', districts: ['Chilonzor tumani', 'Yunusobod tumani', "Mirzo Ulug'bek tumani", 'Yashnobod tumani'] },
+  { name: "Farg'ona viloyati", districts: ["Farg'ona shahri", 'Quvasoy tumani', 'Rishton tumani', "Bog'dod tumani"] }
+];
+const MFY_LIST = ['Navoiy MFY', "Bog'bon MFY", 'Istiqlol MFY', 'Yangihayot MFY', 'Guliston MFY', 'Tinchlik MFY', "Do'stlik MFY", 'Nurli MFY', 'Baraka MFY', 'Oltin vodiy MFY'];
+const STREETS = ["Navoiy ko'chasi", "Amir Temur ko'chasi", "Mustaqillik ko'chasi", "Beruniy ko'chasi", "Ibn Sino ko'chasi", "Mirzo Ulug'bek ko'chasi", "Bog'bon ko'chasi", "Guliston ko'chasi"];
+
+function hashPassport(ser, num) {
+  let s = (ser + num).toUpperCase(), h = 0;
+  for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
+  return Math.abs(h);
+}
+function generateAddress(ser, num) {
+  const h = hashPassport(ser, num);
+  const reg = REGIONS[h % REGIONS.length];
+  return { region: reg.name, district: reg.districts[h % reg.districts.length], mfy: MFY_LIST[h % MFY_LIST.length], street: STREETS[h % STREETS.length] + ' ' + ((h % 200) + 1) + '-uy' };
+}
+
+function seedData() {
+  if (DB.getProposals().length > 0) return;
+  const n = Date.now();
+  DB.setProposals([
+    { id:'p1',userId:'demo',userName:'Aliev Alisher',category:'yoritish',title:"Ko'cha chiroqlarini almashtirish",desc:"Navoiy ko'chasidagi eski chiroqlar 6 oydan beri ishlamayapti. Kechqurun ko'cha qorong'i, xavfsizlik muammosi bor.",addr:'Navoiy MFY, Navoiy ko\'chasi',image:null,status:'voting',votesFor:34,votesAgainst:8,voters:[],adminComment:'Taklif asosli, mahalla budjetidan mablag\' ajratildi.',createdAt:n-604800000,reviewedAt:n-345600000,budget:"45 mln so'm"},
+    { id:'p2',userId:'demo',userName:'Karimova Zilola',category:'obodon',title:"Bolalar o'yin maydonchasi qurish",desc:"Bog'bon MFY hududida bolalar uchun o'yin maydonchasi yo'q. Kichik maydoncha qurishni taklif qilaman.",addr:"Bog'bon MFY, Bog'bon ko'chasi",image:null,status:'review',votesFor:0,votesAgainst:0,voters:[],adminComment:'',createdAt:n-259200000,reviewedAt:null,budget:null},
+    { id:'p3',userId:'demo',userName:'Rahimov Bobur',category:'suv',title:'Ariq tozalash ishlari',desc:"Har yozda ariq to'lib qolib, suv toshib ketadi. Ariqlarni muntazam tozalash kerak.",addr:"Istiqlol MFY, Amir Temur ko'chasi",image:null,status:'accepted',votesFor:56,votesAgainst:12,voters:[],adminComment:"Mahalla yig'inida ma'qullandi. Tuman hokimligiga murojaat qilingan.",createdAt:n-864000000,reviewedAt:n-518400000,budget:"12 mln so'm"},
+    { id:'p4',userId:'demo',userName:'Saidova Nodira',category:'axlat',title:'Axlat konteynerlarini ko\'chirish',desc:'Maktab yonidagi axlat konteynerlari yomon hid tarqatmoqda. Ularni boshqa joyga ko\'chirish kerak.',addr:"Guliston MFY, Mustaqillik ko'chasi",image:null,status:'voting',votesFor:28,votesAgainst:15,voters:[],adminComment:"Sanitariya me'yorlari bo'yicha tekshirildi, ko'chirish maqsadga muvofiq.",createdAt:n-432000000,reviewedAt:n-172800000,budget:"5 mln so'm"},
+    { id:'p5',userId:'demo',userName:'Aliev Alisher',category:'yollar',title:"Yo'l yoritqichlarini ta'mirlash",desc:"Mahalla ichki yo'llarida 3 ta yoritqich sinib qolgan.",addr:"Navoiy MFY, Navoiy ko'chasi",image:null,status:'rejected',votesFor:5,votesAgainst:18,voters:[],adminComment:'Boshqa pudrat tashkiloti ishlaydi.',createdAt:n-950400000,reviewedAt:n-691200000,budget:null},
+    { id:'p6',userId:'demo',userName:'Karimova Zilola',category:'maktab',title:'Mahalla kutubxonasini ochish',desc:"Yoshlar uchun kutubxona tashkil qilish kerak. Binoda bo'sh xona bor.",addr:"Bog'bon MFY, Ibn Sino ko'chasi",image:null,status:'implemented',votesFor:67,votesAgainst:3,voters:[],adminComment:"Kutubxona ochildi. 500 dan ortiq kitob jamlandi.",createdAt:n-1209600000,reviewedAt:n-907200000,budget:"25 mln so'm"},
+    { id:'p7',userId:'demo',userName:'Murodov Jasur',category:'yollar',title:"Ichki yo'llarni asfaltlash",desc:"Yangihayot MFY hududidagi ichki yo'llar yomon ahvolda. Yomg'irda loy, quruqda chang.",addr:"Yangihayot MFY, Beruniy ko'chasi",image:null,status:'review',votesFor:0,votesAgainst:0,voters:[],adminComment:'',createdAt:n-172800000,reviewedAt:null,budget:null},
+    { id:'p8',userId:'demo',userName:'Toshmatova Lola',category:'yoritish',title:"Parkda yoritish o'rnatish",desc:"Tinchlik MFY dagi parkda yorug'lik yo'q. Kechqurun odamlar yura olmaydi.",addr:"Tinchlik MFY, Guliston ko'chasi",image:null,status:'voting',votesFor:18,votesAgainst:5,voters:[],adminComment:'Ekologik va tejamkor yechim. Qo\'llab-quvvatlaymiz.',createdAt:n-518400000,reviewedAt:n-259200000,budget:"18 mln so'm"},
+    { id:'p9',userId:'demo',userName:'Xasanov Oybek',category:'suv',title:"Ichimlik suvi quvurlarini ta'mirlash",desc:"Do'stlik MFY da bir necha joyda suv quvurlari yirtilgan. Shoshilinch ta'mirlash kerak.",addr:"Do'stlik MFY, Mirzo Ulug'bek ko'chasi",image:null,status:'accepted',votesFor:42,votesAgainst:3,voters:[],adminComment:'Tuman suv ta\'minoti boshqarmasiga murojaat qilindi.',createdAt:n-691200000,reviewedAt:n-345600000,budget:"35 mln so'm"},
+    { id:'p10',userId:'demo',userName:'Valiyeva Aziza',category:'obodon',title:'Dam olish maskani qurish',desc:"Nurli MFY da yoshlar uchun dam olish maskani yo'q. Skameykalar, soyabonlar kerak.",addr:"Nurli MFY, Navoiy ko'chasi",image:null,status:'review',votesFor:0,votesAgainst:0,voters:[],adminComment:'',createdAt:n-86400000,reviewedAt:null,budget:null},
+    { id:'p11',userId:'demo',userName:'Sobirov Elyor',category:'maktab',title:'Kompyuter klubini ochish',desc:"Baraka MFY yoshlari uchun kompyuter klubi kerak. Internet va kompyuterlar bilan ta'minlash.",addr:"Baraka MFY, Ibn Sino ko'chasi",image:null,status:'rejected',votesFor:12,votesAgainst:20,voters:[],adminComment:"Xavfsizlik talablari sababli rad etildi.",createdAt:n-777600000,reviewedAt:n-432000000,budget:null},
+    { id:'p12',userId:'demo',userName:"Jo'rayev Anvar",category:'tozalik',title:'Hududni tozalash',desc:"Oltin vodiy MFY da chiqindilar muntazam yig'ilmaydi. Maxsus texnika jadvalini tuzish kerak.",addr:"Oltin vodiy MFY, Bog'bon ko'chasi",image:null,status:'implemented',votesFor:31,votesAgainst:2,voters:[],adminComment:'Tuman hokimligi tomonidan maxsus texnika jadvali tasdiqlandi.',createdAt:n-1036800000,reviewedAt:n-604800000,budget:"8 mln so'm"}
+  ]);
+}
+seedData();
+
+let currentUser = DB.getCurrentUser();
+let selectedImageData = null;
+
+// ═══════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active','slide-in'));
+  const el = document.getElementById('screen-' + id);
+  el.classList.add('active','slide-in');
+  window.scrollTo(0, 0);
+}
+function goTo(screen) {
+  if (screen === 'dashboard') renderDashboard();
+  if (screen === 'my') renderMyProposals();
+  showScreen(screen);
+}
+
+// ═══════════════════════════════════════════
+// REGISTER
+// ═══════════════════════════════════════════
+document.getElementById('regPassportS').addEventListener('input', updateAddress);
+document.getElementById('regPassportN').addEventListener('input', updateAddress);
+
+function updateAddress() {
+  const ser = document.getElementById('regPassportS').value.trim();
+  const num = document.getElementById('regPassportN').value.trim();
+  const pv = document.getElementById('addressPreview');
+  if (ser.length === 2 && num.length >= 4) {
+    const a = generateAddress(ser, num);
+    document.getElementById('previewAddress').innerHTML = `<b>Viloyat:</b> ${a.region}<br><b>Tuman:</b> ${a.district}<br><b>Ko'cha:</b> ${a.street}`;
+    document.getElementById('previewMfy').textContent = a.mfy;
+    pv.classList.add('show');
+  } else { pv.classList.remove('show'); }
+}
+
+function handleRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const surname = document.getElementById('regSurname').value.trim();
+  const ser = document.getElementById('regPassportS').value.trim().toUpperCase();
+  const num = document.getElementById('regPassportN').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  if (!name || !surname) { toast('Iltimos, ism va familiyangizni kiriting'); return; }
+  if (ser.length !== 2 || num.length < 4) { toast('Passport ma\'lumotlarini to\'liq kiriting'); return; }
+  if (phone.length < 7) { toast('Telefon raqamni to\'liq kiriting'); return; }
+  const addr = generateAddress(ser, num);
+  const user = { id:'u'+Date.now(), name, surname, ser, num, phone:'+998 '+phone, region:addr.region, district:addr.district, mfy:addr.mfy, street:addr.street, initials:(name[0]+surname[0]).toUpperCase() };
+  const users = DB.getUsers(); users.push(user); DB.setUsers(users);
+  DB.setCurrentUser(user); currentUser = user;
+  toast('Xush kelibsiz, ' + name + '!');
+  updateUI(); renderDashboard(); showScreen('dashboard');
+}
+
+// ═══════════════════════════════════════════
+// UI
+// ═══════════════════════════════════════════
+function updateUI() {
+  const b = document.getElementById('userBadge');
+  if (currentUser) {
+    b.classList.add('active');
+    document.getElementById('badgeName').textContent = currentUser.name;
+    document.getElementById('badgeMfy').textContent = currentUser.mfy;
+    document.getElementById('dashAvatar').textContent = currentUser.initials;
+    document.getElementById('dashName').textContent = currentUser.name + ' ' + currentUser.surname;
+    document.getElementById('dashLocation').textContent = currentUser.region + ', ' + currentUser.district;
+    document.getElementById('dashMfy').textContent = currentUser.mfy;
+    document.getElementById('propAddr').value = currentUser.mfy + ', ' + currentUser.street;
+  } else { b.classList.remove('active'); showScreen('login'); }
+}
+
+// ═══════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════
+function renderDashboard() {
+  if (!currentUser) return;
+  const filter = document.getElementById('filterStatus').value;
+  let props = DB.getProposals();
+  const myMfy = currentUser.mfy || '';
+  props.sort((a, b) => {
+    const am = a.addr && a.addr.includes(myMfy) ? 0 : 1;
+    const bm = b.addr && b.addr.includes(myMfy) ? 0 : 1;
+    return am !== bm ? am - bm : b.createdAt - a.createdAt;
+  });
+  if (filter !== 'all') props = props.filter(p => p.status === filter);
+  const list = document.getElementById('proposalList');
+  if (props.length === 0) {
+    list.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>Hozircha takliflar yo\'q</p><p class="sub">Birinchi bo\'lib taklif bering!</p><button class="btn btn-primary" onclick="goTo(\'new\')">➕ Yangi taklif</button></div>';
+    return;
+  }
+  list.innerHTML = props.map(p => {
+    const mine = p.addr && p.addr.includes(myMfy);
+    const votes = (p.status === 'voting' || p.status === 'accepted' || p.status === 'implemented');
+    return `<div class="proposal-card" onclick="showDetail('${p.id}')">
+      <div class="p-top"><div><div class="p-title">${esc(p.title)}${mine?'<span class="p-mine">Sizning MFY</span>':''}</div><div class="p-cat">${catLabel(p.category)} · ${esc(p.userName)}</div></div><span class="badge badge-${p.status}">${statusLabel(p.status)}</span></div>
+      <div class="p-desc">${esc(p.desc)}</div>
+      <div class="p-bottom"><div class="p-stat">${votes?`<span>👍 ${p.votesFor}</span><span>👎 ${p.votesAgainst}</span>`:''}<span>📍 ${esc(p.addr)}</span></div><span class="p-date">${dateStr(p.createdAt)}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════
+// NEW PROPOSAL
+// ═══════════════════════════════════════════
+function submitProposal() {
+  if (!currentUser) { toast('Avval tizimga kiring'); return; }
+  const cat = document.getElementById('propCat').value;
+  const title = document.getElementById('propTitle').value.trim();
+  const desc = document.getElementById('propDesc').value.trim();
+  const addr = document.getElementById('propAddr').value.trim();
+  if (!cat) { toast('Kategoriyani tanlang'); return; }
+  if (!title) { toast('Sarlavhani kiriting'); return; }
+  if (!desc) { toast('Tavsifni kiriting'); return; }
+  if (!addr) { toast('Manzilni kiriting'); return; }
+  const fi = document.getElementById('propImage');
+  const done = (img) => {
+    const p = { id:'p'+Date.now(), userId:currentUser.id, userName:currentUser.name+' '+currentUser.surname, category:cat, title, desc, addr, image:img, status:'review', votesFor:0, votesAgainst:0, voters:[], adminComment:'', createdAt:Date.now(), reviewedAt:null, budget:null };
+    const props = DB.getProposals(); props.push(p); DB.setProposals(props);
+    toast('Taklifingiz qabul qilindi!');
+    document.getElementById('propCat').value='';
+    document.getElementById('propTitle').value='';
+    document.getElementById('propDesc').value='';
+    document.getElementById('propImage').value='';
+    goTo('dashboard');
+  };
+  if (fi.files && fi.files[0]) {
+    const r = new FileReader();
+    r.onload = (e) => done(e.target.result);
+    r.readAsDataURL(fi.files[0]);
+  } else { done(null); }
+}
+
+// ═══════════════════════════════════════════
+// DETAIL
+// ═══════════════════════════════════════════
+function showDetail(id) {
+  const p = DB.getProposals().find(x => x.id === id);
+  if (!p) { toast('Taklif topilmadi'); return; }
+  const badge = document.getElementById('detBadge');
+  badge.className = 'badge badge-' + p.status;
+  badge.textContent = statusLabel(p.status);
+  const body = document.getElementById('detailBody');
+  const voted = currentUser && p.voters.includes(currentUser.id);
+  const canVote = p.status === 'voting' && currentUser && !voted;
+  const total = p.votesFor + p.votesAgainst;
+  const pct = total > 0 ? (p.votesFor / total * 100) : 50;
+  let h = `<div class="detail-title">${esc(p.title)}</div>
+    <div class="detail-meta"><span>🏷 ${catLabel(p.category)}</span><span>👤 ${esc(p.userName)}</span><span>📅 ${dateStr(p.createdAt)}</span><span>📍 ${esc(p.addr)}</span></div>
+    <div class="detail-desc">${esc(p.desc).replace(/\n/g,'<br>')}</div>`;
+  if (p.image) h += `<div class="detail-img"><img src="${p.image}" alt="Rasm"/></div>`;
+  if (p.adminComment) h += `<div class="admin-note"><strong>🏛 MFY rahbari:</strong> ${esc(p.adminComment)}</div>`;
+  if (p.budget) h += `<div class="admin-note"><strong>💰 Mablag':</strong> ${esc(p.budget)}</div>`;
+  if (p.status === 'voting') {
+    h += `<div class="vote-box"><h4>📊 Ovoz berish</h4>
+      <div class="vote-actions">
+        <div class="vote-btn vote-for ${voted?'selected':''}" onclick="${canVote?"castVote('"+p.id+"','for')":''}" style="${!canVote&&voted?'cursor:default':''}"><span class="v-icon">👍</span><span class="v-label">ROZIMAN</span><span class="v-count">${p.votesFor}</span></div>
+        <div class="vote-btn vote-against ${voted?'selected':''}" onclick="${canVote?"castVote('"+p.id+"','against')":''}" style="${!canVote&&voted?'cursor:default':''}"><span class="v-icon">👎</span><span class="v-label">ROZI EMASMAN</span><span class="v-count">${p.votesAgainst}</span></div>
+      </div>
+      <div class="vote-bar"><div class="vb-for" style="width:${pct}%"></div><div class="vb-against" style="width:${100-pct}%"></div></div>
+      <div class="vote-pct"><span style="color:var(--success)">${pct.toFixed(0)}%</span><span>${total} ta ovoz</span><span style="color:var(--danger)">${(100-pct).toFixed(0)}%</span></div>
+      ${voted?'<p class="vote-hint">✅ Siz ovoz bergansiz</p>':''}${!currentUser?'<p class="vote-hint">Ovoz berish uchun tizimga kiring</p>':''}</div>`;
+  }
+  if (p.status === 'accepted' || p.status === 'implemented') {
+    const fp = total > 0 ? pct : 0;
+    h += `<div class="vote-box" style="background:var(--success-light);border-color:#86efac;">
+      <h4 style="color:var(--success)">✅ Yakuniy natija</h4>
+      <div style="display:flex;justify-content:center;gap:32px;margin:10px 0;font-size:13px;"><span>👍 Rozi: <b>${p.votesFor}</b></span><span>👎 Qarshi: <b>${p.votesAgainst}</b></span></div>
+      ${total>0?`<div class="vote-bar"><div class="vb-for" style="width:${fp}%"></div><div class="vb-against" style="width:${100-fp}%"></div></div><div class="vote-pct"><span style="color:var(--success)">${fp.toFixed(0)}%</span><span>${total} ta ovoz</span><span style="color:var(--danger)">${(100-fp).toFixed(0)}%</span></div>`:''}</div>`;
+  }
+  if (p.status === 'rejected') h += '<div class="vote-box" style="background:var(--danger-light);border-color:#fca5a5;"><h4 style="color:var(--danger)">❌ Taklif rad etildi</h4></div>';
+  body.innerHTML = h;
+  showScreen('detail');
+}
+
+function castVote(id, dir) {
+  if (!currentUser) { toast('Avval tizimga kiring'); return; }
+  const props = DB.getProposals();
+  const p = props.find(x => x.id === id);
+  if (!p || p.status !== 'voting') return;
+  if (p.voters.includes(currentUser.id)) { toast('Siz allaqachon ovoz bergansiz'); return; }
+  p.voters.push(currentUser.id);
+  if (dir === 'for') p.votesFor++; else p.votesAgainst++;
+  DB.setProposals(props);
+  toast('Ovozingiz qabul qilindi!');
+  showDetail(id);
+}
+
+// ═══════════════════════════════════════════
+// MY PROPOSALS
+// ═══════════════════════════════════════════
+function renderMyProposals() {
+  if (!currentUser) return;
+  let props = DB.getProposals().filter(p => p.userId === currentUser.id);
+  props.sort((a, b) => b.createdAt - a.createdAt);
+  const list = document.getElementById('myProposalList');
+  if (props.length === 0) { list.innerHTML = '<div class="empty-state"><div class="icon">📄</div><p>Siz hali taklif bermagansiz</p></div>'; return; }
+  list.innerHTML = props.map(p => `<div class="proposal-card" onclick="showDetail('${p.id}')">
+    <div class="p-top"><div><div class="p-title">${esc(p.title)}</div><div class="p-cat">${catLabel(p.category)}</div></div><span class="badge badge-${p.status}">${statusLabel(p.status)}</span></div>
+    <div class="p-desc">${esc(p.desc)}</div>
+    <div class="p-bottom"><span class="p-date">${dateStr(p.createdAt)}</span>${p.status==='voting'?`<span class="p-stat">👍 ${p.votesFor} · 👎 ${p.votesAgainst}</span>`:''}</div>
+  </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function statusLabel(s) { return {review:"Ko'rib chiqilmoqda",voting:"Ovozga qo'yilgan",accepted:"Qabul qilingan",rejected:"Rad etilgan",implemented:"Amalga oshirilgan"}[s]||s; }
+function catLabel(c) { return {yollar:"Yo'llar va transport",yoritish:"Ko'cha yoritish",suv:"Suv ta'minoti",tozalik:"Sanitariya va tozalik",obodon:"Obodonlashtirish",maktab:"Ta'lim va sport",axlat:"Axlatxona / chiqindi",boshqa:"Boshqa"}[c]||c; }
+function dateStr(ts) { return ts ? new Date(ts).toLocaleDateString('uz-UZ',{day:'numeric',month:'short',year:'numeric'}) : '—'; }
+function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function toast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 3000); }
+
+function logoutUser() { DB.logout(); currentUser = null; document.getElementById('userBadge').classList.remove('active'); showScreen('login'); toast('Tizimdan chiqdingiz'); }
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+updateUI();
+if (currentUser) { renderDashboard(); showScreen('dashboard'); }
+document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && document.getElementById('screen-login').classList.contains('active')) handleRegister(); });
+</script>
+</body>
+</html>
