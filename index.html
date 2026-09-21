@@ -1,439 +1,403 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" data-theme="light">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Yangiboyev Shohjahon — IT Engineer · Finance | 3D Portfolio</title>
-<meta name="description" content="Yangiboyev Shohjahon — TDIU bitiruvchisi, IT muhandisi va moliyachi. Aloqabank / Xalq Bank amaliyoti, Fuqarolar Ovozi, Avtokredit kalkulyatori, Lingora. GPA 3.93." />
-<meta name="author" content="Shohjahon Yangiboyev" />
-<meta property="og:title" content="Yangiboyev Shohjahon — 3D Portfolio" />
-<meta property="og:description" content="IT Engineer · Finance Specialist. Realistik 3D minimalistik portfolio: loyihalar, sertifikatlar, ilmiy maqola." />
-<meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Shohjahon Yangiboyev","jobTitle":"IT Engineer, Finance Specialist","alumniOf":"Tashkent State University of Economics","email":"mailto:shakhluv@gmail.com","telephone":"+998993881161","url":"https://github.com/wax-yv","knowsAbout":["Python","JavaScript","Flutter","Banking systems","Tableau"]}
-</script>
+<title>Yangiboyev Shohjahon — IT muhandisi · Moliyachi</title>
+<meta name="description" content="Yangiboyev Shohjahon — TDIU bitiruvchisi, bank tizimlari amaliyotchisi. 7 loyiha, 4 xalqaro sertifikat." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230c3b2e'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='%23c9a227' font-family='Georgia'>S</text></svg>" />
 <style>
 :root{
-  --bg:#05070d; --bg2:#0a0f1c; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
-  --border:rgba(255,255,255,.09); --text:#eef2f7; --muted:#9aa7bd; --faint:#64748b;
-  --accent:#7fb0ff; --accent2:#d4af37; --green:#34d399; --radius:18px;
-  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --line-w:1px;
+}
+[data-theme="light"]{
+  --bg:#f5f0e3; --card:#fffdf6; --ink:#20302a; --mut:#64766d;
+  --green:#0c3b2e; --gold:#a07d1c; --gold-soft:#efe3bd;
+  --bd:#ddd2b4; --topbar:rgba(245,240,227,.88);
+  --node-line:rgba(12,59,46,.16); --node-dot:#0c3b2e; --node-hub:#a07d1c;
+  --shadow:0 3px 16px rgba(12,59,46,.07);
+}
+[data-theme="dark"]{
+  --bg:#07120d; --card:#0c1d15; --ink:#e9f2ec; --mut:#93a89b;
+  --green:#34d399; --gold:#d4af37; --gold-soft:#3a2f10;
+  --bd:#1d3a2d; --topbar:rgba(7,18,13,.88);
+  --node-line:rgba(52,211,153,.20); --node-dot:#34d399; --node-hub:#d4af37;
+  --shadow:0 3px 20px rgba(0,0,0,.4);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-#bg3d{position:fixed;inset:0;z-index:0}
-#vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 90% 70% at 50% 0%,transparent 40%,rgba(5,7,13,.55) 100%),linear-gradient(to bottom,rgba(5,7,13,.25),rgba(5,7,13,.88) 85%)}
-::selection{background:rgba(127,176,255,.3)}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(5,7,13,.62);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1120px;margin:0 auto;padding:0 20px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-weight:800;letter-spacing:.5px;font-size:15px;display:flex;align-items:center;gap:10px;color:var(--text)}
-.brand-mark{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#1a56db,#7fb0ff);font-size:15px;color:#fff;font-weight:800}
-.brand small{font-weight:500;color:var(--muted);font-size:11px;display:block;line-height:1.2}
-.nav-links{display:flex;gap:4px;align-items:center}
-.nav-links a{color:var(--muted);font-size:13px;font-weight:500;padding:8px 12px;border-radius:10px}
-.nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06);text-decoration:none}
-.lang{display:flex;gap:6px}
-.lang button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 11px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;font-family:var(--font);transition:.2s}
-.lang button:hover{border-color:var(--accent);color:var(--text)}
-.lang button.active{background:var(--text);color:#0a0a0a;border-color:var(--text)}
+body{background:var(--bg);color:var(--ink);font-family:'Times New Roman',Times,serif;line-height:1.75;transition:background .35s,color .35s}
+#net{position:fixed;inset:0;z-index:0}
+.sans{font-family:'Inter',system-ui,sans-serif}
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:50;background:var(--topbar);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+.topbar-in{max-width:980px;margin:0 auto;padding:0 22px;height:58px;display:flex;align-items:center;gap:14px}
+.brand{font-family:'Inter';font-weight:800;font-size:13px;letter-spacing:2px;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand b{color:var(--gold)}
+nav.links{display:flex;gap:2px;margin-left:8px}
+nav.links a{font-family:'Inter';font-size:12.5px;font-weight:600;color:var(--mut);text-decoration:none;padding:8px 11px;border-radius:8px}
+nav.links a:hover,nav.links a.act{color:var(--ink);background:var(--gold-soft)}
+.tools{margin-left:auto;display:flex;gap:6px;align-items:center}
+.icobtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--bd);background:transparent;cursor:pointer;font-size:16px;display:grid;place-items:center;color:var(--mut);transition:.2s}
+.icobtn:hover{border-color:var(--gold);transform:translateY(-1px)}
+.icobtn.on{background:var(--gold);border-color:var(--gold);color:#111}
+.langbtn{font-family:'Inter';font-size:11.5px;font-weight:800;border:1px solid var(--bd);background:transparent;color:var(--mut);border-radius:8px;padding:8px 10px;cursor:pointer}
+.langbtn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 /* LAYOUT */
-main{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:110px 20px 40px}
-section{margin-bottom:22px;scroll-margin-top:84px}
-.card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
-.card h2{font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.card h2::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:none}
-/* HERO */
-.hero{min-height:62vh;display:flex;flex-direction:column;justify-content:center;padding:20px 4px 30px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--green);background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);padding:7px 14px;border-radius:100px;width:fit-content;margin-bottom:20px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{font-size:clamp(38px,6.5vw,68px);font-weight:800;letter-spacing:-1.5px;line-height:1.04;margin-bottom:10px}
-.hero h1 .grad{background:linear-gradient(100deg,#7fb0ff,#d4af37);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-role{font-size:clamp(15px,2.4vw,20px);color:var(--muted);font-weight:500;margin-bottom:14px}
-.hero-about{max-width:680px;color:#c4cede;font-size:15px;margin-bottom:26px}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;border:1px solid transparent;font-family:var(--font);transition:.2s;text-decoration:none}
-.btn-primary{background:#eef2f7;color:#0a0a0a}
-.btn-primary:hover{background:#fff;transform:translateY(-1px);text-decoration:none}
-.btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border-color:var(--border)}
-.btn-ghost:hover{border-color:var(--accent);text-decoration:none}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:720px}
-.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
-.stat b{font-size:26px;font-weight:800;display:block;letter-spacing:-.5px}
-.stat span{font-size:12px;color:var(--muted)}
-.contact-line{margin-top:22px;font-family:var(--mono);font-size:12.5px;color:var(--faint);display:flex;gap:16px;flex-wrap:wrap}
-.contact-line a{color:var(--muted)}
-/* GRID / TAGS */
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tags{display:flex;flex-wrap:wrap;gap:9px}
-.tag{background:var(--card2);border:1px solid var(--border);padding:8px 14px;border-radius:10px;font-size:13px;transition:.2s}
-.tag:hover{border-color:var(--accent);transform:translateY(-1px)}
-.timeline-item{border-left:2px solid rgba(127,176,255,.3);padding:0 0 20px 20px;position:relative;margin-left:6px}
-.timeline-item:last-child{padding-bottom:0}
-.timeline-item::before{content:'';position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px rgba(127,176,255,.7)}
-.timeline-item strong{font-size:15px}
-.timeline-item .meta{font-size:12.5px;color:var(--accent);font-family:var(--mono);margin:3px 0 6px}
-.timeline-item p{font-size:14px;color:#c4cede}
-.proj{border:1px solid var(--border);border-radius:14px;padding:20px;background:rgba(255,255,255,.025);transition:.25s;margin-bottom:12px}
-.proj:hover{border-color:rgba(127,176,255,.45);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
-.proj:last-child{margin-bottom:0}
-.proj h3{font-size:16px;margin-bottom:6px}
-.proj p{font-size:13.5px;color:#c4cede;margin-bottom:10px}
-.proj .tech{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.proj .tech span{font-family:var(--mono);font-size:11px;background:rgba(127,176,255,.1);border:1px solid rgba(127,176,255,.25);color:var(--accent);padding:3px 9px;border-radius:6px}
-.proj-links{display:flex;gap:10px}
-.proj-links a{font-size:13px;font-weight:600}
-.cert{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);font-size:14px;flex-wrap:wrap}
-.cert:last-child{border:none;padding-bottom:0}
-.cert small{color:var(--muted);display:block;font-size:12px;margin-top:2px;font-family:var(--mono)}
-.cert a{font-size:12.5px;white-space:nowrap;align-self:center}
-.article-box{background:linear-gradient(135deg,rgba(212,175,55,.1),rgba(127,176,255,.07));border:1px solid rgba(212,175,55,.3);border-radius:14px;padding:20px}
-.article-box h3{font-size:15.5px;margin-bottom:6px}
-.article-box p{font-size:13.5px;color:#c4cede}
-.article-box .j{font-family:var(--mono);font-size:11.5px;color:var(--accent2);margin-top:10px}
-footer{position:relative;z-index:2;text-align:center;padding:30px 20px 46px;color:var(--faint);font-size:12.5px}
-footer .mono{font-family:var(--mono);font-size:11.5px;margin-top:6px}
-.hint{position:fixed;bottom:16px;right:18px;z-index:3;font-family:var(--mono);font-size:10.5px;color:var(--faint);background:rgba(5,7,13,.6);border:1px solid var(--border);padding:6px 12px;border-radius:8px;backdrop-filter:blur(8px)}
-@media(max-width:760px){
-  .nav-links{display:none}
-  .grid2{grid-template-columns:1fr}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .card{padding:20px}
-  main{padding-top:96px}
-  .hint{display:none}
-}
-@media(prefers-reduced-motion:reduce){
-  .reveal{opacity:1;transform:none;transition:none}
-  html{scroll-behavior:auto}
-}
+.wrap{max-width:980px;margin:0 auto;padding:0 22px 50px;position:relative;z-index:2}
+section{scroll-margin-top:74px}
+/* PROFILE HEADER (document style, not hero) */
+.profile{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;background:var(--card);border:1px solid var(--bd);border-top:4px solid var(--gold);border-radius:6px;padding:30px;margin:26px 0 20px;box-shadow:var(--shadow)}
+@media(max-width:640px){.profile{grid-template-columns:1fr}}
+.photo3d{perspective:800px}
+.photo3d .fr{border:3px solid var(--gold);border-radius:8px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.25);transition:transform .15s ease-out;background:#fff}
+.photo3d img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover}
+.photo3d figcaption{font-family:'Inter';font-size:10.5px;letter-spacing:1.5px;text-align:center;color:var(--mut);padding:8px 4px 10px;background:var(--card)}
+.profile h1{font-size:clamp(28px,4.5vw,40px);font-weight:400;line-height:1.15}
+.profile h1 b{font-weight:700}
+.profile .role{font-style:italic;font-size:17px;color:var(--gold);margin:4px 0 10px}
+.profile .sum{font-size:14.5px;color:var(--mut);max-width:600px}
+.contact-row{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0;font-size:14px}
+.contact-row a{color:var(--ink);text-decoration:none;font-weight:700}
+.contact-row a:hover{color:var(--gold)}
+.contact-row span{color:var(--mut)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.btn{font-family:'Inter';font-size:13px;font-weight:700;padding:11px 24px;border-radius:5px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.2s;border:1px solid transparent;cursor:pointer}
+.btn-p{background:var(--gold);color:#141414}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.btn-g{background:transparent;color:var(--ink);border-color:var(--bd)}
+.btn-g:hover{border-color:var(--gold);color:var(--gold)}
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--bd);border-top:3px solid var(--gold);border-radius:6px;padding:26px;margin-bottom:18px;box-shadow:var(--shadow)}
+.card h2{font-size:20px}
+.card .sub{font-style:italic;color:var(--mut);font-size:13px;margin-bottom:14px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:4px 22px}
+@media(max-width:640px){.kv{grid-template-columns:1fr}}
+.kv div{border-bottom:1px solid var(--bd);padding:8px 0;font-size:14.5px}
+.kv b{color:var(--green)}
+.job{margin-bottom:14px}
+.job:last-child{margin-bottom:0}
+.job b{font-size:15.5px;color:var(--green)}
+.job i{display:block;font-size:13px;color:var(--gold)}
+.job p{font-size:14px;color:var(--mut)}
+/* PROJECTS GRID */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:680px){.pgrid{grid-template-columns:1fr}}
+.proj{border:1px solid var(--bd);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:8px;transition:.2s;background:var(--card)}
+.proj:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:var(--shadow)}
+.proj h3{font-size:16px;color:var(--green)}
+.proj p{font-size:13.5px;color:var(--mut);flex:1}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tags span{font-family:'Inter';font-size:10.5px;font-weight:700;background:var(--gold-soft);color:var(--ink);padding:3px 9px;border-radius:20px}
+.plinks{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.plinks a{font-family:'Inter';font-size:12px;font-weight:700;padding:7px 15px;border-radius:5px;text-decoration:none;background:var(--green);color:#fff}
+[data-theme="dark"] .plinks a{background:var(--green);color:#06120d}
+.plinks a.ghost{background:transparent;color:var(--green);border:1px solid var(--green)}
+/* CERTS */
+.cert{border:1px solid var(--bd);border-radius:6px;padding:15px 17px;margin-bottom:12px}
+.cert:last-child{margin-bottom:0}
+.cert .row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.cert b{font-size:15.5px}
+.cert i{display:block;font-style:normal;font-size:12.5px;color:var(--mut);font-family:'Inter'}
+.verify{font-family:'Inter';font-size:12px;font-weight:700;color:var(--green);border:1px solid var(--green);padding:7px 15px;border-radius:5px;text-decoration:none;white-space:nowrap}
+.verify:hover{background:var(--green);color:#fff}
+[data-theme="dark"] .verify:hover{color:#06120d}
+.certfig{margin-top:12px}
+.certfig img{width:100%;max-width:380px;border-radius:6px;border:1px solid var(--bd);cursor:zoom-in}
+.certfig figcaption{font-size:12px;color:var(--mut);font-style:italic;margin-top:4px}
+/* SEAL */
+.article{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:6px;padding:20px 22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.a-label{font-family:'Inter';font-size:10.5px;font-weight:800;letter-spacing:2.5px;color:var(--gold);margin-bottom:6px}
+.a-title{font-size:19px;font-weight:700;line-height:1.5}
+.a-title::before{content:'\275D  ';color:var(--gold)}
+.a-meta{font-size:13px;color:var(--mut);font-style:italic;margin-top:6px}
+/* CONTACT */
+.contact-card{text-align:center}
+.contact-card .big{font-size:17px;margin:8px 0 2px}
+.contact-card .big a{color:var(--ink);font-weight:700;text-decoration:none}
+.contact-card .big a:hover{color:var(--gold)}
+.sub:empty{display:none}
+/* FOOTER / TOTOP */
+footer{text-align:center;font-size:12px;font-style:italic;color:var(--mut);padding:20px 0 34px;position:relative;z-index:2}
+#totop{position:fixed;right:20px;bottom:20px;z-index:60;width:44px;height:44px;border-radius:50%;border:1px solid var(--gold);background:var(--card);color:var(--gold);font-size:18px;cursor:pointer;display:none;box-shadow:var(--shadow)}
+#totop.show{display:block}
+/* LIGHTBOX */
+#lb{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:100%;max-height:92vh;border-radius:8px}
+/* REVEAL */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.rv.vis{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media(max-width:760px){nav.links{display:none}}
+@media print{#net,.tools,#totop,.btns{display:none}.profile,.card{box-shadow:none}}
 </style>
 </head>
 <body>
-<canvas id="bg3d"></canvas>
-<div id="vignette"></div>
+<canvas id="net"></canvas>
 
-<nav>
-  <div class="nav-inner">
-    <div class="brand"><span class="brand-mark">◈</span><span>SY<small id="brand-sub">IT · Finance</small></span></div>
-    <div class="nav-links">
-      <a href="#about" data-i18n="nav_about">Haqida</a>
-      <a href="#skills" data-i18n="nav_skills">Ko'nikmalar</a>
-      <a href="#exp" data-i18n="nav_exp">Tajriba</a>
-      <a href="#projects" data-i18n="nav_proj">Loyihalar</a>
-      <a href="#certs" data-i18n="nav_certs">Sertifikatlar</a>
-      <a href="#contact" data-i18n="nav_contact">Aloqa</a>
-    </div>
-    <div class="lang">
-      <button data-lang="uz" class="active">UZ</button>
-      <button data-lang="ru">RU</button>
-      <button data-lang="en">EN</button>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#profil">SY <b>◈</b> Portfolio</a>
+    <nav class="links">
+      <a href="#profil" data-nav="profil">Profil</a>
+      <a href="#tajriba" data-nav="tajriba">Tajriba</a>
+      <a href="#loyihalar" data-nav="loyihalar">Loyihalar</a>
+      <a href="#sertifikatlar" data-nav="sertifikatlar">Sertifikatlar</a>
+      <a href="#aloqa" data-nav="aloqa">Aloqa</a>
+    </nav>
+    <div class="tools">
+      <button class="icobtn on" id="btn-day" title="Day" aria-label="Day mode">☀</button>
+      <button class="icobtn" id="btn-night" title="Night" aria-label="Night mode">🌙</button>
+      <button class="langbtn on" data-l="uz">UZ</button>
+      <button class="langbtn" data-l="ru">RU</button>
+      <button class="langbtn" data-l="en">EN</button>
     </div>
   </div>
-</nav>
+</header>
 
-<main>
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-badge"><span class="dot"></span><span id="intro-line">Realistik 3D · Vercel-ready</span></div>
-    <h1><span id="hero-name">Yangiboyev Shohjahon</span><br /><span class="grad" id="hero-role">IT Engineer · Finance</span></h1>
-    <p class="hero-about" id="hero-about"></p>
-    <div class="cta">
-      <a class="btn btn-primary" href="#projects" id="cta-projects">▸ Loyihalarni ko'rish</a>
-      <a class="btn btn-ghost" href="#contact" id="cta-contact">✉ Bog'lanish</a>
-      <a class="btn btn-ghost" href="assets/cv.pdf" download id="cta-cv">⬇ CV (PDF)</a>
+<div class="wrap">
+  <!-- PROFILE -->
+  <section id="profil" class="profile rv">
+    <figure class="photo3d"><div class="fr" id="photofr">
+      <img src="assets/photo.jpg" alt="Yangiboyev Shohjahon — fotosurat" />
+      <figcaption>TDIU · 2026</figcaption>
+    </div></figure>
+    <div>
+      <h1 id="h-name">Yangiboyev <b>Shohjahon</b></h1>
+      <div class="role" id="h-role"></div>
+      <p class="sum" id="h-sum"></p>
+      <div class="btns">
+        <a class="btn btn-p" href="assets/cv.pdf" download id="b-cv">⬇ CV (PDF)</a>
+        <a class="btn btn-g" href="mailto:shakhluv@gmail.com" id="b-mail">✉ Xat yozish</a>
+      </div>
     </div>
-    <div class="stats" id="stats"></div>
-    <div class="contact-line" id="contact-line"></div>
-  </div>
+  </section>
 
-  <section id="about" class="reveal"><div class="card">
-    <h2 data-i18n="sec_about">Haqida</h2>
-    <p id="about-text" style="color:#c4cede;font-size:14.5px"></p>
-    <div id="langs" class="tags" style="margin-top:16px"></div>
-  </div></section>
+  <!-- SKILLS -->
+  <section class="card rv"><h2 id="c1t">Malaka</h2><div class="sub">TDIU · 2022–2026 · o‘rtacha ball 77 · GPA 3.93</div><div class="kv" id="t-sk"></div></section>
 
-  <section id="skills" class="reveal"><div class="card">
-    <h2 data-i18n="sec_skills">Ko'nikmalar</h2>
-    <div id="skills" class="tags"></div>
-  </div></section>
+  <!-- EXPERIENCE -->
+  <section class="card rv" id="tajriba"><h2 id="c2t">Xizmat yo'li</h2><div class="sub">Aloqabank · Xalq bank</div><div id="t-exp"></div></section>
 
-  <section id="exp" class="reveal"><div class="grid2">
-    <div class="card"><h2 data-i18n="sec_exp">Tajriba</h2><div id="experience"></div></div>
-    <div class="card"><h2 data-i18n="sec_edu">Ta'lim</h2><div id="education"></div>
-      <div style="margin-top:18px"><h2 data-i18n="sec_article" style="margin-bottom:12px">Ilmiy maqola</h2><div class="article-box" id="article"></div></div>
+  <!-- ARTICLE -->
+  <div class="article rv"><div class="a-label" id="a-label"></div><div class="a-title" id="a-title"></div><div class="a-meta" id="a-meta"></div></div>
+
+  <!-- PROJECTS -->
+  <section class="card rv" id="loyihalar"><h2 id="c3t">Amaliy ishlar</h2><div class="sub" id="c3s">Mualliflik loyihalari va demo-konseptlar</div><div class="pgrid" id="t-pr"></div></section>
+
+  <!-- CERTS -->
+  <section class="card rv" id="sertifikatlar"><h2 id="c4t">Guvohnomalar</h2><div class="sub" id="c4s">Har biri tekshiriladi — havolani bosing</div><div id="t-ct"></div></section>
+
+  <!-- CONTACT -->
+  <section class="card rv contact-card" id="aloqa"><h2 id="c5t">Aloqa</h2>
+    <div class="sub" id="c5s">Bank, davlat muassasasi yoki IT jamoa — 24 soat ichida javob</div>
+    <p class="big">☎ <a href="tel:+998993881161">+998 99 388 11 61</a> · <a href="tel:+998870341161">+998 87 034 11 61</a></p>
+    <p class="big">✉ <a href="mailto:shakhluv@gmail.com">shakhluv@gmail.com</a></p>
+    <div class="btns" style="justify-content:center;margin-top:14px">
+      <a class="btn btn-p" href="assets/cv.pdf" download id="b-cv2">⬇ CV (PDF)</a>
+      <a class="btn btn-g" href="https://github.com/wax-yv" target="_blank" rel="noopener">⬢ GitHub</a>
     </div>
-  </div></section>
+  </section>
 
-  <section id="projects" class="reveal"><div class="card">
-    <h2 data-i18n="sec_projects">Loyihalar</h2>
-    <div id="projects-list"></div>
-  </div></section>
+  <footer>© 2026 Yangiboyev Shohjahon · localhost:8005</footer>
+</div>
 
-  <section id="certs" class="reveal"><div class="card">
-    <h2 data-i18n="sec_certs">Sertifikatlar</h2>
-    <div id="certs"></div>
-  </div></section>
+<button id="totop" title="Yuqoriga" aria-label="Back to top">↑</button>
+<div id="lb"><img id="lbimg" src="" alt="Sertifikat" /></div>
 
-  <section id="contact" class="reveal"><div class="card">
-    <h2 data-i18n="sec_contact">Aloqa</h2>
-    <p style="color:#c4cede;font-size:14.5px;margin-bottom:16px" id="contact-text"></p>
-    <div class="cta" style="margin:0">
-      <a class="btn btn-primary" id="btn-email" href="mailto:shakhluv@gmail.com">✉ Email yozish</a>
-      <a class="btn btn-ghost" id="btn-phone" href="tel:+998993881161">☎ +998 99 388 11 61</a>
-      <a class="btn btn-ghost" href="https://github.com/wax-yv" target="_blank" rel="noopener">⬢ GitHub</a>
-    </div>
-  </div></section>
-</main>
-
-<footer>
-  <div>© 2026 Yangiboyev Shohjahon · <span id="foot-loc">Toshkent, O'zbekiston</span></div>
-  <div class="mono">Three.js · Static · Vercel-ready · UZ/RU/EN</div>
-</footer>
-<div class="hint">drag to orbit · scroll to zoom</div>
-
-<script type="importmap">
-{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
-</script>
-<script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-/* ---------- 3D SCENE ---------- */
-const canvas = document.getElementById('bg3d');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.setSize(innerWidth, innerHeight);
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x05070d);
-scene.fog = new THREE.Fog(0x05070d, 12, 32);
-
-const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 100);
-camera.position.set(4.2, 2.2, 7);
-
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.06;
-controls.minDistance = 3.5;
-controls.maxDistance = 13;
-controls.enablePan = false;
-controls.maxPolarAngle = Math.PI * 0.62;
-
-scene.add(new THREE.HemisphereLight(0xbdd2ff, 0x0a0a12, 0.85));
-const key = new THREE.DirectionalLight(0xffffff, 1.6);
-key.position.set(5, 9, 6);
-key.castShadow = true;
-key.shadow.mapSize.set(2048, 2048);
-key.shadow.camera.left = -8; key.shadow.camera.right = 8;
-key.shadow.camera.top = 8; key.shadow.camera.bottom = -8;
-scene.add(key);
-const rim = new THREE.PointLight(0x7fb0ff, 22, 30);
-rim.position.set(-6, 3, -4);
-scene.add(rim);
-const gold = new THREE.PointLight(0xd4af37, 12, 25);
-gold.position.set(5, -1, -5);
-scene.add(gold);
-
-const ground = new THREE.Mesh(
-  new THREE.PlaneGeometry(60, 60),
-  new THREE.MeshStandardMaterial({ color: 0x070b14, roughness: 0.95, metalness: 0 })
-);
-ground.rotation.x = -Math.PI / 2;
-ground.position.y = -2.2;
-ground.receiveShadow = true;
-scene.add(ground);
-const grid = new THREE.GridHelper(60, 60, 0x1a2b4a, 0x0d1626);
-grid.position.y = -2.19;
-grid.material.transparent = true;
-grid.material.opacity = 0.5;
-scene.add(grid);
-
-// Hero object: torus knot (glass/metal)
-const knot = new THREE.Mesh(
-  new THREE.TorusKnotGeometry(1.05, 0.3, 280, 48),
-  new THREE.MeshPhysicalMaterial({
-    color: 0x8ab4f8, metalness: 0.55, roughness: 0.22,
-    clearcoat: 0.8, clearcoatRoughness: 0.12,
-    envMapIntensity: 1.3, emissive: 0x0a1a3a, emissiveIntensity: 0.35
-  })
-);
-knot.castShadow = true;
-knot.position.set(1.6, 0.3, 0);
-scene.add(knot);
-
-const cage = new THREE.Mesh(
-  new THREE.IcosahedronGeometry(2.1, 1),
-  new THREE.MeshBasicMaterial({ color: 0x2a4a7a, wireframe: true, transparent: true, opacity: 0.35 })
-);
-cage.position.copy(knot.position);
-scene.add(cage);
-
-// Floating shards
-const shards = [];
-const shardGeo = new THREE.OctahedronGeometry(0.14);
-const shardMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.3, emissive: 0x3a2c00, emissiveIntensity: 0.4 });
-for (let i = 0; i < 26; i++) {
-  const m = new THREE.Mesh(shardGeo, shardMat.clone());
-  m.position.set((Math.random() - 0.5) * 14, Math.random() * 5 - 2, (Math.random() - 0.5) * 10 - 1);
-  m.rotation.set(Math.random() * 3, Math.random() * 3, 0);
-  m.castShadow = true;
-  m.userData = { s: 0.4 + Math.random() * 0.9, o: Math.random() * Math.PI * 2, y: m.position.y };
-  shards.push(m); scene.add(m);
+<script>
+/* ---------- PARTICLE NETWORK ---------- */
+const cv = document.getElementById('net'), cx = cv.getContext('2d');
+let W, H, nodes = [], ang = 0, mouse = {x:-9999, y:-9999};
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function themeColors(){
+  const dark = document.documentElement.dataset.theme === 'dark';
+  return dark
+    ? {line:[52,211,153], dot:'#34d399', hub:'#d4af37'}
+    : {line:[12,59,46], dot:'#0c3b2e', hub:'#a07d1c'};
 }
-
-// Starfield
-{
-  const N = 1300, pos = new Float32Array(N * 3);
-  for (let i = 0; i < N; i++) {
-    pos[i * 3] = (Math.random() - 0.5) * 50;
-    pos[i * 3 + 1] = Math.random() * 22 - 4;
-    pos[i * 3 + 2] = (Math.random() - 0.5) * 40 - 5;
+function build(){
+  W = cv.width = innerWidth; H = cv.height = innerHeight;
+  const n = Math.min(95, Math.floor(W * H / 16000));
+  nodes = [];
+  for(let i=0;i<n;i++){
+    nodes.push({x:Math.random()*W, y:Math.random()*H,
+      vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35,
+      r:Math.random()*1.6+.8, hub:i%16===0});
   }
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  scene.add(new THREE.Points(g, new THREE.PointsMaterial({ color: 0x9db8e8, size: 0.035, transparent: true, opacity: 0.75 })));
 }
-
-let mx = 0, my = 0;
-addEventListener('pointermove', e => {
-  mx = (e.clientX / innerWidth - 0.5);
-  my = (e.clientY / innerHeight - 0.5);
-}, { passive: true });
-
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const clock = new THREE.Clock();
-function animate() {
-  requestAnimationFrame(animate);
-  const t = clock.getElapsedTime();
-  if (!reduceMotion) {
-    knot.rotation.y += 0.0032;
-    knot.rotation.x = Math.sin(t * 0.25) * 0.12;
-    knot.position.y = 0.3 + Math.sin(t * 0.7) * 0.12;
-    cage.rotation.y -= 0.0011;
-    cage.rotation.z = Math.sin(t * 0.15) * 0.08;
-    cage.position.y = knot.position.y;
-    for (const s of shards) {
-      s.rotation.x += 0.004 * s.userData.s;
-      s.rotation.y += 0.006 * s.userData.s;
-      s.position.y = s.userData.y + Math.sin(t * s.userData.s + s.userData.o) * 0.35;
+build(); addEventListener('resize', build);
+addEventListener('pointermove', e=>{mouse.x=e.clientX; mouse.y=e.clientY;}, {passive:true});
+function frame(){
+  const C = themeColors();
+  cx.clearRect(0,0,W,H);
+  const ox = W/2, oy = H/2, ca = Math.cos(ang), sa = Math.sin(ang);
+  const P = nodes.map(n=>{
+    let x = n.x + n.vx, y = n.y + n.vy;
+    if(x<0) x+=W; if(x>W) x-=W; if(y<0) y+=H; if(y>H) y-=H;
+    n.x=x; n.y=y;
+    // mouse repel
+    const dx=x-mouse.x, dy=y-mouse.y, d=Math.hypot(dx,dy);
+    let rx=x, ry=y;
+    if(d<130 && d>1){rx=x+dx/d*14; ry=y+dy/d*14;}
+    // slow rotation around center
+    const px=rx-ox, py=ry-oy;
+    return {x:ox+px*ca-py*sa, y:oy+px*sa+py*ca, r:n.hub?n.r+1.6:n.r, hub:n.hub};
+  });
+  const R = 140;
+  for(let i=0;i<P.length;i++) for(let j=i+1;j<P.length;j++){
+    const dx=P[i].x-P[j].x, dy=P[i].y-P[j].y, d=Math.hypot(dx,dy);
+    if(d<R){
+      cx.strokeStyle=`rgba(${C.line[0]},${C.line[1]},${C.line[2]},${(1-d/R)*.55})`;
+      cx.lineWidth = (P[i].hub||P[j].hub) ? 1.3 : .8;
+      cx.beginPath(); cx.moveTo(P[i].x,P[i].y); cx.lineTo(P[j].x,P[j].y); cx.stroke();
     }
   }
-  // parallax + scroll drift
-  camera.position.x += ((4.2 + mx * 1.4) - camera.position.x) * 0.03;
-  camera.position.y += ((2.2 - my * 0.9 - scrollY * 0.0009) - camera.position.y) * 0.03;
-  controls.update();
-  renderer.render(scene, camera);
-}
-animate();
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
-});
-
-/* ---------- I18N + CONTENT ---------- */
-const STR = {
-  uz: { nav_about: 'Haqida', nav_skills: "Ko'nikmalar", nav_exp: 'Tajriba', nav_proj: 'Loyihalar', nav_certs: 'Sertifikatlar', nav_contact: 'Aloqa', sec_about: 'Haqida', sec_skills: "Ko'nikmalar", sec_exp: 'Tajriba', sec_edu: "Ta'lim", sec_article: 'Ilmiy maqola', sec_projects: 'Loyihalar', sec_certs: 'Sertifikatlar', sec_contact: 'Aloqa', cta_p: '▸ Loyihalarni ko‘rish', cta_c: '✉ Bog‘lanish', demo: 'Jonli demo', admin: 'Admin panel', contact_t: 'Bank, davlat muassasasi yoki IT jamoada ishlashga tayyorman. Email yoki telefon orqali bog‘laning — 24 soat ichida javob beraman.' },
-  ru: { nav_about: 'О себе', nav_skills: 'Навыки', nav_exp: 'Опыт', nav_proj: 'Проекты', nav_certs: 'Сертификаты', nav_contact: 'Контакты', sec_about: 'О себе', sec_skills: 'Навыки', sec_exp: 'Опыт', sec_edu: 'Образование', sec_article: 'Научная статья', sec_projects: 'Проекты', sec_certs: 'Сертификаты', sec_contact: 'Контакты', cta_p: '▸ Смотреть проекты', cta_c: '✉ Связаться', demo: 'Живое демо', admin: 'Админ-панель', contact_t: 'Открыт к работе в банке, госструктуре или IT-команде. Напишите на email или позвоните — отвечу в течение 24 часов.' },
-  en: { nav_about: 'About', nav_skills: 'Skills', nav_exp: 'Experience', nav_proj: 'Projects', nav_certs: 'Certificates', nav_contact: 'Contact', sec_about: 'About', sec_skills: 'Skills', sec_exp: 'Experience', sec_edu: 'Education', sec_article: 'Journal paper', sec_projects: 'Projects', sec_certs: 'Certificates', sec_contact: 'Contact', cta_p: '▸ View projects', cta_c: '✉ Get in touch', demo: 'Live demo', admin: 'Admin panel', contact_t: 'Open to roles in banking, public sector or IT teams. Email or call — I reply within 24 hours.' }
-};
-
-let DATA = null;
-let LANG = localStorage.getItem('pf-lang') || 'uz';
-
-async function load() {
-  const r = await fetch('data.json', { cache: 'no-cache' });
-  DATA = await r.json();
-  applyLang(LANG);
-}
-function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
-
-function applyLang(l) {
-  LANG = l;
-  localStorage.setItem('pf-lang', l);
-  document.documentElement.lang = l;
-  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
-  const t = STR[l];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const k = el.dataset.i18n;
-    if (t[k]) el.textContent = t[k];
+  P.forEach(p=>{
+    cx.fillStyle = p.hub ? C.hub : C.dot;
+    cx.beginPath(); cx.arc(p.x,p.y,p.r,0,7); cx.fill();
   });
-  if (!DATA) return;
-  document.getElementById('intro-line').textContent = DATA.intro[l];
-  document.getElementById('hero-name').textContent = DATA.name[l];
-  document.getElementById('hero-role').textContent = DATA.title[l];
-  document.getElementById('hero-about').textContent = DATA.about[l].split('.')[0] + '.';
-  document.getElementById('about-text').textContent = DATA.about[l];
-  document.getElementById('cta-projects').textContent = t.cta_p;
-  document.getElementById('cta-contact').textContent = t.cta_c;
-  document.getElementById('brand-sub').textContent = DATA.title[l].split('·')[0].trim().slice(0, 22);
-  document.getElementById('foot-loc').textContent = DATA.contact.location[l];
-  document.getElementById('contact-text').textContent = t.contact_t;
-
-  const c = DATA.contact;
-  document.getElementById('contact-line').innerHTML =
-    `<span>✉ <a href="mailto:${c.email}">${c.email}</a></span><span>☎ <a href="tel:+998993881161">${c.phone}</a></span><span>⬢ <a href="https://${c.github}" target="_blank" rel="noopener">${c.github}</a></span><span>◈ ${esc(c.location[l])}</span>`;
-
-  document.getElementById('stats').innerHTML = DATA.stats.map(s =>
-    `<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label[l])}</span></div>`).join('');
-
-  document.getElementById('langs').innerHTML = DATA.languages.map(x =>
-    `<span class="tag">🌐 ${esc(x.name[l])} · <b>${esc(x.level)}</b></span>`).join('');
-
-  document.getElementById('skills').innerHTML = DATA.skills[l].map(s =>
-    `<span class="tag">${esc(s)}</span>`).join('');
-
-  document.getElementById('experience').innerHTML = DATA.experience.map(e =>
-    `<div class="timeline-item"><strong>${esc(e.role[l])}</strong><div class="meta">${esc(e.company[l])} · ${esc(e.period[l])}</div><p>${esc(e.desc[l])}</p></div>`).join('');
-
-  document.getElementById('education').innerHTML = DATA.education.map(e =>
-    `<div class="timeline-item"><strong>${esc(e.degree[l])}</strong><div class="meta">${esc(e.university[l])} · ${esc(e.period)} · GPA ${esc(e.gpa)}</div></div>`).join('');
-
-  const a = DATA.article;
-  document.getElementById('article').innerHTML =
-    `<h3>📄 ${esc(a.title)}</h3><p>${esc(a.desc[l])}</p><div class="j">${esc(a.journal)} · ${esc(a.advisor)}</div>`;
-
-  document.getElementById('projects-list').innerHTML = DATA.projects.map(p => {
-    const links = [];
-    if (p.link) links.push(`<a href="${p.link}" target="_blank" rel="noopener">▸ ${t.demo}</a>`);
-    if (p.admin) links.push(`<a href="${p.admin}" target="_blank" rel="noopener">⚙ ${t.admin}</a>`);
-    return `<div class="proj"><h3>${esc(p.title[l])}</h3><p>${esc(p.desc[l])}</p>
-      <div class="tech">${(p.tech || []).map(x => `<span>${esc(x)}</span>`).join('')}</div>
-      <div class="proj-links">${links.join('')}</div></div>`;
-  }).join('');
-
-  document.getElementById('certs').innerHTML = DATA.certificates.map(x =>
-    `<div class="cert"><div><strong>${esc(x.name)}</strong><small>${esc(x.issuer)} · ${esc(x.date)}</small></div>
-    ${String(x.id).startsWith('coursera') ? `<a href="https://${esc(x.id)}" target="_blank" rel="noopener">Verify ↗</a>` : `<small style="align-self:center">${esc(x.id)}</small>`}</div>`).join('');
+  if(!reduced){ ang += .00045; requestAnimationFrame(frame); }
 }
-document.querySelectorAll('.lang button').forEach(b => b.onclick = () => applyLang(b.dataset.lang));
+frame();
+// repaint on theme change (static if reduced motion)
+new MutationObserver(()=>{ if(reduced) frame(); }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
-/* reveal on scroll */
-const io = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-}), { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+/* ---------- THEME (icons only) ---------- */
+const bd = document.getElementById('btn-day'), bn = document.getElementById('btn-night');
+function setTheme(t){
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem('v5-theme', t);
+  bd.classList.toggle('on', t==='light'); bn.classList.toggle('on', t==='dark');
+}
+bd.onclick = ()=>setTheme('light'); bn.onclick = ()=>setTheme('dark');
+setTheme(localStorage.getItem('v5-theme') || 'light');
 
-load().catch(() => {
-  document.getElementById('hero-about').textContent = 'data.json yuklanmadi — Vercel da файл yonida ekanini tekshiring.';
+/* ---------- PHOTO TILT ---------- */
+const fr = document.getElementById('photofr');
+fr.parentElement.addEventListener('pointermove', e=>{
+  if(reduced) return;
+  const r = fr.getBoundingClientRect();
+  const x = (e.clientX-r.left)/r.width-.5, y = (e.clientY-r.top)/r.height-.5;
+  fr.style.transform = `rotateY(${x*10}deg) rotateX(${-y*10}deg)`;
 });
+fr.parentElement.addEventListener('pointerleave', ()=>fr.style.transform='none');
+
+/* ---------- I18N ---------- */
+const D = {
+uz:{role:"Axborot texnologiyalari muhandisi · Moliyachi",
+sum:"Toshkent Davlat Iqtisodiyot universiteti bitiruvchisi. Aloqabank va Xalq bankida bank tizimlari (Colvir, KATM, MyID, OneID) bilan ishlaganman. Hujjat tahlilidan BI-dashboardgacha — har bir loyiha real bank muammosiga javob.",
+nav:["Profil","Tajriba","Loyihalar","Sertifikatlar","Aloqa"],c1:"Malaka",c2:"Xizmat yo'li",c3:"Amaliy ishlar",c3s:"Mualliflik loyihalari va demo-konseptlar",c4:"Guvohnomalar",c4s:"Har biri tekshiriladi — havolani bosing",c5:"Aloqa",c5s:"",cv:"⬇ CV (PDF)",mail:"✉ Xat yozish",verify:"Tekshirish ↗",certimg:"Sertifikat rasmi ↗",certpdf:"Asl PDF ↗",
+sk:[["Ta'lim","TDIU, 2022–2026"],["Soha","IT + Moliya-bank"],["Tizimlar","Colvir · KATM · MyID · OneID"],["Kod","Python · JS · Flutter"],["Tahlil","Tableau Public"],["Tillar","EN B1 · RU A2"]],
+ex:[["Amaliyotchi — bank tizimlari","Aloqabank / Xalq bank · 2024","Colvir, KATM, MyID, OneID bilan ishlash."],["Kredit undiruvchi amaliyotchi","Bank · 2024","Muddati o'tgan kreditlar bilan ishlash."],["Mustaqil dasturchi","2024–2026","2 veb-vosita, 1 Flutter ilova, 5 demo-konsept."],["Talaba — TDIU","2022–2026 · o‘rtacha ball 77 · GPA 3.93","MHXS/IFRS ilmiy maqola."]],
+al:"Ilmiy maqola",at:"Milliy va xalqaro moliyaviy hisobotlarning farqi",am:"Modern education and development jurnali · 05.05.2024 · 81–85-betlar · Ilmiy rahbar: Obidov Rahmonali",
+pr:[
+ ["Fuqarolar Ovozi","MFY takliflari, ovoz berish, holat kuzatuvi.",["HTML","CSS","JS"],"projects/fuqarolar-ovoz.html","projects/fuqarolar-ovoz-admin.html"],
+ ["Avtokredit kalkulyatori","Annuitet hisob, imtiyozli davr, grafik, shartnoma.",["JS","Moliya"],"projects/avtokredit-kalkulyator.html",""],
+ ["HujjatAI — aqlli hujjat tahlili","Shartnomadagi xavfli bandlarni topib beradi.",["JS","AI"],"projects/hujjatai-demo.html",""],
+ ["DataLens — ma'lumotlar paneli","CSV jadvaldan chiroyli grafik va hisobot chiqaradi.",["JS","Tahlil"],"projects/datalens-demo.html",""],
+ ["SkillProof — bilimni isbotlash","Topshiriq orqali ko'nikmangizni tekshiradi.",["JS","Ta'lim"],"projects/skillproof-demo.html",""],
+ ["Yo'lXaritam — bank yo'riqnomasi","Avtokredit uchun kerakli hujjatlar ro'yxati.",["JS","Bank"],"projects/yolxaritam-demo.html",""]],
+ct:[
+ ["Introduction to Generative AI","Google Cloud · 06.03.2025","https://coursera.org/verify/VT7M4QIZ2FPR",""],
+ ["Data Science Math Skills","Duke University · 06.03.2025","https://coursera.org/verify/VFWYZ205UXZT",""],
+ ["Tableau Public for Project Management","Coursera · 16.03.2024","https://coursera.org/verify/8ASYAYREMR3Q",""],
+ ["No-Code videokurs (oltin)","Yoshlar ishlari agentligi + Ustoz AI + TuronBank · 25.10.2024 · ID 0000000051","","ustoz"] ]},
+ru:{role:"Инженер ИТ · Финансист",
+sum:"Выпускник ТДИУ. Работал с банковскими системами (Colvir, KATM, MyID, OneID) в Aloqabank и Xalq Bank. От анализа документов до BI-дэшборда — каждый проект отвечает на реальную банковскую задачу.",
+nav:["Профиль","Опыт","Проекты","Сертификаты","Контакты"],c1:"Квалификация",c2:"Опыт",c3:"Работы",c3s:"Авторские проекты и демо-концепты",c4:"Сертификаты",c4s:"Каждый проверяется — нажмите ссылку",c5:"Контакты",c5s:"Банк, госструктура или IT-команда — ответ за 24 часа",cv:"⬇ CV (PDF)",mail:"✉ Написать",verify:"Проверить ↗",certimg:"Фото сертификата ↗",certpdf:"Оригинал PDF ↗",
+sk:[["Образование","ТДИУ, 2022–2026"],["Сфера","ИТ + Финансы"],["Системы","Colvir · KATM · MyID · OneID"],["Код","Python · JS · Flutter"],["Анализ","Tableau Public"],["Языки","EN B1 · RU A2"]],
+ex:[["Стажёр — банковские системы","Aloqabank / Xalq Bank · 2024","Работа с Colvir, KATM, MyID, OneID."],["Стажёр по взысканию","Банк · 2024","Работа с просроченными кредитами."],["Разработчик","2024–2026","2 веб-инструмента, 1 Flutter-приложение, 5 демо."],["Студент — ТДИУ","2022–2026 · средний балл 77 · GPA 3.93","Статья МСФО."]],
+al:"Научная статья",at:"Разница национальной и международной финансовой отчётности",am:"Журнал Modern education and development · 05.05.2024 · стр. 81–85 · Руководитель: Obidov Rahmonali",
+pr:[
+ ["Голос граждан","Предложения, голосование, статусы.",["HTML","CSS","JS"],"projects/fuqarolar-ovoz.html","projects/fuqarolar-ovoz-admin.html"],
+ ["Автокредитный калькулятор","Аннуитет, льготы, график, договор.",["JS","Финансы"],"projects/avtokredit-kalkulyator.html",""],
+ ["HujjatAI","Анализ рисков договора: 7 вкладок.",["JS","AI"],"projects/hujjatai-demo.html",""],
+ ["DataLens","BI из CSV: KPI, фильтры, отчёт.",["JS","BI"],"projects/datalens-demo.html",""],
+ ["SkillProof","Концепт проверки навыков.",["JS","HR-tech"],"projects/skillproof-demo.html",""],
+ ["Yo'lXaritam","Чек-лист процедур: автокредит.",["JS","Банк"],"projects/yolxaritam-demo.html",""]],
+ct:[
+ ["Introduction to Generative AI","Google Cloud · 06.03.2025","https://coursera.org/verify/VT7M4QIZ2FPR",""],
+ ["Data Science Math Skills","Duke University · 06.03.2025","https://coursera.org/verify/VFWYZ205UXZT",""],
+ ["Tableau Public for Project Management","Coursera · 16.03.2024","https://coursera.org/verify/8ASYAYREMR3Q",""],
+ ["Видеокурс No-Code (золото)","Агентство + Ustoz AI + TuronBank · 25.10.2024 · ID 0000000051","","ustoz"] ]},
+en:{role:"IT Engineer · Finance Specialist",
+sum:"TSUE graduate. Worked with banking systems (Colvir, KATM, MyID, OneID) at Aloqabank and Xalq Bank. From document analysis to BI dashboards — every project answers a real banking need.",
+nav:["Profile","Experience","Projects","Certificates","Contact"],c1:"Qualification",c2:"Experience",c3:"Work",c3s:"Original projects and demo concepts",c4:"Certificates",c4s:"Each is verifiable — click the link",c5:"Contact",c5s:"Bank, public institution or IT team — reply within 24 hours",cv:"⬇ CV (PDF)",mail:"✉ Write me",verify:"Verify ↗",certimg:"Certificate photo ↗",certpdf:"Original PDF ↗",
+sk:[["Education","TSUE, 2022–2026"],["Field","IT + Finance"],["Systems","Colvir · KATM · MyID · OneID"],["Code","Python · JS · Flutter"],["Analytics","Tableau Public"],["Languages","EN B1 · RU A2"]],
+ex:[["Intern — banking systems","Aloqabank / Xalq Bank · 2024","Hands-on Colvir, KATM, MyID, OneID."],["Collection intern","Bank · 2024","Overdue-loan practice."],["Developer","2024–2026","2 web tools, 1 Flutter app, 5 demos."],["Student — TSUE","2022–2026 · average score 77 · GPA 3.93","IFRS journal paper."]],
+al:"Journal paper",at:"National vs international financial reporting",am:"Modern education and development journal · 05.05.2024 · pp. 81–85 · Advisor: Obidov Rahmonali",
+pr:[
+ ["Citizens Voice","Proposals, voting, status tracking.",["HTML","CSS","JS"],"projects/fuqarolar-ovoz.html","projects/fuqarolar-ovoz-admin.html"],
+ ["Auto-loan calculator","Annuity, grace period, schedule, contract.",["JS","Finance"],"projects/avtokredit-kalkulyator.html",""],
+ ["HujjatAI","Contract risk analysis: 7 tabs.",["JS","AI"],"projects/hujjatai-demo.html",""],
+ ["DataLens","BI from CSV: KPIs, filters, report.",["JS","BI"],"projects/datalens-demo.html",""],
+ ["SkillProof","Skill-proof concept.",["JS","HR-tech"],"projects/skillproof-demo.html",""],
+ ["Yo'lXaritam","Procedure checklist: auto-loan.",["JS","Bank"],"projects/yolxaritam-demo.html",""]],
+ct:[
+ ["Introduction to Generative AI","Google Cloud · Mar 6, 2025","https://coursera.org/verify/VT7M4QIZ2FPR",""],
+ ["Data Science Math Skills","Duke University · Mar 6, 2025","https://coursera.org/verify/VFWYZ205UXZT",""],
+ ["Tableau Public for Project Management","Coursera · Mar 16, 2024","https://coursera.org/verify/8ASYAYREMR3Q",""],
+ ["No-Code video course (gold)","Youth Agency + Ustoz AI + TuronBank · Oct 25, 2024 · ID 0000000051","","ustoz"] ]}
+};
+let LANG = localStorage.getItem('v5-lang') || 'uz';
+function set(l){
+  LANG = l; localStorage.setItem('v5-lang', l);
+  document.documentElement.lang = l;
+  const d = D[l];
+  document.querySelectorAll('.langbtn').forEach(b=>b.classList.toggle('on', b.dataset.l===l));
+  document.querySelectorAll('nav.links a').forEach((a,i)=>a.textContent=d.nav[i]);
+  document.getElementById('h-role').textContent = d.role;
+  document.getElementById('h-sum').textContent = d.sum;
+  document.getElementById('c1t').textContent = d.c1;
+  document.getElementById('c2t').textContent = d.c2;
+  document.getElementById('c3t').textContent = d.c3;
+  document.getElementById('c3s').textContent = d.c3s;
+  document.getElementById('c4t').textContent = d.c4;
+  document.getElementById('c4s').textContent = d.c4s;
+  document.getElementById('c5t').textContent = d.c5;
+  document.getElementById('c5s').textContent = d.c5s;
+  document.getElementById('b-cv').textContent = d.cv;
+  document.getElementById('b-cv2').textContent = d.cv;
+  document.getElementById('b-mail').textContent = d.mail;
+  document.getElementById('t-sk').innerHTML = d.sk.map(x=>`<div><b>${x[0]}:</b> ${x[1]}</div>`).join('');
+  document.getElementById('t-exp').innerHTML = d.ex.map(x=>`<div class="job"><b>${x[0]}</b><i>${x[1]}</i><p>${x[2]}</p></div>`).join('');
+  document.getElementById('a-label').textContent = d.al;
+  document.getElementById('a-title').textContent = d.at;
+  document.getElementById('a-meta').textContent = d.am;
+  document.getElementById('t-pr').innerHTML = d.pr.map(p=>{
+    let links = '';
+    if(p[3]) links += `<a href="${p[3]}" target="_blank" rel="noopener">${p[3].startsWith('http')?'Repo ↗':'Ochish →'}</a>`;
+    if(p[4]) links += `<a class="ghost" href="${p[4]}" target="_blank" rel="noopener">Admin</a>`;
+    return `<div class="proj"><h3>${p[0]}</h3><p>${p[1]}</p><div class="tags">${p[2].map(t=>`<span>${t}</span>`).join('')}</div><div class="plinks">${links}</div></div>`;
+  }).join('');
+  document.getElementById('t-ct').innerHTML = d.ct.map(c=>{
+    let extra = '';
+    if(c[2]) extra = `<a class="verify" href="${c[2]}" target="_blank" rel="noopener">${d.verify}</a>`;
+    else if(c[3]==='ustoz') extra = `<span style="display:flex;gap:8px;flex-wrap:wrap"><a class="verify" href="assets/ustoz-ai.pdf" target="_blank" rel="noopener">${d.certpdf}</a></span>`;
+    const fig = c[3]==='ustoz'
+      ? `<figure class="certfig"><img src="assets/ustoz-ai.jpg" alt="Ustoz AI" onclick="openLb(this.src)" /><figcaption>🎖 ID 0000000051 · ${d.certimg}</figcaption></figure>` : '';
+    return `<div class="cert"><div class="row"><div><b>${c[0]}</b><i>${c[1]}</i></div>${extra}</div>${fig}</div>`;
+  }).join('');
+}
+document.querySelectorAll('.langbtn').forEach(b=>b.onclick=()=>set(b.dataset.l));
+set(LANG);
+
+/* ---------- LIGHTBOX / TOTOP / REVEAL / NAV ---------- */
+function openLb(src){ document.getElementById('lbimg').src = src; document.getElementById('lb').classList.add('open'); }
+document.getElementById('lb').onclick = ()=>document.getElementById('lb').classList.remove('open');
+addEventListener('keydown', e=>{ if(e.key==='Escape') document.getElementById('lb').classList.remove('open'); });
+const totop = document.getElementById('totop');
+addEventListener('scroll', ()=>totop.classList.toggle('show', scrollY>600), {passive:true});
+totop.onclick = ()=>scrollTo({top:0, behavior:reduced?'auto':'smooth'});
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target);} }), {threshold:.06});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const navAs = [...document.querySelectorAll('nav.links a')];
+const secIO = new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting) navAs.forEach(a=>a.classList.toggle('act', a.dataset.nav===e.target.id));
+}), {rootMargin:'-40% 0px -55% 0px'});
+['profil','tajriba','loyihalar','sertifikatlar','aloqa'].forEach(id=>{const el=document.getElementById(id); if(el) secIO.observe(el);});
 </script>
 </body>
 </html>

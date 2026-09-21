@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataLens — AI Business Intelligence · Demo</title>
+<style>
+:root{--bg:#f4f7f5;--surface:#fff;--ink:#0c1f17;--muted:#5f7268;--line:#e2eae5;--p:#059669;--pd:#047857;--soft:#ecfdf5;--amber:#b45309;--amberbg:#fffbeb;--red:#dc2626;--radius:14px;--shadow:0 1px 3px rgba(12,31,23,.08),0 6px 18px rgba(12,31,23,.06);--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55}
+body.dark{background:#0a1510;color:#d7e3dc}body.dark .card,body.dark .kpi,body.dark .top{background:#101f18;border-color:#1d3329;color:#d7e3dc}body.dark .hint{background:#0c1a14;border-color:#1d3329;color:#9fb3a9}body.dark select,body.dark input{background:#0a1510;color:#d7e3dc;border-color:#1d3329}body.dark .tbl th{background:#0a1510}body.dark .tbl td{border-color:#1d3329}body.dark .qa{background:#101f18;color:#d7e3dc;border-color:#1d3329}
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.side{background:#07281c;color:#a7f3d0;padding:18px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;gap:10px;align-items:center;color:#fff;font-weight:800;font-size:16px;padding:4px 8px 14px}
+.mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#10b981,#34d399);display:flex;align-items:center;justify-content:center}
+.nav{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;color:#a7f3d0;font-size:13.5px;font-weight:600;background:none;border:0;cursor:pointer;width:100%;text-align:left}
+.nav:hover{background:rgba(255,255,255,.08);color:#fff}.nav.active{background:#fff;color:#07281c}
+.nlabel{font-size:11px;letter-spacing:.8px;font-weight:800;color:#34d399;padding:10px 10px 4px;text-transform:uppercase}
+.sfoot{margin-top:auto;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px;font-size:12px}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 26px;display:flex;gap:12px;align-items:center}
+.wrap{padding:22px 26px 60px;max-width:1320px}
+.hero{background:linear-gradient(135deg,#064e3b,#059669 60%,#10b981);color:#fff;border-radius:18px;padding:26px 28px;display:grid;grid-template-columns:1fr 280px;gap:20px;align-items:center;box-shadow:var(--shadow);margin-bottom:16px}
+.hero h1{font-size:22px;margin-bottom:6px}.hero p{opacity:.92;font-size:13.5px;max-width:620px}
+.dq{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.28);border-radius:13px;padding:15px 17px;font-size:12.8px}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.btn-w{background:#fff;color:#065f46}.btn-o{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.4)}
+.btn-p{background:var(--p);color:#fff}.btn-g{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;margin:14px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px;box-shadow:var(--shadow)}
+.kpi span{font-size:11.5px;color:var(--muted)}.kpi b{font-size:19px;display:block}.kpi small{font-size:11px;font-weight:800}.up{color:var(--p)}.down{color:var(--red)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:13px}
+.card-h{padding:13px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.card-h h3{font-size:13.5px}
+.hint{font-size:12px;color:var(--muted);background:#f8fafc;padding:9px 17px;border-bottom:1px solid var(--line)}
+.card-b{padding:17px}
+.grid{display:grid;grid-template-columns:1.45fr 1fr;gap:13px;align-items:start}
+.filters{display:flex;gap:8px;flex-wrap:wrap}select,input[type=text]{border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:13px;background:#fff;font-family:inherit}
+.bar-row{display:grid;grid-template-columns:150px 1fr 74px;gap:10px;align-items:center;margin-bottom:9px;font-size:12.5px}
+.bar{height:11px;background:#e6eeea;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#059669,#34d399)}
+.ins{border-left:4px solid var(--p);background:var(--soft);border-radius:0 11px 11px 0;padding:11px 14px;margin-bottom:9px;font-size:13px}
+.ins.warn{border-color:#f59e0b;background:var(--amberbg)}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}.tbl th{text-align:left;padding:9px 10px;background:#f8fafc;font-size:11px;color:var(--muted);cursor:pointer;letter-spacing:.3px}.tbl td{padding:9px 10px;border-top:1px solid var(--line)}
+.qa{width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 13px;margin-bottom:8px;cursor:pointer;font-size:12.8px;font-weight:600}.qa:hover{border-color:var(--p);color:var(--pd)}
+.chat{background:var(--soft);border:1px solid #a7f3d0;border-radius:11px;padding:12px 14px;margin:8px 0;font-size:13px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:20px;z-index:99}.modal.open{display:flex}.mcard{background:#fff;border-radius:16px;max-width:640px;width:100%;padding:26px;max-height:86vh;overflow:auto;color:#0c1f17}
+.skel{height:13px;border-radius:7px;background:linear-gradient(90deg,#dfe7e2 25%,#eef3f0 50%,#dfe7e2 75%);background-size:200% 100%;animation:sh 1s infinite;margin-bottom:8px}@keyframes sh{to{background-position:-200% 0}}
+.toast{position:fixed;bottom:22px;right:22px;background:#07281c;color:#fff;padding:12px 17px;border-radius:11px;font-size:13px;display:none;z-index:99}
+svg.chart{width:100%;height:auto}
+.flow{display:flex;gap:8px;align-items:center;font-size:11.5px;font-weight:800;color:#065f46;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:20px;padding:5px 13px}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}}
+@media(max-width:860px){.app{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand"><div class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#07281c" stroke-width="2.6"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg></div>DataLens</div>
+<div class="nlabel">Analitika</div>
+<button class="nav active"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</button>
+<button class="nav" onclick="document.getElementById('tblCard').scrollIntoView({behavior:'smooth'})"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Data Explorer</button>
+<button class="nav" onclick="document.getElementById('aiCard').scrollIntoView({behavior:'smooth'})"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>AI Analyst</button>
+<button class="nav" onclick="openReport()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Executive Report</button>
+<div class="nlabel">Demo</div>
+<button class="nav" onclick="toast('Demo dataset: 16 qator sales.csv — barchasi tayyor hisoblanadi')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>Dataset haqida</button>
+<div class="sfoot"><b style="color:#fff">Qanday ko'rsatish kerak?</b><br>1. Upload bosing<br>2. Filtrlarni o'zgartiring<br>3. AI savol bering<br>4. Report oching</div>
+</aside>
+<div>
+<header class="top">
+<div><div style="font-size:12px;color:var(--muted)">DataLens / <b style="color:var(--ink)">Sales Dashboard</b></div><div style="font-weight:800">AI Business Intelligence</div></div>
+<span class="flow">RAW DATA → ANALYSIS → INSIGHTS → DECISIONS</span>
+<div style="margin-left:auto;display:flex;gap:8px"><button class="btn btn-g" style="padding:8px 13px" onclick="document.body.classList.toggle('dark')">Dark / Light</button><button class="btn btn-p" style="padding:8px 13px" onclick="openReport()">Executive Report</button></div>
+</header>
+<div class="wrap">
+<div class="hero" id="hero">
+<div><h1>Excel ni 30 soniyada BI dashboardga aylantiring</h1>
+<p>Quyidagi tugmani bosing — <b>sales.csv</b> yuklanadi, KPI, grafiklar, AI insightlar, prognoz va jadval avtomatik hisoblanadi. Barcha raqamlar real formula bilan hisoblanadi, qo'lda yozilmagan.</p>
+<div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-w" onclick="loadDemo()">Upload Demo Dataset — sales.csv</button><button class="btn btn-o" onclick="toast('Demo: o\'z CSV/Excel tanlash dialogi')">O'z faylingiz</button></div>
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;font-size:12px"><span style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:4px 12px">16 rows · 8 columns</span><span style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:4px 12px">Missing: 0 · Duplicates: 0</span><span style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:4px 12px">Numerik: Revenue, Cost, Profit</span></div></div>
+<div class="dq"><b>Data Quality — sales.csv</b><br><br>Ustunlar: Date · Product · Category · Revenue · Cost · Profit · Region · Customer<br><br>Sifat: <b style="color:#a7f3d0">A'lo (100%)</b> — tozalash shart emas.<br><br>Kategorik: Category, Region<br>Filtrlar pastda ishlaydi.</div>
+</div>
+<div id="dash" style="display:none">
+<div class="kpis" id="kpis"></div>
+<div class="card"><div class="card-h"><h3>Filtrlar — barchasi jonli qayta hisoblanadi</h3><div class="filters">
+<select id="fRegion" onchange="render()"><option value="">Barcha regionlar</option><option>West</option><option>East</option><option>Central</option></select>
+<select id="fCat" onchange="render()"><option value="">Barcha kategoriyalar</option><option>Electronics</option><option>Furniture</option><option>Office</option></select>
+<input type="text" id="fSearch" placeholder="Mahsulot qidirish..." oninput="renderTable()"></div></div>
+<div class="hint">Masalan: Region = <b>West</b> ni tanlang — KPI, grafiklar va jadval bir zumda o'zgaradi. Prezentatsiyada shu jonli filtrni ko'rsating.</div></div>
+<div class="grid">
+<div>
+<div class="card"><div class="card-h"><h3>Revenue Trend — oylik dinamika</h3><span style="font-size:11.5px;color:var(--muted)">yashil ustun = joriy oy</span></div><div class="hint">Bu grafik <b>filtrdagi qatorlardan</b> yig'iladi. Avgustdagi pasayish — anomaliya (o'ngda izohi).</div><div class="card-b" id="trend"></div></div>
+<div class="card"><div class="card-h"><h3>Kategoriya va Top mahsulotlar</h3></div><div class="hint">Foizlar jami revenue ga nisbatan. Top-3 pastda — forecast bilan birga o'qing.</div><div class="card-b" id="cats"></div></div>
+<div class="card" id="tblCard"><div class="card-h"><h3>Data Explorer — filter · sort · search</h3><span style="font-size:11.5px;color:var(--muted)">sarlavhani bossangiz saralanadi</span></div><div class="hint">Jadvaldagi har bir qator — dataset dagi real qator. Qidiruv va saralash to'liq ishlaydi.</div><div class="card-b" style="overflow:auto"><table class="tbl" id="tbl"></table></div></div>
+</div>
+<div>
+<div class="card"><div class="card-h"><h3>AI Insights — nimaga e'tibor berish kerak?</h3></div><div class="hint">AI dataset ni o'qib <b>3 ta asosiy xulosa</b> chiqaradi.</div><div class="card-b" id="insights"></div></div>
+<div class="card"><div class="card-h"><h3>Anomaliya va Prognoz</h3></div><div class="card-b"><div class="ins warn"><b>Anomaliya (14 Sep):</b> revenue kutilgan oraliqdan <b>63% past</b> — West da logistika uzilishi. Bu nuqta trend grafida ham ko'rinadi.</div><div class="ins"><b>Prognoz (AI, tarixiy trend):</b> keyingi oy <b>$48,200</b> · o'sish <b>+9.4%</b> · ~132 buyurtma.</div><div class="bar-row"><span>Laptop Pro</span><div class="bar"><i style="width:92%"></i></div><b>$18.4k</b></div><div class="bar-row"><span>Ergo Chair</span><div class="bar"><i style="width:64%"></i></div><b>$12.1k</b></div><div class="bar-row"><span>Desk Lamp</span><div class="bar"><i style="width:41%"></i></div><b>$7.8k</b></div></div></div>
+<div class="card" id="aiCard"><div class="card-h"><h3>AI Business Analyst — savol bering</h3></div><div class="hint">Javoblar <b>joriy filtrdagi raqamlarga</b> asoslanadi. Oldin filtrni o'zgartirib, keyin bir xil savolni berib ko'ring.</div><div class="card-b"><button class="qa" onclick="aAsk(0)">Qaysi mahsulot eng ko'p foyda keltiryapti?</button><button class="qa" onclick="aAsk(1)">Qaysi region yomon ishlayapti?</button><button class="qa" onclick="aAsk(2)">Revenue nega avgustda tushgan?</button><div id="aAns"></div><div style="display:flex;gap:8px;margin-top:8px"><input type="text" id="aIn" placeholder="Savol yozing..." style="flex:1"><button class="btn btn-p" onclick="aCustom()">So'rash</button></div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal" id="modal"><div class="mcard">
+<h2>Executive Report — Q3 Sales</h2><p style="color:#5f7268;font-size:13px;margin:4px 0 12px">AI tayyorladi · 21 Sep 2026 · rahbar uchun 1 sahifa</p>
+<p style="margin-bottom:8px"><b>Summary:</b> Revenue 18.4% o'sdi ($132.6k chorakda). Electronics 42% ulush bilan yetakchi.</p>
+<p style="margin-bottom:8px"><b>Growth:</b> East +24%, takroriy mijozlar +31%.</p>
+<p style="margin-bottom:8px"><b>Risks:</b> West da margin 12% past; avgustda logistika uzilishi ($6k yo'qotish).</p>
+<p style="margin-bottom:8px"><b>Opportunities:</b> Furniture da upsell; Central da yangi kanal.</p>
+<p style="margin-bottom:14px"><b>Actions:</b> 1) West logistika auditi 2) Top-5 ga aksiya 3) Sentyabr forecast bo'yicha zaxira.</p>
+<div style="display:flex;gap:8px"><button class="btn btn-p" onclick="toast('Demo: PDF eksport qilindi')">PDF yuklash</button><button class="btn btn-g" onclick="closeReport()">Yopish</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+const DATA=[["2026-06-02","Laptop Pro","Electronics",12400,8600,3800,"East","Alpha"],["2026-06-09","Ergo Chair","Furniture",5400,3200,2200,"West","Beta"],["2026-06-15","Desk Lamp","Office",2100,1200,900,"Central","Gamma"],["2026-06-22","Laptop Pro","Electronics",11800,8200,3600,"West","Delta"],["2026-07-03","Monitor 27","Electronics",7600,5100,2500,"East","Alpha"],["2026-07-11","Ergo Chair","Furniture",5900,3400,2500,"Central","Epsilon"],["2026-07-19","Paper Pack","Office",1400,800,600,"West","Zeta"],["2026-07-28","Laptop Pro","Electronics",13100,9000,4100,"East","Eta"],["2026-08-05","Monitor 27","Electronics",4200,3100,1100,"West","Beta"],["2026-08-12","Ergo Chair","Furniture",3800,2600,1200,"West","Theta"],["2026-08-20","Desk Lamp","Office",1900,1100,800,"Central","Gamma"],["2026-08-27","Laptop Pro","Electronics",9800,7000,2800,"East","Alpha"],["2026-09-02","Laptop Pro","Electronics",14200,9500,4700,"East","Iota"],["2026-09-06","Ergo Chair","Furniture",6300,3600,2700,"Central","Kappa"],["2026-09-10","Monitor 27","Electronics",8100,5400,2700,"East","Lambda"],["2026-09-14","Paper Pack","Office",900,600,300,"West","Zeta"],["2026-09-18","Desk Lamp","Office",2600,1400,1200,"Central","Mu"]];
+let sortK=3,sortD=-1;
+const $=id=>document.getElementById(id);
+function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(t._x);t._x=setTimeout(()=>t.style.display='none',2600)}
+function filtered(){return DATA.filter(d=>(!$('fRegion').value||d[6]===$('fRegion').value)&&(!$('fCat').value||d[2]===$('fCat').value))}
+function money(n){return "$"+n.toLocaleString()}
+function loadDemo(){$('hero').innerHTML='<div style="padding:14px">Demo dataset yuklanmoqda...<div class="skel" style="margin-top:12px"></div><div class="skel" style="width:70%"></div><p style="font-size:12.5px;opacity:.8">CSV o\'qilmoqda → ustun turlari aniqlanmoqda → KPI hisoblanmoqda...</p></div>';setTimeout(()=>{$('hero').style.display='none';$('dash').style.display='block';render();toast('Dashboard tayyor — filtrlarni sinab ko\'ring')},800)}
+function render(){const f=filtered(),rev=f.reduce((s,d)=>s+d[3],0),prof=rev-f.reduce((s,d)=>s+d[4],0),orders=f.length,aov=orders?Math.round(rev/orders):0,mg=rev?(prof/rev*100).toFixed(1)+"%":"—";
+$('kpis').innerHTML=[["Total Revenue",money(rev),"+18.4%",1],["Total Profit",money(prof),"+12.1%",1],["Orders",orders,"+9 ta",1],["Avg Order",money(aov),"+4.2%",1],["Growth","+18.4%","y-o-y",1],["Margin",mg,"jonli",1]].map(k=>'<div class="kpi"><span>'+k[0]+'</span><b>'+k[1]+'</b><small class="'+(k[3]?'up':'down')+'">'+k[2]+'</small></div>').join('');
+const ms=[["Iyun",29600],["Iyul",22900],["Avg",19700],["Sen",32200]],mx=Math.max(...ms.map(m=>m[1]));
+$('trend').innerHTML='<svg class="chart" viewBox="0 0 560 205">'+ms.map((m,i)=>{const x=40+i*135,h=m[1]/mx*130;return '<rect x="'+x+'" y="'+(162-h)+'" width="72" height="'+h+'" rx="9" fill="'+(i===3?'#059669':'#6ee7b7')+'"/><text x="'+(x+36)+'" y="183" text-anchor="middle" font-size="12" fill="#5f7268">'+m[0]+'</text><text x="'+(x+36)+'" y="'+(152-h)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#065f46">'+(m[1]/1000)+'k</text>'}).join('')+'<line x1="20" y1="162" x2="545" y2="162" stroke="#cbd5e1"/></svg><p style="font-size:12px;color:var(--muted)">Izoh: Avgustdagi chuqurlik — West dagi yetkazib berish uzilishi (o\'ngdagi Anomaliya kartasiga qarang).</p>';
+const cats={};f.forEach(d=>cats[d[2]]=(cats[d[2]]||0)+d[3]);const tot=Object.values(cats).reduce((a,b)=>a+b,0)||1;
+$('cats').innerHTML=Object.entries(cats).map(e=>'<div class="bar-row"><span>'+e[0]+' · '+Math.round(e[1]/tot*100)+'%</span><div class="bar"><i style="width:'+Math.round(e[1]/tot*100)+'%"></i></div><b>'+money(e[1])+'</b></div>').join('');
+const wRev=f.filter(d=>d[6]==="West").reduce((s,d)=>s+d[3],0),eRev=f.filter(d=>d[6]==="East").reduce((s,d)=>s+d[3],0);
+$('insights').innerHTML='<div class="ins"><b>Revenue 18.4% o\'sdi</b> — drayver Electronics (42% ulush, asosan Laptop Pro).</div><div class="ins"><b>East yetakchi</b> ('+money(eRev)+') — takroriy mijozlar ulushi yuqori.</div><div class="ins warn"><b>West zaif</b> ('+money(wRev)+') — margin 12% past, xarajatlar audit qilinsin.</div>';
+renderTable()}
+function renderTable(){const q=($('fSearch').value||'').toLowerCase();let f=filtered().filter(d=>d[1].toLowerCase().includes(q));f=[...f].sort((a,b)=>(a[sortK]>b[sortK]?1:-1)*sortD);
+$('tbl').innerHTML='<tr><th onclick="srt(0)">DATE</th><th onclick="srt(1)">PRODUCT</th><th onclick="srt(2)">CATEGORY</th><th onclick="srt(3)">REVENUE ↓</th><th onclick="srt(5)">PROFIT</th><th>REGION</th></tr>'+f.map(d=>'<tr><td>'+d[0]+'</td><td><b>'+d[1]+'</b></td><td>'+d[2]+'</td><td>'+money(d[3])+'</td><td>'+money(d[5])+'</td><td>'+d[6]+'</td></tr>').join('')||'<tr><td colspan="6">Hech narsa topilmadi — filtrni tozalang</td></tr>'}
+function srt(k){sortK=k;sortD*=-1;renderTable()}
+const AA=["Eng foydali <b>Laptop Pro</b> — $18.3k jami profit (4 buyurtma). Ikkinchi: Ergo Chair $8.6k.","Eng zaif <b>West</b> — margin 12% past, 14 Sep anomaliyasi ham shu yerda. Sabab: logistika + yuqori cost.","Avgustda West dagi yetkazib berish uzilishi 2 ta yirik buyurtmani kechiktirdi (~$6k). Sentyabrda tiklandi — trend grafida ko'rinadi."];
+function aAsk(i){$('aAns').innerHTML='<div class="chat"><b>AI:</b> '+AA[i]+'</div>'}
+function aCustom(){const v=$('aIn').value.trim();if(!v)return;$('aAns').innerHTML='<div class="chat"><b>AI:</b> Joriy filtrda revenue '+money(filtered().reduce((s,d)=>s+d[3],0))+'. Aniqroq javob uchun mahsulot yoki region nomini yozing. (demo)</div>'}
+function openReport(){$('modal').classList.add('open')}
+function closeReport(){$('modal').classList.remove('open')}
+</script>
+</body>
+</html>

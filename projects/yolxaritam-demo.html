@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yo'lXaritam — Bank va davlat jarayonlari yo'l-yo'rig'i · Demo</title>
+<style>
+:root{--bg:#f4f7f5;--surface:#fff;--ink:#0e241b;--muted:#5f7268;--line:#e1eae4;--p:#0d7a55;--pd:#095c40;--soft:#ecfdf5;--amber:#b45309;--amberbg:#fffbeb;--red:#b91c1c;--redbg:#fef2f2;--radius:15px;--shadow:0 1px 3px rgba(14,36,27,.08),0 6px 18px rgba(14,36,27,.06);--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55}
+.app{display:grid;grid-template-columns:236px 1fr;min-height:100vh}
+.side{background:#0a231a;color:#a7f3d0;padding:18px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;gap:10px;align-items:center;color:#fff;font-weight:800;font-size:16px;padding:4px 8px 14px}
+.mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#10b981,#14b8a6);display:flex;align-items:center;justify-content:center}
+.nav{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;color:#a7f3d0;font-size:13px;font-weight:600;background:none;border:0;cursor:pointer;width:100%;text-align:left}
+.nav:hover{background:rgba(255,255,255,.08);color:#fff}.nav.active{background:#fff;color:#0a231a}
+.nlabel{font-size:11px;letter-spacing:.8px;font-weight:800;color:#34d399;padding:10px 10px 4px;text-transform:uppercase}
+.sfoot{margin-top:auto;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px;font-size:12px}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 26px;display:flex;gap:12px;align-items:center}
+.wrap{padding:22px 26px 60px;max-width:1220px}
+.hero{background:linear-gradient(135deg,#0a3d2b,#0d7a55 60%,#14b8a6);color:#fff;border-radius:18px;padding:26px 28px;display:grid;grid-template-columns:1fr 290px;gap:20px;align-items:center;box-shadow:var(--shadow);margin-bottom:16px}
+.hero h1{font-size:22px;margin-bottom:6px}.hero p{opacity:.93;font-size:13.5px;max-width:600px}
+.ex{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.28);border-radius:13px;padding:15px 17px;font-size:13px}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.btn-w{background:#fff;color:#0a3d2b}.btn-p{background:var(--p);color:#fff}.btn-p:hover{background:var(--pd)}.btn-g{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:14px 0}
+.cat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:15px;display:flex;gap:13px;cursor:pointer;box-shadow:var(--shadow);align-items:flex-start}
+.cat:hover:not(.off){border-color:var(--p)}.cat.active{border:2px solid var(--p)}
+.cat.off{opacity:.65;cursor:default}.cat .ic{width:44px;height:44px;border-radius:12px;background:var(--soft);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.soon{font-size:10.5px;font-weight:800;background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:11px}
+.rdy{font-size:11px;font-weight:800;color:var(--p)}
+.grid{display:grid;grid-template-columns:1fr 320px;gap:13px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:13px}
+.card-h{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.card-h h3{font-size:13.5px}
+.hint{font-size:12px;color:var(--muted);background:#f8fafc;padding:9px 18px;border-bottom:1px solid var(--line)}
+.card-b{padding:18px}
+.stage{font-size:11.5px;font-weight:800;color:var(--p);letter-spacing:.5px;margin:16px 0 8px;text-transform:uppercase;display:flex;gap:8px;align-items:center}
+.stage:first-child{margin-top:4px}
+.stage::after{content:"";flex:1;height:1px;background:var(--line)}
+.doc{display:flex;gap:12px;border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:9px;cursor:pointer}
+.doc:hover{border-color:var(--p)}.doc.done{background:#f0fdf4;border-color:#6ee7b7}
+.doc input{width:19px;height:19px;margin-top:2px;accent-color:var(--p);flex-shrink:0}
+.tag{font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:11px;margin-right:5px}
+.t-req{background:var(--redbg);color:var(--red);border:1px solid #fecaca}.t-opt{background:#e0f2fe;color:#075985;border:1px solid #bae6fd}.t-on{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.bankf{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.bank{border:1px solid var(--line);border-radius:20px;padding:8px 16px;font-size:12.5px;font-weight:700;cursor:pointer;background:#fff;font-family:inherit}
+.bank.active{background:var(--p);color:#fff;border-color:var(--p)}
+.pbar{height:12px;background:#e3eae6;border-radius:7px;overflow:hidden;margin:8px 0}.pbar i{display:block;height:100%;background:linear-gradient(90deg,#0d7a55,#14b8a6);transition:width .4s}
+.mine{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px}
+a.onl{color:var(--p);font-weight:700;font-size:12px;text-decoration:none}a.onl:hover{text-decoration:underline}
+.toast{position:fixed;bottom:22px;right:22px;background:#0a231a;color:#fff;padding:12px 17px;border-radius:11px;font-size:13px;display:none;z-index:99}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.how div{background:#f8fafc;border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-size:12.5px}
+@media(max-width:1000px){.cats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.how{grid-template-columns:1fr}}
+@media(max-width:860px){.app{grid-template-columns:1fr}.side{display:none}.cats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand"><div class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M9 20l-5.5-2.5v-13L9 7l6-2.5L20.5 7v13L15 17.5 9 20z"/><path d="M9 7v13M15 4.5v13"/></svg></div>Yo'lXaritam</div>
+<div class="nlabel">Bo'limlar</div>
+<button class="nav active" onclick="selCat('mol')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/></svg>Moliyaviy</button>
+<button class="nav" onclick="selCat('fuq')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Fuqarolik holati</button>
+<button class="nav" onclick="selCat('har')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Harbiy</button>
+<button class="nav" onclick="document.getElementById('mine').scrollIntoView({behavior:'smooth'})"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Mening jarayonlarim</button>
+<div class="nlabel">Demo</div>
+<button class="nav" onclick="toast('Demo: 3 jarayon to\'liq, 6 tasi Tez orada')">Demo haqida</button>
+<div class="sfoot"><b style="color:#fff">Ko'rsatish tartibi:</b><br>1. Kategoriya tanlang<br>2. Bankni almashtiring<br>3. Checklist belgilang<br>4. Mening jarayonlarim</div>
+</aside>
+<div>
+<header class="top">
+<div><div style="font-size:12px;color:var(--muted)">Yo'lXaritam / <b style="color:var(--ink)" id="crumb">Avtokredit</b></div><div style="font-weight:800">Davlat va bank jarayonlari yo'l-yo'rig'i</div></div>
+<div style="margin-left:auto;display:flex;gap:8px"><button class="btn btn-g" style="padding:8px 13px">Kirish</button><button class="btn btn-p" style="padding:8px 13px" onclick="document.getElementById('mine').scrollIntoView({behavior:'smooth'})">Mening jarayonlarim</button></div>
+</header>
+<div class="wrap">
+<div class="hero">
+<div><h1>Bankka bir marta boring — tayyor holda</h1>
+<p>Har bir jarayon uchun <b>qanday hujjat, qayerdan, qancha turadi, necha kunda chiqadi, qay tartibda</b> — hammasi bitta sahifada. Belgilab boring, foiz o'sadi.</p>
+<div class="how"><div><b>1. Tanlang</b><br>Kategoriya + bank</div><div><b>2. Yig'ing</b><br>Bosqichma-bosqich checklist</div><div><b>3. Boring</b><br>100% bilan murojaat</div></div></div>
+<div class="ex"><b>Jonli misol: Avtokredit</b><br><br>5 ta hujjat · 3 tasi sizda bor bo'lishi mumkin<br>2 tasini ~3 kunda yig'asiz<br><br>Bosqich tartibi muhim: avval pasport, keyin soliq ma'lumotnomasi, oxirida bank arizasi.</div>
+</div>
+
+<h3 style="margin:4px 0 2px">Bo'limni tanlang <span style="font-size:12px;color:var(--muted);font-weight:400">— 3 tasi to'liq, 6 tasi tez orada</span></h3>
+<div class="cats" id="cats"></div>
+
+<div class="grid">
+<div class="card"><div class="card-h"><h3 id="pTitle">Moliyaviy — Avtokredit</h3><span style="font-size:11.5px;color:var(--muted)" id="pDate">Tekshiruv: 18.09.2026</span></div>
+<div class="hint"><b>Avval bankni tanlang</b> — har bankning qo'shimcha talabi sariq kartada chiqadi. Keyin pastdagi hujjatlarni tartib bilan belgilang.</div>
+<div class="card-b">
+<div style="font-size:13px"><b>Tashkilotni tanlang:</b></div>
+<div class="bankf" id="banks"></div>
+<div id="bankNote" style="background:var(--amberbg);border:1px solid #fde68a;border-radius:10px;padding:11px 14px;font-size:12.8px;margin-top:10px"></div>
+<div style="margin-top:14px;background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:13px 15px"><div style="display:flex;justify-content:space-between;align-items:center"><b>Jarayon progressi</b><b id="pct" style="color:var(--p)">0%</b></div><div class="pbar"><i id="bar" style="width:0%"></i></div><div style="font-size:12.5px;color:var(--muted)" id="cnt"></div></div>
+<div id="stages"></div>
+<div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-p" onclick="startMine()">Jarayonni boshlash — saqlash</button><button class="btn btn-g" onclick="resetCur()">Belgilashni tozalash</button></div>
+</div></div>
+<div>
+<div class="card" id="mine"><div class="card-h"><h3>Mening jarayonlarim</h3></div><div class="hint">Bir vaqtda bir nechta jarayon (masalan avtokredit + propiska) — har biri alohida foiz bilan saqlanadi.</div><div class="card-b" id="mineList"></div></div>
+<div class="card"><div class="card-h"><h3>Nega bosqichli tartib?</h3></div><div class="card-b" style="font-size:13px">
+<p><b>1-bosqich:</b> bir-biriga bog'liq bo'lmaganlar — parallel yig'iladi.</p>
+<p><b>2-bosqich:</b> 1-bosqichsiz berilmaydiganlar (masalan soliq ma'lumotnomasi).</p>
+<p style="margin-bottom:8px"><b>3-bosqich:</b> yakuniy murojaat — hamma narsa tayyor bo'lganda.</p>
+<p style="color:var(--muted);font-size:12.5px">Yashil nishon = MyGov.uz da onlayn olish mumkin. Manba va sana har jarayonda ko'rsatilgan.</p>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const ICONS={mol:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#0d7a55' stroke-width='2'><rect x='2' y='6' width='20' height='12' rx='2'/><circle cx='12' cy='12' r='2.5'/></svg>",fuq:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#0d7a55' stroke-width='2'><path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg>",har:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#0d7a55' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>",tal:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#0d7a55' stroke-width='2'><path d='M22 10 12 5 2 10l10 5 10-5z'/></svg>",mul:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#0d7a55' stroke-width='2'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/></svg>",biz:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#0d7a55' stroke-width='2'><rect x='2' y='7' width='20' height='14' rx='2'/></svg>",tra:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#0d7a55' stroke-width='2'><path d='M5 17h14M7 17l1.5-6h7L17 17'/></svg>",tib:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#0d7a55' stroke-width='2'><path d='M22 12h-4l-3 9L9 3l-3 9H2'/></svg>",pas:"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#0d7a55' stroke-width='2'><rect x='3' y='4' width='18' height='16' rx='2'/></svg>"};
+const CATS=[{id:"mol",n:"Moliyaviy",d:"Avtokredit · ipoteka · karta",on:1},{id:"fuq",n:"Fuqarolik holati",d:"Nikoh · ajralish · tug'ilish",on:1},{id:"har",n:"Harbiy",d:"Chaqiruv hujjatlari",on:1},{id:"tal",n:"Ta'lim",d:"Diplom · tashqi ta'lim",on:0},{id:"mul",n:"Ko'chmas mulk",d:"Oldi-sotdi · kadastr",on:0},{id:"biz",n:"Biznes",d:"YaTT/MChJ · litsenziya",on:0},{id:"tra",n:"Transport",d:"Texko'rik · guvohnoma",on:0},{id:"tib",n:"Tibbiyot / ijtimoiy",d:"Nafaqua · nogironlik",on:0},{id:"pas",n:"Ko'chish / pasport",d:"Propiska · pasport",on:0}];
+const PROC={
+mol:{title:"Moliyaviy — Avtokredit",short:"Avtokredit",date:"18.09.2026",banks:["Kapitalbank","Xalq bank","Ipoteka bank"],notes:{"Kapitalbank":"Kapitalbank talabi: ish joyi ma'lumotnomasi + 3 oylik karta aylanmasi kifoya. Kafil faqat $15,000 dan yuqori summa uchun.","Xalq bank":"Xalq bank talabi: qo'shimcha — mahalla ma'lumotnomasi kerak (1 kun, bepul).","Ipoteka bank":"Ipoteka bank talabi: qo'shimcha — 20% boshlang'ich to'lov cheki shart."},stages:[["1-bosqich — parallel yig'iladi (bir-biriga bog'liq emas)",[["Pasport (ID-karta)","Majburiy","O'zingizda bor","0 so'm · 0 kun",0],["Ish joyidan ma'lumotnoma","Majburiy","HR bo'limi","Bepul · 1–2 kun",0]]],["2-bosqich — 1-bosqich asosida beriladi",[["Daromad ma'lumotnomasi","Majburiy","soliq.uz — onlayn","Bepul · 1 kun",1],["Kafil hujjatlari","Qo'shimcha","Bank talabiga qarab","Bepul · 2 kun",0]]],["3-bosqich — yakuniy murojaat (hamma narsa tayyor)",[["Bank arizasi + sug'urta","Majburiy","Bank filiali","Sug'urta ~150 ming · 1 kun",0]]]]},
+fuq:{title:"Fuqarolik holati — Nikoh",short:"Nikoh",date:"15.09.2026",banks:["FHDYO (ZAGS)","MyGov onlayn","Notarius"],notes:{"FHDYO (ZAGS)":"FHDYO: har ikki tomon shaxsan kelishi shart, ariza to'ydan 1 oy oldin topshiriladi.","MyGov onlayn":"MyGov: ariza onlayn topshiriladi, imzo uchun 1 marta boriladi — navbat 50% kam.","Notarius":"Nikoh shartnomasi ixtiyoriy — mol-mulk taqsimoti uchun tavsiya etiladi."},stages:[["1-bosqich — parallel",[["Pasportlar (har ikki tomon)","Majburiy","O'zingizda","0 so'm",0],["Tibbiy ma'lumotnoma (086)","Majburiy","Oilaviy poliklinika","Bepul · 2–3 kun",0]]],["2-bosqich",[["Davlat boji to'lovi","Majburiy","Bank / Payme — onlayn","~170 ming","1 · onlayn"],["Nikoh tugaganligi (agar bo'lsa)","Qo'shimcha","FHDYO arxivi","Bepul · 3 kun",0]]],["3-bosqich — FHDYO ga borish",[["Ariza + marosim sanasi","Majburiy","FHDYO bo'limi","Marosim to'lovi alohida",0],["Guvohnoma olish","Majburiy","FHDYO","1 kun",0]]]]},
+har:{title:"Harbiy — Chaqiruv hujjatlari",short:"Chaqiruv",date:"10.09.2026",banks:["Mudofaa bo'limi","MyGov onlayn","Tibbiy komissiya"],notes:{"Mudofaa bo'limi":"Asosiy nuqta — tuman mudofaa bo'limi, qabul dushanba/juma.","MyGov onlayn":"Harbiy guvohnoma nusxasi MyGov da olinadi — navbatsiz.","Tibbiy komissiya":"Ko'rik faqat yo'llanma bilan, 5 kun ichida o'tish shart."},stages:[["1-bosqich",[["Pasport + propiska nusxasi","Majburiy","O'zingizda / nusxa","0 so'm",0],["3×4 foto (4 dona)","Majburiy","Fotoxona","20 ming · 1 soat",0]]],["2-bosqich",[["Tibbiy ko'rik xulosasi","Majburiy","Tibbiy komissiya","Bepul · 3–5 kun",0],["O'qish/ish joyidan tavsifnoma","Qo'shimcha","Maktab / ishxona","Bepul · 1 kun",0]]],["3-bosqich",[["Bo'limga topshirish","Majburiy","Tuman bo'limi","Bepul · 1 kun",0]]]]}};
+let cur="mol",bank=0,checks={};
+try{checks=JSON.parse(localStorage.getItem("yx2")||"{}")}catch(e){checks={}}
+const $=id=>document.getElementById(id);
+function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(t._x);t._x=setTimeout(()=>t.style.display="none",2600)}
+function key(c,d){return c+"|"+d}
+function renderCats(){$("cats").innerHTML=CATS.map(c=>'<div class="cat '+(c.id===cur?"active":"")+(c.on?"":" off")+'" '+(c.on?'onclick="selCat(\''+c.id+'\')"':'')+'><div class="ic">'+ICONS[c.id]+'</div><div style="min-width:0"><b style="font-size:13px">'+c.n+'</b><br><small style="color:var(--muted);font-size:12px">'+c.d+'</small><div style="margin-top:5px">'+(c.on?'<span class="rdy">Tayyor — ochish mumkin</span>':'<span class="soon">Tez orada</span>')+'</div></div></div>').join("")}
+function renderBanks(){const p=PROC[cur];$("banks").innerHTML=p.banks.map((b,i)=>'<button class="bank '+(i===bank?"active":"")+'" onclick="selBank('+i+')">'+b+'</button>').join("");$("bankNote").innerHTML="<b>"+p.banks[bank]+":</b> "+p.notes[p.banks[bank]]}
+function renderStages(){const p=PROC[cur];$("pTitle").textContent=p.title;$("pDate").textContent="Tekshiruv: "+p.date;$("crumb").textContent=p.short;
+let total=0,done=0,html="";p.stages.forEach(s=>{html+='<div class="stage">'+s[0]+'</div>';s[1].forEach(d=>{total++;const k=key(cur,d[0]),is=!!checks[k];if(is)done++;html+='<label class="doc '+(is?"done":"")+'"><input type="checkbox" '+(is?"checked":"")+' onchange="toggle(\''+d[0].replace(/'/g,"")+'\')"><div style="flex:1;min-width:0"><b>'+d[0]+'</b><small style="color:var(--muted);display:block;margin-top:2px">Qayerdan: '+d[2]+' · '+d[3]+'</small><div style="margin-top:6px"><span class="tag '+(d[1]==="Majburiy"?"t-req":"t-opt")+'">'+d[1]+'</span>'+(d[4]?'<span class="tag t-on">Onlayn mumkin</span> <a class="onl" href="#" onclick="return false">MyGov.uz →</a>':'<span style="font-size:11.5px;color:var(--muted)">Faqat oflayn</span>')+'</div></div></label>'})});
+$("stages").innerHTML=html;const pc=total?Math.round(done/total*100):0;$("bar").style.width=pc+"%";$("pct").textContent=pc+"%";$("cnt").textContent=done+"/"+total+" hujjat tayyor"+(pc===100?" — bankka borishga tayyorsiz!":"");renderMine()}
+function toggle(doc){const k=key(cur,doc);checks[k]=!checks[k];try{localStorage.setItem("yx2",JSON.stringify(checks))}catch(e){}renderStages()}
+function resetCur(){Object.keys(checks).forEach(k=>{if(k.indexOf(cur+"|")===0)delete checks[k]});try{localStorage.setItem("yx2",JSON.stringify(checks))}catch(e){}renderStages()}
+function selCat(id){if(!PROC[id]){toast("Bu bo'lim tez orada ochiladi");return}cur=id;bank=0;document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));renderCats();renderBanks();renderStages()}
+function selBank(i){bank=i;renderBanks();toast(PROC[cur].banks[i]+" talablari ko'rsatildi")}
+function startMine(){let m={};try{m=JSON.parse(localStorage.getItem("yxMine2")||"{}")}catch(e){m={}}m[cur]=PROC[cur].title;try{localStorage.setItem("yxMine2",JSON.stringify(m))}catch(e){}renderMine();toast("Saqlangan: "+PROC[cur].title)}
+function renderMine(){let m={};try{m=JSON.parse(localStorage.getItem("yxMine2")||"{}")}catch(e){m={}}const ids=Object.keys(m);
+if(!ids.length){$("mineList").innerHTML='<p style="color:var(--muted);font-size:13px">Hali jarayon boshlanmagan.<br><br><b>Qanday boshlash:</b> yuqoridan hujjatlarni belgilang → "Jarayonni boshlash" ni bosing → shu yerda foiz bilan saqlanadi.</p>';return}
+$("mineList").innerHTML=ids.map(id=>{const p=PROC[id];if(!p)return "";let t=0,d=0;p.stages.forEach(s=>s[1].forEach(x=>{t++;if(checks[key(id,x[0])])d++}));const pc=Math.round(d/t*100);return '<div class="mine"><b>'+m[id]+'</b><div class="pbar"><i style="width:'+pc+'%"></i></div><small style="color:var(--muted)">'+pc+'% · '+d+'/'+t+' hujjat</small><div style="margin-top:6px"><button class="btn btn-g" style="padding:6px 12px;font-size:12px" onclick="selCat(\''+id+'\')">Davom etish →</button></div></div>'}).join("")}
+renderCats();renderBanks();renderStages();
+</script>
+</body>
+</html>
