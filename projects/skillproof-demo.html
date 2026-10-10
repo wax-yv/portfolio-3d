@@ -2,153 +2,472 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillProof — Verified Skills · Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkillProof, demo</title>
 <style>
-:root{--bg:#f7f6f3;--surface:#fff;--ink:#191817;--muted:#78716c;--line:#e8e4de;--p:#7c3aed;--pd:#6d28d9;--soft:#f5f0ff;--lime:#bef264;--green:#15803d;--greenbg:#f0fdf4;--amber:#b45309;--red:#b91c1c;--radius:14px;--shadow:0 1px 3px rgba(25,24,23,.08),0 6px 18px rgba(25,24,23,.06);--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
+/* Tokens: one surface colour, one accent. Depth comes only from paired light/dark shadows. */
+:root{
+  --bg:#e3e7ec; --hi:#fbfcfe; --lo:#b6bfcb;
+  --ink:#141a22; --muted:#4e5a69; --accent:#0a6b57;
+  --r:12px; --r-s:8px;
+  --raise:6px 6px 14px var(--lo),-6px -6px 14px var(--hi);
+  --raise-s:3px 3px 7px var(--lo),-3px -3px 7px var(--hi);
+  --inset:inset 3px 3px 7px var(--lo),inset -3px -3px 7px var(--hi);
+  --inset-s:inset 2px 2px 4px var(--lo),inset -2px -2px 4px var(--hi);
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55}
-.app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
-.side{background:#16130f;color:#d6d3d1;padding:18px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
-.brand{display:flex;gap:10px;align-items:center;color:#fff;font-weight:800;font-size:16px;padding:4px 8px 14px}
-.mark{width:34px;height:34px;border-radius:10px;background:var(--lime);display:flex;align-items:center;justify-content:center}
-.nav{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;color:#d6d3d1;font-size:13.5px;font-weight:600;background:none;border:0;cursor:pointer;width:100%;text-align:left}
-.nav:hover{background:rgba(255,255,255,.08);color:#fff}.nav.active{background:#fff;color:#16130f}
-.nlabel{font-size:11px;letter-spacing:.8px;font-weight:800;color:#a8a29e;padding:10px 10px 4px;text-transform:uppercase}
-.sfoot{margin-top:auto;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:12px;font-size:12px}
-.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 26px;display:flex;gap:12px;align-items:center}
-.wrap{padding:22px 26px 60px;max-width:1240px}
-.hero{background:#16130f;color:#fff;border-radius:18px;padding:24px 26px;display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:center;box-shadow:var(--shadow);margin-bottom:16px}
-.hero h1{font-size:21px;margin-bottom:6px}.hero h1 span{color:var(--lime)}
-.hero p{color:#d6d3d1;font-size:13.5px;max-width:600px}
-.flow{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
-.flow span{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:5px 13px;font-size:12px}
-.flow b{color:var(--lime)}
-.proof{background:rgba(190,242,100,.12);border:1px solid rgba(190,242,100,.4);border-radius:13px;padding:15px 17px;font-size:12.8px}
-.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
-.btn-p{background:var(--p);color:#fff}.btn-p:hover{background:var(--pd)}
-.btn-l{background:var(--lime);color:#16130f}.btn-g{background:#fff;border:1px solid var(--line);color:var(--ink)}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:13px}
-.card-h{padding:13px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px}.card-h h3{font-size:13.5px}
-.hint{font-size:12px;color:var(--muted);background:#faf9f7;padding:9px 17px;border-bottom:1px solid var(--line)}
-.card-b{padding:17px}
-.grid{display:grid;grid-template-columns:350px 1fr;gap:13px;align-items:start}
-.user{display:flex;gap:13px;align-items:center}
-.avatar{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#bef264);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:21px;flex-shrink:0}
-.vb{display:inline-flex;align-items:center;gap:5px;background:var(--greenbg);color:var(--green);font-size:11px;font-weight:800;padding:3px 10px;border-radius:13px;border:1px solid #bbf7d0}
-.unv{display:inline-flex;background:#fef2f2;color:var(--red);font-size:11px;font-weight:800;padding:3px 10px;border-radius:13px}
-.skill{margin-bottom:12px}.skill .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;gap:8px}
-.pbar{height:9px;background:#f0ede9;border-radius:5px;overflow:hidden}.pbar i{display:block;height:100%;background:linear-gradient(90deg,#7c3aed,#bef264);transition:width .8s}
-.ch{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:10px;display:flex;gap:12px;align-items:center}
-.ch:hover{border-color:var(--p)}
-.lv{font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:12px;background:#f0ede9;color:#57534e;white-space:nowrap}
-.task{background:#16130f;color:#e7e5e4;border-radius:12px;padding:14px 15px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;margin:10px 0;white-space:pre-wrap}
-textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;min-height:110px;resize:vertical}
-textarea:focus{outline:0;border-color:var(--p);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
-.metric{display:grid;grid-template-columns:1fr 80px;gap:6px;align-items:center;font-size:12.8px;margin-bottom:7px}
-.cmp{width:100%;border-collapse:collapse;font-size:13px}.cmp th,.cmp td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--font);font-variant-numeric:tabular-nums}
 .hidden{display:none!important}
-.skel{height:13px;border-radius:7px;background:linear-gradient(90deg,#e7e2da 25%,#f3efe9 50%,#e7e2da 75%);background-size:200% 100%;animation:sh 1s infinite;margin-bottom:8px}@keyframes sh{to{background-position:-200% 0}}
-.linkbox{display:flex;gap:8px}.linkbox input{flex:1;border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:12.5px;min-width:0}
-.steps{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.steps span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:6px 13px;border-radius:16px;font-size:12px}
-.toast{position:fixed;bottom:22px;right:22px;background:#16130f;color:#fff;padding:12px 17px;border-radius:11px;font-size:13px;display:none;z-index:99}
-@media(max-width:1000px){.grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}}
-@media(max-width:860px){.app{grid-template-columns:1fr}.side{display:none}}
+.dim,.sub{color:var(--muted)}
+.sub{font-size:12px}
+.ic{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:3;vertical-align:-2px}
+.ok{color:var(--accent);font-weight:600}
+
+/* Top bar */
+.top{max-width:960px;margin:0 auto;padding:24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700}
+.mark{width:32px;height:32px;border-radius:var(--r-s);box-shadow:var(--raise-s);display:grid;place-items:center;color:var(--accent)}
+.seg{display:flex;gap:4px;padding:5px;border-radius:var(--r);box-shadow:var(--inset)}
+.seg button{border:0;background:none;color:var(--muted);font:600 14px var(--font);padding:8px 14px;border-radius:var(--r-s);cursor:pointer;white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-current=page]{color:var(--accent);box-shadow:var(--raise-s)}
+
+/* Layout */
+main{max-width:960px;margin:0 auto;padding:8px 24px 24px}
+.lead{color:var(--muted);margin-bottom:24px}
+.card{border-radius:var(--r);box-shadow:var(--raise);padding:24px;margin-bottom:24px}
+.card h2{font-size:18px;margin-bottom:16px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.cols .card{margin-bottom:24px}
+
+/* Controls */
+.btn{border:0;background:var(--bg);color:var(--ink);font:600 14px var(--font);padding:10px 16px;border-radius:var(--r-s);box-shadow:var(--raise-s);cursor:pointer;transition:box-shadow .15s}
+.btn:hover{color:var(--accent)}
+.btn:active{box-shadow:var(--inset-s)}
+.btn[disabled]{opacity:.6;cursor:default}
+.btn-a{background:var(--accent);color:#fff}
+.btn-a:hover{color:#fff;filter:brightness(1.08)}
+.btn.sm{padding:6px 12px;font-size:12px}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+textarea,input{width:100%;border:0;border-radius:var(--r-s);background:var(--bg);color:var(--ink);box-shadow:var(--inset);padding:12px;font:13px/1.5 var(--mono)}
+textarea{min-height:140px;resize:vertical}
+.actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px}
+.linkbox{display:flex;gap:16px}
+
+/* Profile */
+.person{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.initials{width:48px;height:48px;border-radius:50%;box-shadow:var(--inset);display:grid;place-items:center;font-weight:700}
+.count{margin-left:auto;padding:6px 12px;border-radius:var(--r-s);box-shadow:var(--inset-s);font-size:12px;font-weight:600}
+.skill{margin-bottom:16px}
+.skill:last-child{margin-bottom:0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;min-height:30px}
+.row>span:last-child,.row>div{display:flex;align-items:center;gap:12px}
+.meter{position:relative;height:8px;border-radius:4px;box-shadow:var(--inset-s)}
+.meter i{display:block;height:100%;border-radius:4px;background:var(--accent)}
+.meter u{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
+.item{display:flex;align-items:center;gap:16px;padding:16px;margin-bottom:16px;border-radius:var(--r-s);box-shadow:var(--inset)}
+.item:last-child{margin-bottom:0}
+.item>div:first-child{flex:1;min-width:0}
+.item .state{font-weight:600;white-space:nowrap}
+
+/* Task and result */
+.code{white-space:pre-wrap;font:13px/1.5 var(--mono);padding:12px;margin:12px 0;border-radius:var(--r-s);box-shadow:var(--inset)}
+.task-meta{margin:12px 0 16px}
+.scorebox{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.score{font-size:40px;font-weight:700;line-height:1}
+.scorebox b{margin-left:12px}
+.crit{display:grid;grid-template-columns:minmax(110px,150px) 1fr 52px;gap:12px;align-items:center;margin-bottom:12px}
+.crit b{text-align:right}
+.missing{margin:16px 0 0 20px}
+.missing li{margin-bottom:4px}
+
+/* Employer comparison */
+.cmp{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:12px 16px;align-items:baseline}
+.cmp .h{font-weight:700;padding-bottom:12px}
+.cmp .lead-cell{color:var(--muted)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);padding:12px 20px;border-radius:var(--r-s);background:var(--bg);box-shadow:var(--raise);font-weight:600;opacity:0;pointer-events:none;transition:opacity .15s}
+.toast.show{opacity:1}
+footer{max-width:960px;margin:0 auto;padding:0 24px 48px;font-size:12px;color:var(--muted)}
+
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+@media(max-width:560px){
+  .seg{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .count{margin-left:0}
+  .item{flex-wrap:wrap}
+  .linkbox{flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="app">
-<aside class="side">
-<div class="brand"><div class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16130f" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></div>SkillProof</div>
-<div class="nlabel">Nomzod</div>
-<button class="nav active" onclick="showTab('profile')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Public Profile</button>
-<button class="nav" onclick="showTab('ch')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>Challenges</button>
-<button class="nav" onclick="showTab('res')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>AI Natija</button>
-<div class="nlabel">Ish beruvchi</div>
-<button class="nav" onclick="showTab('emp')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Employer View</button>
-<div class="sfoot"><b style="color:#fff">Ko'rsatish tartibi:</b><br>1. Profile — isbotlangan skillar<br>2. Challenges — real task<br>3. Submit → AI baho<br>4. Employer — solishtirish</div>
-</aside>
-<div>
+
 <header class="top">
-<div><div style="font-size:12px;color:var(--muted)">SkillProof / <b style="color:var(--ink)" id="crumb">Public Profile</b></div><div style="font-weight:800">Skill Verification Platform</div></div>
-<div style="margin-left:auto;display:flex;gap:8px"><button class="btn btn-g" style="padding:8px 13px" onclick="showTab('emp')">Employer kirish</button><button class="btn btn-l" style="padding:8px 13px" onclick="showTab('ch')">Take Assessment</button></div>
+  <div class="brand"><span class="mark"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>SkillProof</div>
+  <nav class="seg" aria-label="Bo'limlar">
+    <button data-tab="profile" aria-current="page">Profil</button>
+    <button data-tab="ch">Topshiriqlar</button>
+    <button data-tab="res">Natija</button>
+    <button data-tab="emp">Ish beruvchi</button>
+  </nav>
 </header>
-<div class="wrap">
-<div class="hero">
-<div><h1>CV dagi gap emas — <span>real ish bilan isbotla</span></h1>
-<p>Har bir skill real topshiriq orqali tekshiriladi, AI 6 mezon bo'yicha baholaydi, natija public profilda <b style="color:#bef264">verified</b> belgisi bilan chiqadi. Sertifikat emas — dalil.</p>
-<div class="flow"><span><b>1</b> Task tanla</span><span><b>2</b> Yechim topshir</span><span><b>3</b> AI baholaydi</span><span><b>4</b> Verified profil</span></div></div>
-<div class="proof"><b>Ish beruvchi nima ko'radi?</b><br><br>Bu profil ochiq havola orqali tekshiriladi: qaysi task, qanday ball, qachon. Quyidagi profilni nusxalab yuborish mumkin.<br><br><button class="btn btn-l" style="padding:8px 14px" onclick="showTab('ch')">Boshlash — Take Assessment</button></div>
-</div>
 
-<div id="t-profile">
-<div class="grid">
-<div>
-<div class="card"><div class="card-b"><div class="user"><div class="avatar">JK</div><div><b style="font-size:16px">Jasur Karimov</b><br><span style="color:var(--muted);font-size:12.5px">Frontend Developer · Toshkent · 3 yil</span><div style="margin-top:6px"><span class="vb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M20 6 9 17l-5-5"/></svg>ID-tekshirilgan · 2 verified skill</span></div></div></div></div></div>
-<div class="card"><div class="card-h"><h3>Skill Profile — ball + daraja</h3></div><div class="hint">Yashil belgi = real task bilan tasdiqlangan. Qizil = hali tasdiqlanmagan.</div><div class="card-b" id="skills"></div></div>
-<div class="card"><div class="card-h"><h3>Verification Link — ish beruvchiga yuborish</h3></div><div class="card-b"><div class="linkbox"><input id="vlink" value="https://skillproof.io/u/jasur-karimov-9f3a" readonly><button class="btn btn-p" style="padding:8px 13px" onclick="navigator.clipboard&&navigator.clipboard.writeText(document.getElementById('vlink').value);toast('Havola nusxalandi')">Nusxalash</button></div><p style="font-size:12px;color:var(--muted);margin-top:8px">Havolani ochgan ish beruvchi task tafsiloti va AI bahoni ko'radi.</p></div></div>
-</div>
-<div>
-<div class="card"><div class="card-h"><h3>Proof of Skill — dalillar ro'yxati</h3><span class="vb">2 verified</span></div><div class="hint">Har bir yozuv: topshiriq nomi + texnologiya + natija + sana.</div><div class="card-b" id="proofs"></div></div>
-<div class="card"><div class="card-h"><h3>AI Career Skill Gap — Senior Frontendgacha nima yetishmaydi?</h3></div><div class="hint">AI hozirgi darajangizni maqsadli rol bilan solishtiradi.</div><div class="card-b">
-<div class="skill"><div class="row"><span><b>React</b> · Advanced — talab bajarilgan</span><b>87/100</b></div><div class="pbar"><i style="width:87%"></i></div></div>
-<div class="skill"><div class="row"><span><b>TypeScript</b> · Intermediate → kerak: Advanced</span><b style="color:var(--amber)">64/100 · 2 task qoldi</b></div><div class="pbar"><i style="width:64%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></i></div></div>
-<div class="skill"><div class="row"><span><b>Testing</b> · Beginner → kerak: Advanced</span><b style="color:var(--red)">32/100 · kritik</b></div><div class="pbar"><i style="width:32%;background:linear-gradient(90deg,#dc2626,#f87171)"></i></div></div>
-<div style="background:var(--soft);border:1px solid #ddd6fe;border-radius:10px;padding:11px 14px;font-size:13px"><b>AI tavsiya (6 hafta):</b> avval Testing → Intermediate (2 task), keyin TypeScript → Advanced (1 task) + System Design asoslari.</div>
-</div></div>
-</div>
-</div>
-</div>
+<main>
+  <section id="t-profile">
+    <p class="lead">Har bir skill topshiriq bilan tasdiqlanadi. Natija ochiq havolada ko'rinadi.</p>
+    <div class="card person">
+      <div class="initials" aria-hidden="true">NN</div>
+      <div><b>Namuna Nomzod</b><div class="sub">Frontend dasturchi, Toshkent</div></div>
+      <div class="count" id="count"></div>
+    </div>
+    <div class="cols">
+      <div class="card"><h2>Skillar</h2><div id="skills"></div></div>
+      <div class="card"><h2>Dalillar</h2><div id="proofs"></div></div>
+    </div>
+    <div class="card"><h2>Senior Frontend uchun bo'shliq</h2><div id="gap"></div></div>
+    <div class="card">
+      <h2>Ochiq havola</h2>
+      <div class="linkbox">
+        <input id="vlink" value="skillproof.demo/u/namuna-nomzod" readonly aria-label="Ochiq havola">
+        <button class="btn" id="copy">Nusxalash</button>
+      </div>
+    </div>
+  </section>
 
-<div id="t-ch" class="hidden">
-<div class="card"><div class="card-h"><h3>Real Project Challenges — test emas, real ish</h3><span style="font-size:12px;color:var(--muted)">multiple-choice yo'q</span></div><div class="hint">Har bir task real ish topshirig'i. Bittasini tanlang → tafsilot ochiladi → yechim yozing → AI baholaydi.</div><div class="card-b" id="chlist"></div></div>
-<div class="card hidden" id="taskCard"><div class="card-h"><h3 id="taskTitle"></h3><button class="btn btn-g" style="padding:7px 12px" onclick="document.getElementById('taskCard').classList.add('hidden')">Yopish</button></div><div class="card-b"><div id="taskDesc" style="font-size:13px"></div><div class="task" id="taskCode"></div>
-<div style="font-size:12px;color:var(--muted);margin-bottom:6px"><b>Baholash mezonlari:</b> Correctness · Code Quality · Performance · Security · Problem Solving · Best Practices</div>
-<label style="font-size:12.5px;font-weight:700">Yechimingiz (kod / tahlil / havola):</label>
-<textarea id="sol" placeholder="Masalan: fetch bilan products oldim, useMemo bilan filter qildim... (demo uchun 2-3 qator kifoya)"></textarea>
-<div style="margin-top:10px"><button class="btn btn-p" onclick="submitSol()">Yechimni topshirish → AI baholaydi</button></div></div></div>
-</div>
+  <section id="t-ch" class="hidden">
+    <div class="card"><h2>Topshiriqlar</h2><div id="chlist"></div></div>
+    <div class="card hidden" id="taskCard">
+      <h2 id="taskTitle"></h2>
+      <p id="taskDesc"></p>
+      <pre class="code" id="taskCode"></pre>
+      <p class="sub task-meta" id="taskMeta"></p>
+      <label for="sol" class="sub">Yechim</label>
+      <textarea id="sol" spellcheck="false"></textarea>
+      <div class="actions">
+        <button class="btn" id="sample">Namuna yechim</button>
+        <button class="btn btn-a" id="submit">Topshirish</button>
+      </div>
+    </div>
+  </section>
 
-<div id="t-res" class="hidden">
-<div class="card"><div class="card-h"><h3>AI Evaluation — <span id="resTitle">natija</span></h3><span class="vb">6 mezon</span></div><div class="hint">Ballar 0–100. 80+ = Verified belgisi profilingizga qo'shiladi.</div><div class="card-b" id="resBody"><div class="empty"><b>Hali topshirilgan yechim yo'q</b><p style="font-size:13px;margin:6px 0 12px">Challenges bo'limidan task tanlab yechim yuboring.</p><button class="btn btn-p" onclick="showTab('ch')">Challenges ga o'tish</button></div></div></div>
-</div>
+  <section id="t-res" class="hidden">
+    <div class="card"><h2 id="resTitle">Natija</h2><div id="resBody"></div></div>
+  </section>
 
-<div id="t-emp" class="hidden">
-<div class="card"><div class="card-h"><h3>Employer Dashboard — 2 nomzodni yonma-yon solishtirish</h3></div><div class="hint">Ish beruvchi ballarni emas, <b>dalillarni</b> solishtiradi — har bir ball ortida task turibdi.</div><div class="card-b" style="overflow:auto">
-<table class="cmp"><tr><th>Mezon</th><th>Malika A · Frontend</th><th>Otabek B · Full-stack</th></tr>
-<tr><td>React</td><td><b>94</b> <span class="vb">verified</span></td><td><b>81</b> <span class="vb">verified</span></td></tr>
-<tr><td>TypeScript</td><td>89</td><td><b>95</b> <span class="vb">verified</span></td></tr>
-<tr><td>SQL</td><td>72</td><td><b>91</b> <span class="vb">verified</span></td></tr>
-<tr><td>Challenge soni</td><td>6 ta</td><td>8 ta</td></tr>
-<tr><td>So'nggi task</td><td>E-commerce Dashboard · 92%</td><td>Orders API · 90%</td></tr></table>
-<div style="margin-top:12px;background:var(--greenbg);border:1px solid #bbf7d0;border-radius:10px;padding:11px 14px;font-size:13px"><b>AI tavsiya:</b> sof Frontend rol uchun — <b>Malika A</b> (React 94); Full-stack rol uchun — <b>Otabek B</b> (muvozanatli).</div>
-</div></div>
-</div>
+  <section id="t-emp" class="hidden">
+    <div class="card">
+      <h2>Ikki nomzodni solishtirish</h2>
+      <p class="lead">Ballar faqat tasdiqlangan topshiriqlardan olinadi.</p>
+      <div class="cmp" id="cmp"></div>
+    </div>
+  </section>
+</main>
 
-</div>
-</div>
-</div>
-<div class="toast" id="toast"></div>
+<footer>Demo. Nomzodlar va ma'lumotlar namuna. Baholash yechimdagi kalit belgilar bo'yicha hisoblanadi, AI emas.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-const TABS=[["profile","Public Profile"],["ch","Challenges"],["res","AI Natija"],["emp","Employer View"]];
-let curT="profile",curCh=0;
-const $=id=>document.getElementById(id);
-const SKILLS=[["React",87,"Advanced",1],["Python",91,"Expert",1],["SQL",78,"Advanced",1],["TypeScript",64,"Intermediate",1],["Testing",32,"Beginner",0]];
+// ---- data (single source of truth: every number on screen is derived from CHS and PROOFS)
+const CRIT=["To'g'rilik","Kod sifati","Tezlik","Xavfsizlik","Muammoni yechish","Amaliyot"];
+const PASS=80;
+
+// keys: [criterion index, regex pattern, label shown when the item is missing]. Two keys per criterion.
 const CHS=[
-{t:"E-commerce Dashboard yarating",d:"React",lv:"Advanced",desc:"API orqali products olib, filter + pagination + loading/empty/error holatlari bilan dashboard yarating. Kod sifati va performans baholanadi.",code:"GET /api/products?category=&page=\n// Talab: filter + pagination + loading/empty/error"},
-{t:"CSV datasetni tahlil qiling",d:"Python · pandas",lv:"Intermediate",desc:"sales.csv dan top-3 mahsulot va eng kuchsiz regionni toping, 5 qatorli xulosa yozing.",code:"import pandas as pd\ndf = pd.read_csv('sales.csv')\n# groupby Category/Region + insight"},
-{t:"REST API endpoint yarating",d:"Node.js",lv:"Intermediate",desc:"POST /orders: validatsiya + standart xato formati + rate-limit (429).",code:"POST /orders { productId, qty }\n// 201 Created | 400 Bad Request | 429"},
-{t:"Sekin SQL ni tuzating",d:"SQL",lv:"Advanced",desc:"EXPLAIN bilan seq-scan sababini toping, indeks taklif qiling va foydasini o'lchang.",code:"SELECT * FROM orders WHERE status='paid' AND ...\n-- Seq Scan muammosi"}];
-function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(t._x);t._x=setTimeout(()=>t.style.display='none',2600)}
-function showTab(t){curT=t;["profile","ch","res","emp"].forEach(k=>$("t-"+k).classList.toggle("hidden",k!==t));document.querySelectorAll(".nav").forEach((n,i)=>n.classList.toggle("active",TABS[i]&&TABS[i][0]===t));$("crumb").textContent=(TABS.find(x=>x[0]===t)||[])[1]||t;window.scrollTo({top:0,behavior:"smooth"})}
-function renderSkills(){$("skills").innerHTML=SKILLS.map(s=>'<div class="skill"><div class="row"><span><b>'+s[0]+'</b> · '+s[2]+'</span><span><b>'+s[1]+'/100</b> '+(s[3]?'<span class="vb">verified</span>':'<span class="unv">tasdiqlanmagan</span>')+'</span></div><div class="pbar"><i style="width:'+s[1]+'%"></i></div></div>').join('')}
-function renderProofs(){$("proofs").innerHTML=[["E-commerce Dashboard","React · filter + pagination","Passed · 92% · 12.09.2026"],["Sales tahlili","Python · pandas","Passed · 88% · 28.08.2026"]].map(p=>'<div class="ch"><div style="width:38px;height:38px;border-radius:10px;background:var(--greenbg);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg></div><div><b>'+p[0]+'</b><br><small style="color:var(--muted)">'+p[1]+' · '+p[2]+'</small></div></div>').join('')}
-function renderCh(){$("chlist").innerHTML=CHS.map((c,i)=>'<div class="ch"><div style="flex:1;min-width:0"><b>'+c.t+'</b><br><small style="color:var(--muted)">'+c.d+' · '+c.desc+'</small></div><span class="lv">'+c.lv+'</span><button class="btn btn-p" style="padding:8px 14px" onclick="openTask('+i+')">Boshlash</button></div>').join('')}
-function openTask(i){curCh=i;$("taskCard").classList.remove("hidden");$("taskTitle").textContent=CHS[i].t;$("taskDesc").textContent=CHS[i].desc;$("taskCode").textContent=CHS[i].code;$("taskCard").scrollIntoView({behavior:"smooth",block:"center"})}
-function submitSol(){const v=$("sol").value.trim();if(!v){toast("Avval yechimingizni yozing (2-3 qator kifoya)");return}showTab("res");$("resTitle").textContent=CHS[curCh].t;const b=$("resBody");b.innerHTML='<div class="skel"></div><div class="skel" style="width:75%"></div><div class="skel" style="width:55%"></div><p style="font-size:13px;color:var(--muted)">AI baholamoqda: correctness → quality → performance → security...</p>';
-setTimeout(()=>{const sc=[92,85,78,88,90,84],names=["Correctness","Code Quality","Performance","Security","Problem Solving","Best Practices"];
-b.innerHTML='<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:12px"><svg width="150" height="120" viewBox="0 0 150 120">'+sc.map((s,i)=>'<rect x="5" y="'+(4+i*19)+'" width="70" height="10" rx="5" fill="#f0ede9"/><rect x="5" y="'+(4+i*19)+'" width="'+(s/100*70)+'" height="10" rx="5" fill="#7c3aed"/>').join('')+'</svg><div><div style="font-size:40px;font-weight:800;line-height:1">87<span style="font-size:16px;color:var(--muted)">/100</span></div><span class="vb">Verified · '+(CHS[curCh].d)+' · '+CHS[curCh].lv+'</span><div style="font-size:12px;color:var(--muted);margin-top:4px">Profilingizga verified belgisi qo\'shildi</div></div></div>'+names.map((n,i)=>'<div class="metric"><span>'+n+'</span><b>'+sc[i]+'/100</b></div>').join('')+'<div style="background:var(--soft);border:1px solid #ddd6fe;border-radius:10px;padding:11px 14px;font-size:13px;margin-top:10px"><b>AI xulosa:</b> Yechim to\'g\'ri va to\'liq. Kuchli tomon: xato holatlari. O\'sish nuqtasi: error-boundary + memoization qo\'shing. Keyingi tavsiya: TypeScript → Advanced task.</div>';toast("Baholash tayyor — 87/100 Verified")},1300)}
-renderSkills();renderProofs();renderCh();
+{title:"Mahsulotlar paneli",skill:"React",lv:"Advanced",
+ desc:"API dan mahsulotlarni olib, filter va sahifalash bilan panel yarating. Loading, bo'sh va xato holatlari ko'rsatilsin.",
+ code:"GET /api/products?category=&page=\n// filter + pagination\n// loading, empty, error",
+ keys:[
+  [0,'fetch|axios',"API so'rovi"],[0,'catch|\\.ok\\b',"xatoni tutish"],
+  [1,'useState|useReducer',"holat (state)"],[1,'key\\s*=',"ro'yxat uchun key"],
+  [2,'useMemo|useCallback|memo\\(',"memoizatsiya"],[2,'page|limit|slice',"sahifalash"],
+  [3,'AbortController|signal',"so'rovni bekor qilish"],[3,'encodeURIComponent|URLSearchParams',"parametrlarni kodlash"],
+  [4,'loading|skeleton',"loading holati"],[4,'empty|length\\s*===?\\s*0',"bo'sh holat"],
+  [5,'useEffect',"useEffect"],[5,'if\\s*\\(\\s*error|error\\s*&&|ErrorBoundary',"xato holatini ko'rsatish"]],
+ sample:`function Products(){
+  const [items,setItems]=useState([]);
+  const [page,setPage]=useState(1);
+  const [loading,setLoading]=useState(true);
+  const [error,setError]=useState(null);
+  useEffect(()=>{
+    const ctrl=new AbortController();
+    const q=new URLSearchParams({page});
+    fetch('/api/products?'+q,{signal:ctrl.signal})
+      .then(r=>{if(!r.ok)throw new Error(r.status);return r.json()})
+      .then(setItems).catch(setError).finally(()=>setLoading(false));
+    return()=>ctrl.abort();
+  },[page]);
+  if(loading) return <p>Yuklanmoqda</p>;
+  if(error) return <p>Xato: {error.message}</p>;
+  if(items.length===0) return <p>Mahsulot yo'q</p>;
+  return items.map(p=><Item key={p.id} {...p}/>);
+}`},
+{title:"Savdo tahlili",skill:"Python",lv:"Intermediate",
+ desc:"sales.csv dan eng ko'p sotilgan 3 mahsulotni va eng zaif regionni toping, qisqa xulosa chiqaring.",
+ code:"import pandas as pd\ndf = pd.read_csv('sales.csv')\n# top-3 mahsulot, eng zaif region, xulosa",
+ keys:[
+  [0,'groupby',"guruhlash (groupby)"],[0,'nlargest|sort_values|head\\(3\\)',"top-3 tanlash"],
+  [1,'read_csv',"read_csv"],[1,'def |#',"funksiya yoki izoh"],
+  [2,'agg\\(|\\.sum\\(',"agregatsiya"],[2,'usecols|dtype|category',"dtype yoki usecols"],
+  [3,'dropna|isna|fillna',"bo'sh qiymatlarni tozalash"],[3,'assert|try|raise',"kirishni tekshirish"],
+  [4,'idxmin|nsmallest|\\.min\\(',"eng zaif regionni topish"],[4,'print|xulosa|summary',"xulosa"],
+  [5,'import pandas',"pandas import"],[5,'if __name__|def ',"funksiyaga ajratish"]],
+ sample:`import pandas as pd
+
+def analyze(path):
+    # load and clean
+    df = pd.read_csv(path)
+    df = df.dropna(subset=['revenue'])
+    assert 'region' in df.columns
+    top = df.groupby('product')['revenue'].sum().nlargest(3)
+    by_region = df.groupby('region')['revenue'].agg('sum')
+    weakest = by_region.idxmin()
+    print('Top-3:', list(top.index))
+    print('Eng zaif region:', weakest)
+
+if __name__ == '__main__':
+    analyze('sales.csv')`},
+{title:"Tiplangan API klienti",skill:"TypeScript",lv:"Advanced",
+ desc:"Generic fetch klient yozing: javob tipi, status tekshiruvi va maxsus xato bilan.",
+ code:"async function api<T>(url: string): Promise<T>\n// javob tipi, status, xato",
+ keys:[
+  [0,'interface|type\\s+\\w+',"tip e'loni"],[0,'Promise<',"Promise tipi"],
+  [1,'<T>|<T,',"generic (T)"],[1,'unknown',"unknown"],
+  [2,'AbortSignal|cache|Map<',"keshlash yoki bekor qilish"],[2,'readonly|as const',"readonly"],
+  [3,'res\\.ok|\\.status',"status tekshiruvi"],[3,'zod|safeParse|typeof|instanceof',"runtime tekshiruv"],
+  [4,'extends Error',"maxsus xato klassi"],[4,'try|catch',"try/catch"],
+  [5,'export',"export"],[5,'Record<|satisfies|Readonly<',"yordamchi tiplar"]],
+ sample:`export interface ApiError { status: number; message: string }
+
+export class HttpError extends Error {
+  constructor(public status: number, message: string) { super(message); }
+}
+
+const cache = new Map<string, unknown>();
+
+export async function api<T>(url: string, signal?: AbortSignal): Promise<T> {
+  if (cache.has(url)) return cache.get(url) as T;
+  try {
+    const res = await fetch(url, { signal });
+    if (!res.ok) throw new HttpError(res.status, res.statusText);
+    const data: unknown = await res.json();
+    cache.set(url, data);
+    return data as T;
+  } catch (e) {
+    if (e instanceof HttpError) throw e;
+    throw new HttpError(0, 'Network error');
+  }
+}`},
+{title:"Sekin so'rovni tuzatish",skill:"SQL",lv:"Advanced",
+ desc:"EXPLAIN bilan Seq Scan sababini toping, indeks taklif qiling va tezlik farqini o'lchang.",
+ code:"SELECT * FROM orders\nWHERE status = 'paid' AND created_at > now() - interval '30 days'\nORDER BY created_at DESC;",
+ keys:[
+  [0,'EXPLAIN',"EXPLAIN"],[0,'CREATE INDEX',"CREATE INDEX"],
+  [1,'SELECT\\s+(?!\\*)\\w+',"SELECT * o'rniga ustunlar"],[1,'ORDER BY',"tartiblash indeksga mosligi"],
+  [2,'Seq Scan|Index Scan|Bitmap',"reja tahlili"],[2,'status\\s*,\\s*created_at|INCLUDE|WHERE\\s+status\\s*=',"tarkibiy yoki qisman indeks"],
+  [3,'\\$1|prepared|bind',"parametrlangan so'rov"],[3,'inject',"SQL injection"],
+  [4,'ms\\b|vaqt|cost',"vaqtni o'lchash"],[4,'oldin|keyin|before|after',"oldin va keyin"],
+  [5,'ANALYZE|VACUUM',"ANALYZE"],[5,'LIMIT',"LIMIT"]],
+ sample:`-- before: EXPLAIN shows Seq Scan on orders, 480 ms
+EXPLAIN
+SELECT id, total, created_at FROM orders
+WHERE status = $1 AND created_at > now() - interval '30 days'
+ORDER BY created_at DESC;
+
+-- fix: composite index matches the filter and the sort
+CREATE INDEX idx_orders_status_created ON orders (status, created_at DESC);
+
+-- after: Index Scan, 12 ms. Parametrlangan so'rov SQL injection oldini oladi.`},
+{title:"Funksiya uchun testlar",skill:"Testing",lv:"Intermediate",
+ desc:"calcDiscount(price, percent) uchun testlar yozing: oddiy, chegaraviy va noto'g'ri qiymatlar.",
+ code:"function calcDiscount(price, percent) {\n  // percent 0..100 oralig'ida bo'lmasa xato tashlaydi\n}",
+ keys:[
+  [0,'expect|assert',"expect yoki assert"],[0,'toBe|toEqual|equal',"natijani solishtirish"],
+  [1,'describe|test\\(|it\\(',"test bloklari"],[1,'beforeEach|setup|fixture',"tayyorlov (beforeEach)"],
+  [2,'\\.each|parametr',"parametrli testlar"],[2,'mock|spy|jest\\.fn|vi\\.fn',"mock"],
+  [3,'toThrow|throws',"xato tashlashni tekshirish"],[3,'NaN|null|undefined|manfiy|negative',"noto'g'ri kiritish"],
+  [4,'chegara|boundary|edge',"chegaraviy qiymat"],[4,'100|\\b0\\b',"0 va 100 holatlari"],
+  [5,'should|qaytaradi|returns',"aniq test nomlari"],[5,'coverage|arrange|act|assert',"AAA yoki coverage"]],
+ sample:`import { calcDiscount } from './discount';
+
+describe('calcDiscount', () => {
+  test.each([[100, 10, 90], [200, 50, 100], [80, 0, 80]])(
+    'returns %i - %i%% = %i', (p, d, out) => {
+      expect(calcDiscount(p, d)).toBe(out);
+    });
+
+  test('chegara: 100% gives 0', () => {
+    expect(calcDiscount(50, 100)).toBe(0);
+  });
+
+  test('throws on negative percent', () => {
+    expect(() => calcDiscount(50, -5)).toThrow();
+  });
+
+  test('NaN price is rejected', () => {
+    expect(() => calcDiscount(NaN, 10)).toThrow();
+  });
+});`}
+];
+
+// A proof exists only for a passed attempt (score >= PASS). Skills are derived from these.
+const PROOFS=[{ch:0,score:92,date:"2026-09-12"},{ch:1,score:88,date:"2026-08-28"}];
+const ROLE=[["React",85],["TypeScript",80],["Testing",70]];
+const CANDS=[
+ {n:"Nomzod A",role:"Frontend",sk:{React:94,TypeScript:89,SQL:null},count:6,last:"Mahsulotlar paneli, 92"},
+ {n:"Nomzod B",role:"Full-stack",sk:{React:81,TypeScript:95,SQL:91},count:8,last:"Buyurtmalar API, 90"}];
+
+const best=i=>{const s=PROOFS.filter(p=>p.ch===i).map(p=>p.score);return s.length?Math.max(...s):null};
+const levelOf=s=>s>=90?"Expert":"Advanced";
+
+// Demo evaluator: checks the solution for expected constructs. Score depends on the input.
+function evaluate(ch,text){
+  const t=text.trim(), lenF=Math.min(t.length/260,1);
+  const per=CRIT.map(()=>({hit:0,tot:0,miss:[]}));
+  for(const [c,pattern,label] of ch.keys){
+    per[c].tot++;
+    if(new RegExp(pattern,"i").test(t)) per[c].hit++; else per[c].miss.push(label);
+  }
+  const scores=per.map(x=>Math.round(15+lenF*25+(x.hit/x.tot)*60));
+  const total=Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+  // missing items, weakest criteria first
+  const miss=scores.map((s,i)=>[s,i]).sort((a,b)=>a[0]-b[0]).flatMap(([,i])=>per[i].miss).slice(0,5);
+  return {scores,total,miss,passed:total>=PASS};
+}
+
+// ---- ui
+const $=id=>document.getElementById(id);
+const CHECK='<svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+let cur=0,last=null;
+
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("show"),2400)}
+
+function showTab(t){
+  ["profile","ch","res","emp"].forEach(k=>$("t-"+k).classList.toggle("hidden",k!==t));
+  document.querySelectorAll(".seg button").forEach(b=>{
+    if(b.dataset.tab===t) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");
+  });
+  window.scrollTo(0,0);
+}
+
+function renderProfile(){
+  const verified=CHS.filter((_,i)=>best(i)!==null).length;
+  $("count").textContent=verified+" / "+CHS.length+" skill tasdiqlangan";
+
+  $("skills").innerHTML=CHS.map((c,i)=>{
+    const s=best(i);
+    const right=s!==null
+      ?'<span class="ok">'+CHECK+" "+s+"/100, "+levelOf(s)+"</span>"
+      :'<span><span class="dim">tasdiqlanmagan</span><button class="btn sm" data-open="'+i+'">Tasdiqlash</button></span>';
+    return '<div class="skill"><div class="row"><b>'+c.skill+"</b>"+right+'</div><div class="meter"><i style="width:'+(s||0)+'%"></i></div></div>';
+  }).join("");
+
+  $("proofs").innerHTML=PROOFS.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(p=>
+    '<div class="item"><div><b>'+CHS[p.ch].title+'</b><div class="sub">'+CHS[p.ch].skill+", "+p.date+'</div></div><span class="state ok">'+p.score+"/100</span></div>").join("");
+
+  // Gap to the target role: derived from the same proofs
+  const rows=ROLE.map(([name,req])=>{
+    const i=CHS.findIndex(c=>c.skill===name), s=best(i);
+    return {name,req,i,s,gap:s===null?req:Math.max(0,req-s)};
+  });
+  const todo=rows.filter(r=>r.gap>0).sort((a,b)=>b.gap-a.gap);
+  $("gap").innerHTML=rows.map(r=>{
+    const text=r.s===null?"tasdiqlanmagan, talab "+r.req:r.s>=r.req?r.s+"/"+r.req+", bajarilgan":r.s+"/"+r.req+", yana "+r.gap+" ball";
+    return '<div class="skill"><div class="row"><b>'+r.name+'</b><span class="'+(r.gap?"dim":"ok")+'">'+text+'</span></div><div class="meter"><i style="width:'+(r.s||0)+'%"></i><u style="left:'+r.req+'%"></u></div></div>';
+  }).join("")+(todo.length
+    ?'<div class="actions"><span class="dim">Keyingi topshiriq:</span>'+todo.map(r=>'<button class="btn sm" data-open="'+r.i+'">'+r.name+"</button>").join("")+"</div>"
+    :'<p class="ok">Barcha talablar bajarilgan.</p>');
+}
+
+function renderChallenges(){
+  $("chlist").innerHTML=CHS.map((c,i)=>{
+    const s=best(i);
+    return '<div class="item"><div><b>'+c.title+'</b><div class="sub">'+c.skill+", "+c.lv+'</div></div><span class="state '+(s!==null?"ok":"dim")+'">'+(s!==null?s+"/100":"ochiq")+'</span><button class="btn" data-open="'+i+'">Ochish</button></div>';
+  }).join("");
+}
+
+function openTask(i){
+  cur=i;
+  const c=CHS[i];
+  showTab("ch");
+  $("taskCard").classList.remove("hidden");
+  $("taskTitle").textContent=c.title;
+  $("taskDesc").textContent=c.desc;
+  $("taskCode").textContent=c.code;
+  $("taskMeta").textContent="Mezonlar: "+CRIT.join(", ").toLowerCase()+". "+PASS+" va undan yuqori ball skillni tasdiqlaydi.";
+  $("sol").value="";
+  $("taskCard").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"});
+}
+
+// Save a passed attempt as a proof; keep the better result if one already exists
+function save(r){
+  const old=best(cur);
+  if(!r.passed) return PASS+" balldan past, profilga qo'shilmadi.";
+  if(old!==null&&old>=r.total) return "Oldingi natija ("+old+") yuqoriroq, profil o'zgarmadi.";
+  const date=new Date().toISOString().slice(0,10);
+  const ex=PROOFS.find(p=>p.ch===cur);
+  if(ex){ex.score=r.total;ex.date=date}else PROOFS.push({ch:cur,score:r.total,date});
+  return "Skill profilga qo'shildi.";
+}
+
+function renderResult(){
+  const b=$("resBody");
+  if(!last){
+    $("resTitle").textContent="Natija";
+    b.innerHTML='<p class="dim">Hali yechim topshirilmagan.</p><div class="actions"><button class="btn btn-a" data-tab="ch">Topshiriqlarga o\'tish</button></div>';
+    return;
+  }
+  $("resTitle").textContent=CHS[last.ch].title;
+  b.innerHTML='<div class="scorebox"><span class="score">'+last.total+'</span><span class="dim">/100</span><b class="'+(last.passed?"ok":"")+'">'+(last.passed?"Tasdiqlandi":"Tasdiqlanmadi")+'</b></div>'
+    +'<p class="sub" style="margin-bottom:24px">'+last.note+"</p>"
+    +CRIT.map((n,i)=>'<div class="crit"><span>'+n+'</span><div class="meter"><i style="width:'+last.scores[i]+'%"></i></div><b>'+last.scores[i]+"</b></div>").join("")
+    +(last.miss.length?'<p class="sub" style="margin-top:24px">Yetishmayapti</p><ul class="missing">'+last.miss.map(m=>"<li>"+m+"</li>").join("")+"</ul>":"")
+    +'<div class="actions"><button class="btn" data-open="'+last.ch+'">Qayta urinish</button><button class="btn" data-tab="profile">Profilga qaytish</button></div>';
+}
+
+function renderEmployer(){
+  const names=["React","TypeScript","SQL"];
+  let h='<span></span>'+CANDS.map(c=>'<div class="h">'+c.n+'<div class="sub">'+c.role+"</div></div>").join("");
+  for(const n of names){
+    const v=CANDS.map(c=>c.sk[n]), top=Math.max(...v.map(x=>x===null?-1:x));
+    h+='<span class="lead-cell">'+n+"</span>"+v.map(x=>x===null?'<span class="dim">tasdiqlanmagan</span>':'<span class="'+(x===top?"ok":"")+'">'+x+"/100</span>").join("");
+  }
+  h+='<span class="lead-cell">Topshiriqlar</span>'+CANDS.map(c=>"<span>"+c.count+"</span>").join("");
+  h+='<span class="lead-cell">Oxirgisi</span>'+CANDS.map(c=>"<span>"+c.last+"</span>").join("");
+  $("cmp").innerHTML=h;
+}
+
+function renderAll(){renderProfile();renderChallenges();renderResult();renderEmployer()}
+
+// One delegated click handler for navigation and "open task" buttons
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-tab],[data-open]");
+  if(!el) return;
+  if(el.dataset.open!==undefined) openTask(+el.dataset.open); else showTab(el.dataset.tab);
+});
+
+$("sample").onclick=()=>{$("sol").value=CHS[cur].sample};
+
+$("submit").onclick=()=>{
+  const text=$("sol").value;
+  if(text.trim().length<20){toast("Yechim juda qisqa, kamida 20 belgi yozing");return}
+  const btn=$("submit");
+  btn.disabled=true;btn.textContent="Baholanmoqda";
+  setTimeout(()=>{
+    const r=evaluate(CHS[cur],text);
+    last={ch:cur,...r,note:save(r)};
+    btn.disabled=false;btn.textContent="Topshirish";
+    renderAll();showTab("res");
+  },450);
+};
+
+$("copy").onclick=()=>{
+  if(navigator.clipboard) navigator.clipboard.writeText($("vlink").value).catch(()=>{});
+  toast("Havola nusxalandi");
+};
+
+renderAll();
 </script>
 </body>
 </html>
