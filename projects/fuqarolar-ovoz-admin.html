@@ -2,423 +2,353 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Fuqarolar Ovozi — Admin panel</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuqarolar ovozi — admin, demo</title>
 <style>
-:root {
-  --primary: #1a1a2e;
-  --primary-light: #16213e;
-  --accent: #1a56db;
-  --accent-light: #e8effc;
-  --success: #16a34a;
-  --success-light: #dcfce7;
-  --danger: #dc2626;
-  --danger-light: #fee2e2;
-  --warning: #d97706;
-  --warning-light: #fef3c7;
-  --info: #0891b2;
-  --info-light: #cffafe;
-  --bg: #f0f4f8;
-  --card: #ffffff;
-  --text: #0f172a;
-  --text2: #475569;
-  --text3: #94a3b8;
-  --border: #e2e8f0;
-  --radius: 12px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+/* Tokens: bir asosiy rang, bir aksent. Chukklik faqat juft yorug'/qorong'i soyalardan. */
+:root{
+  --bg:#e3e7ec; --hi:#fbfcfe; --lo:#b6bfcb;
+  --ink:#141a22; --muted:#4e5a69; --accent:#8a5a10;
+  --ok:#0a6b57; --bad:#a12d20;
+  --r:12px; --r-s:8px;
+  --raise:6px 6px 14px var(--lo),-6px -6px 14px var(--hi);
+  --raise-s:3px 3px 7px var(--lo),-3px -3px 7px var(--hi);
+  --inset:inset 3px 3px 7px var(--lo),inset -3px -3px 7px var(--hi);
+  --inset-s:inset 2px 2px 4px var(--lo),inset -2px -2px 4px var(--hi);
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--font);font-variant-numeric:tabular-nums}
+.hidden{display:none!important}
+.dim,.sub{color:var(--muted)}
+.sub{font-size:12px}
+.ic{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:3;vertical-align:-2px}
+.ok{color:var(--ok);font-weight:600}
+.bad{color:var(--bad);font-weight:600}
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+.top{max-width:960px;margin:0 auto;padding:24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700}
+.mark{width:32px;height:32px;border-radius:var(--r-s);box-shadow:var(--raise-s);display:grid;place-items:center;color:var(--accent)}
+.admin-badge{font-size:12px;font-weight:600;padding:6px 12px;border-radius:var(--r-s);box-shadow:var(--inset-s)}
+.seg{display:flex;gap:4px;padding:5px;border-radius:var(--r);box-shadow:var(--inset)}
+.seg button{border:0;background:none;color:var(--muted);font:600 14px var(--font);padding:8px 14px;border-radius:var(--r-s);cursor:pointer;white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-current=page]{color:var(--accent);box-shadow:var(--raise-s)}
+.seg button[disabled]{opacity:.5;cursor:default}
 
-/* ══════ HEADER ══════ */
-.header { background: linear-gradient(135deg, var(--primary) 0%, #0f3460 100%); color: #fff; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(26,26,46,0.3); }
-.header-inner { max-width: 1100px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 10px; }
-.header-brand { display: flex; align-items: center; gap: 10px; }
-.header-brand .shield { width: 32px; height: 32px; border-radius: 8px; background: url('https://data.daryo.uz/media/2019/11/800px-Bandera_de_Khiva_1917-1920.svg_.png') center/cover no-repeat; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
-.header-brand h1 { font-size: 14px; font-weight: 700; }
-.header-brand p { font-size: 10px; opacity: 0.7; margin-top: 1px; }
-.admin-badge { display: none; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 16px; font-size: 11px; font-weight: 500; }
-.admin-badge.active { display: flex; }
-.admin-badge .logout { opacity: 0.5; cursor: pointer; font-size: 13px; transition: opacity 0.2s; }
-.admin-badge .logout:hover { opacity: 1; }
+main{max-width:960px;margin:0 auto;padding:8px 24px 24px}
+.lead{color:var(--muted);margin-bottom:24px}
+.card{border-radius:var(--r);box-shadow:var(--raise);padding:24px;margin-bottom:24px}
+.card h2{font-size:18px;margin-bottom:16px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.cols .card{margin-bottom:24px}
 
-/* ══════ CONTAINER ══════ */
-.container { max-width: 960px; margin: 0 auto; padding: 16px; flex: 1; width: 100%; }
+.btn{border:0;background:var(--bg);color:var(--ink);font:600 14px var(--font);padding:10px 16px;border-radius:var(--r-s);box-shadow:var(--raise-s);cursor:pointer;transition:box-shadow .15s}
+.btn:hover{color:var(--accent)}
+.btn:active{box-shadow:var(--inset-s)}
+.btn[disabled]{opacity:.6;cursor:default}
+.btn-a{background:var(--accent);color:#fff}
+.btn-a:hover{color:#fff;filter:brightness(1.08)}
+.btn.ok-btn{color:var(--ok)} .btn.bad-btn{color:var(--bad)}
+.btn.sm{padding:6px 12px;font-size:12px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input,select,textarea{width:100%;border:0;border-radius:var(--r-s);background:var(--bg);color:var(--ink);box-shadow:var(--inset);padding:12px;font:13px/1.5 var(--font)}
+textarea{min-height:70px;resize:vertical}
+label{font-weight:600;font-size:13px;display:block;margin-bottom:6px}
+.field{margin-bottom:16px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
-/* ══════ SCREENS ══════ */
-.screen { display: none; animation: fadeIn 0.3s ease; }
-.screen.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat{border-radius:var(--r);box-shadow:var(--raise);padding:18px}
+.stat b{font-size:22px;display:block}
+.stat span{font-size:12px;color:var(--muted)}
 
-/* ══════ CARDS ══════ */
-.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; margin-bottom: 14px; border: 1px solid var(--border); }
-.card-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--bg); display: flex; align-items: center; gap: 6px; }
+.item{padding:16px;margin-bottom:16px;border-radius:var(--r-s);box-shadow:var(--inset)}
+.item:last-child{margin-bottom:0}
+.item-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.item-head>div:first-child{flex:1;min-width:0}
+.badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;background:var(--bg);box-shadow:var(--raise-s);white-space:nowrap}
+.b-review{color:var(--warn,#8a5a10);color:var(--accent)} .b-voting{color:var(--ok)}
+.b-accepted{color:var(--ok)} .b-rejected{color:var(--bad)} .b-implemented{color:var(--ok)}
+.panel{margin-top:12px;padding-top:12px;border-top:1px solid rgba(78,90,105,.15)}
+.panel p{font-size:13px;margin-bottom:12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 
-/* ══════ FORMS ══════ */
-.form-group { margin-bottom: 12px; }
-.form-group label { display: block; font-size: 11px; font-weight: 600; color: var(--text2); margin-bottom: 4px; }
-input, select, textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; transition: all 0.2s; background: #fff; }
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,86,219,0.08); }
-textarea { resize: vertical; min-height: 60px; }
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid rgba(78,90,105,.15);white-space:nowrap}
+th:last-child,td:last-child{text-align:right}
+th{font-size:12px;color:var(--muted)}
+.num{text-align:right;font-variant-numeric:tabular-nums}
 
-/* ══════ BUTTONS ══════ */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 9px 16px; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; white-space: nowrap; }
-.btn:active { transform: scale(0.97); }
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: #1e40af; }
-.btn-success { background: var(--success); color: #fff; }
-.btn-success:hover { background: #15803d; }
-.btn-danger { background: var(--danger); color: #fff; }
-.btn-danger:hover { background: #b91c1c; }
-.btn-info { background: var(--info); color: #fff; }
-.btn-info:hover { background: #0e7490; }
-.btn-outline { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
-.btn-outline:hover { background: var(--accent-light); }
-.btn-sm { padding: 6px 12px; font-size: 11px; border-radius: 6px; }
-.btn-block { width: 100%; }
-.btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
+.share{margin-bottom:14px}
+.share .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.meter{height:8px;border-radius:4px;box-shadow:var(--inset-s);margin-bottom:6px}
+.meter i{display:block;height:100%;border-radius:4px;background:var(--accent)}
 
-/* ══════ LOGIN ══════ */
-.login-wrap { max-width: 380px; margin: 40px auto; }
-.login-header { text-align: center; margin-bottom: 20px; }
-.login-header .shield-lg { width: 64px; height: 64px; border-radius: 12px; background: url('https://data.daryo.uz/media/2019/11/800px-Bandera_de_Khiva_1917-1920.svg_.png') center/cover no-repeat; margin: 0 auto 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-.login-header h2 { font-size: 20px; font-weight: 800; color: var(--text); }
-.login-header p { font-size: 12px; color: var(--text3); margin-top: 3px; }
+.hint{padding:16px;border-radius:var(--r-s);box-shadow:var(--inset);color:var(--muted);text-align:center}
+.login-box{max-width:420px;margin:0 auto}
+.demo-cred{font:12px/1.6 ui-monospace,Menlo,monospace;padding:10px 12px;border-radius:var(--r-s);box-shadow:var(--inset);margin-bottom:16px}
 
-/* ══════ STATS ══════ */
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 16px; }
-.stat-card { background: var(--card); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); text-align: center; border-left: 4px solid var(--accent); transition: transform 0.2s; }
-.stat-card:hover { transform: translateY(-2px); }
-.stat-card .num { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1; }
-.stat-card .lbl { font-size: 10px; color: var(--text3); margin-top: 4px; font-weight: 500; }
-.stat-card.s-green { border-left-color: var(--success); }
-.stat-card.s-yellow { border-left-color: var(--warning); }
-.stat-card.s-red { border-left-color: var(--danger); }
-.stat-card.s-teal { border-left-color: var(--info); }
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);padding:12px 20px;border-radius:var(--r-s);background:var(--bg);box-shadow:var(--raise);font-weight:600;opacity:0;pointer-events:none;transition:opacity .15s;max-width:90vw}
+.toast.show{opacity:1}
+footer{max-width:960px;margin:0 auto;padding:0 24px 48px;font-size:12px;color:var(--muted)}
 
-/* ══════ TABS ══════ */
-.tabs { display: flex; gap: 0; margin-bottom: 14px; border-radius: 8px; overflow: hidden; background: var(--bg); padding: 3px; }
-.tab { flex: 1; padding: 7px 10px; background: transparent; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s; border: none; border-radius: 6px; font-family: inherit; color: var(--text2); text-align: center; }
-.tab.active { background: var(--primary); color: #fff; box-shadow: 0 2px 8px rgba(26,26,46,0.2); }
-.tab:hover:not(.active) { background: #e2e8f0; }
-.tab .count { display: inline-block; background: rgba(0,0,0,0.08); padding: 0 5px; border-radius: 8px; font-size: 9px; margin-left: 3px; }
-.tab.active .count { background: rgba(255,255,255,0.2); }
-
-/* ══════ BADGES ══════ */
-.badge { display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; white-space: nowrap; }
-.badge-review { background: var(--warning-light); color: var(--warning); }
-.badge-voting { background: var(--info-light); color: var(--info); }
-.badge-accepted { background: var(--success-light); color: var(--success); }
-.badge-rejected { background: var(--danger-light); color: var(--danger); }
-.badge-implemented { background: #ede9fe; color: #7c3aed; }
-
-/* ══════ PROPOSAL ROW ══════ */
-.prop-row { border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; transition: all 0.2s; background: var(--card); }
-.prop-row:hover { border-color: #cbd5e1; }
-.pr-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
-.pr-title { font-size: 13px; font-weight: 600; }
-.pr-cat { font-size: 10px; color: var(--text3); margin-top: 2px; }
-.pr-desc { font-size: 12px; color: var(--text2); margin-top: 6px; max-height: 36px; overflow: hidden; line-height: 1.4; }
-.pr-meta { display: flex; gap: 10px; font-size: 10px; color: var(--text3); margin-top: 6px; flex-wrap: wrap; }
-.pr-meta span { display: flex; align-items: center; gap: 2px; }
-.pr-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
-.pr-image { margin-top: 8px; }
-.pr-image img { max-width: 100px; max-height: 70px; border-radius: 6px; object-fit: cover; }
-.pr-note { font-size: 11px; color: #92400e; background: var(--warning-light); padding: 6px 10px; border-radius: 6px; margin-top: 6px; line-height: 1.4; }
-
-/* ══════ REVIEW PANEL ══════ */
-.review-panel { background: var(--accent-light); border: 1.5px solid #bfdbfe; border-radius: var(--radius); padding: 14px; margin-top: 10px; animation: slideDown 0.3s ease; }
-.review-panel h4 { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
-.review-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ══════ CATEGORY STATS ══════ */
-.cat-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.cat-table th { background: var(--bg); padding: 8px 10px; text-align: left; font-weight: 600; font-size: 11px; color: var(--text2); }
-.cat-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
-.cat-table tr:hover { background: #f8fafc; }
-.cat-pct { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
-.cat-pct.high { background: var(--success-light); color: var(--success); }
-.cat-pct.low { background: var(--danger-light); color: var(--danger); }
-
-/* ══════ EMPTY ══════ */
-.empty-state { text-align: center; padding: 32px 16px; color: var(--text3); }
-.empty-state .icon { font-size: 40px; margin-bottom: 8px; opacity: 0.6; }
-.empty-state p { font-size: 12px; }
-
-/* ══════ TOAST ══════ */
-.toast {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
-  background: var(--primary); color: #fff; padding: 10px 20px; border-radius: 10px;
-  font-size: 12px; font-weight: 500; z-index: 999; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  opacity: 0; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); max-width: 90vw; text-align: center;
+@media(max-width:760px){.cols,.stats,.row2{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){
+  .seg{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .cols,.stats,.row2{grid-template-columns:1fr}
 }
-.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-/* ══════ FOOTER ══════ */
-.footer { background: var(--primary); color: rgba(255,255,255,0.5); padding: 12px 16px; font-size: 10px; text-align: center; margin-top: auto; }
-
-/* ══════ RESPONSIVE ══════ */
-@media (max-width: 640px) {
-  .header-brand h1 { font-size: 12px; }
-  .header-brand p { display: none; }
-  .header-inner { height: 48px; }
-  .container { padding: 10px; }
-  .card { padding: 14px; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .stat-card .num { font-size: 22px; }
-  .tabs { overflow-x: auto; flex-wrap: nowrap; }
-  .tab { min-width: 0; padding: 6px 8px; font-size: 10px; white-space: nowrap; }
-  .pr-top { flex-direction: column; }
-  .pr-actions { flex-direction: column; }
-  .pr-actions .btn { width: 100%; }
-  .login-wrap { margin: 20px auto; }
-}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<!-- ══════ HEADER ══════ -->
-<header class="header">
-  <div class="header-inner">
-    <div class="header-brand">
-      <div class="shield"></div>
-      <div>
-        <h1>Fuqarolar Ovozi</h1>
-        <p>Admin panel</p>
-      </div>
-    </div>
-    <div class="admin-badge" id="adminBadge">
-      <span>👨‍💼</span>
-      <span id="adminName">Admin</span>
-      <span class="logout" onclick="adminLogout()" title="Chiqish">🚪</span>
-    </div>
+<header class="top">
+  <div class="brand"><span class="mark"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></span>Fuqarolar ovozi — admin</div>
+  <div style="display:flex;gap:12px;align-items:center">
+    <span class="admin-badge hidden" id="whoBadge"></span>
+    <nav class="seg" aria-label="Bo'limlar">
+      <button data-tab="queue" aria-current="page" disabled>Navbat</button>
+      <button data-tab="stats" disabled>Statistika</button>
+      <button data-tab="cats" disabled>Kategoriyalar</button>
+    </nav>
+    <button class="btn sm hidden" id="logout">Chiqish</button>
   </div>
 </header>
 
-<div class="toast" id="toast"></div>
-
-<div class="container">
-
-  <!-- ═══ LOGIN ═══ -->
-  <div class="screen active" id="screen-login">
-    <div class="login-wrap">
-      <div class="login-header">
-        <div class="shield-lg"></div>
-        <h2>Admin panelga kirish</h2>
-        <p>MFY rahbarlari va boshqaruv uchun</p>
-      </div>
-      <div class="card">
-        <div class="form-group">
-          <label>Login</label>
-          <input type="text" id="adminLogin" placeholder="admin" value="admin" />
-        </div>
-        <div class="form-group">
-          <label>Parol</label>
-          <input type="password" id="adminPass" placeholder="••••••" value="admin123" />
-        </div>
-        <button class="btn btn-primary btn-block" onclick="adminLogin()">Kirish →</button>
-        <p style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;">Demo: admin / admin123</p>
-      </div>
+<main>
+  <!-- Kirish -->
+  <section id="t-login">
+    <div class="card login-box">
+      <h2>Administrator kirish</h2>
+      <div class="demo-cred">Demo kirish:&nbsp; login <b>admin</b> &nbsp;·&nbsp; parol <b>admin2026</b></div>
+      <form id="loginForm" novalidate>
+        <div class="field" id="fLogin"><label for="adminLogin">Login</label><input id="adminLogin" autocomplete="username" aria-describedby="loginErr">
+          <p class="err-msg bad sub" id="loginErr" style="display:none">Login yoki parol xato. Demo: admin / admin2026</p></div>
+        <div class="field"><label for="adminPass">Parol</label><input id="adminPass" type="password" autocomplete="current-password"></div>
+        <button class="btn btn-a" type="submit" style="width:100%">Kirish</button>
+      </form>
     </div>
-  </div>
+  </section>
 
-  <!-- ═══ DASHBOARD ═══ -->
-  <div class="screen" id="screen-dashboard">
-    <div class="stats-grid" id="statsRow"></div>
+  <!-- Navbat -->
+  <section id="t-queue" class="hidden">
+    <p class="lead">Tekshiruv navbati. Taklifni ovozga qo'ying yoki izoh bilan rad eting.</p>
     <div class="card">
-      <div class="card-title">📋 Takliflar boshqaruvi</div>
-      <div class="tabs" id="statusTabs"></div>
-      <div id="proposalList"></div>
+      <div class="field"><label for="qStatus">Holat bo'yicha ko'rish</label>
+        <select id="qStatus">
+          <option value="review">Ko'rib chiqilmoqda</option>
+          <option value="voting">Ovozga qo'yilgan</option>
+          <option value="accepted">Qabul qilingan</option>
+          <option value="rejected">Rad etilgan</option>
+          <option value="implemented">Amalga oshirilgan</option>
+        </select></div>
+      <div id="queueList"></div>
     </div>
+  </section>
+
+  <!-- Statistika -->
+  <section id="t-stats" class="hidden">
+    <p class="lead">Barcha ko'rsatkichlar umumiy ma'lumotlar bazasidan jonli hisoblanadi.</p>
+    <div class="stats" id="statCards"></div>
+    <div class="cols">
+      <div class="card"><h2>Holatlar bo'yicha</h2><div id="statusBars"></div></div>
+      <div class="card"><h2>Jami ovozlar</h2><div id="voteBars"></div></div>
+    </div>
+  </section>
+
+  <!-- Kategoriyalar -->
+  <section id="t-cats" class="hidden">
+    <p class="lead">Kategoriyalar kesimida natijalar.</p>
     <div class="card">
-      <div class="card-title">📊 Kategoriyalar</div>
-      <div id="categoryStats"></div>
+      <div style="overflow-x:auto"><table id="catTable">
+        <thead><tr><th>Kategoriya</th><th class="num">Jami</th><th class="num">Qabul</th><th class="num">Rad</th><th class="num">Muvaffaqiyat</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
     </div>
-  </div>
+    <div class="card"><h2>Kategoriya ulushi</h2><div id="catShare"></div></div>
+  </section>
+</main>
 
-</div>
-
-<footer class="footer">© 2026 Fuqarolar Ovozi — Admin panel</footer>
+<footer>Demo. Kirish va ma'lumotlar namuna. Fuqarolar paneli: fuqarolar-ovoz.html (umumiy ma'lumotlar bazasi).</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-// ═══════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════
-const DB = {
-  getUsers() { return JSON.parse(localStorage.getItem('fo_users') || '[]'); },
-  getProposals() { return JSON.parse(localStorage.getItem('fo_proposals') || '[]'); },
-  setProposals(p) { localStorage.setItem('fo_proposals', JSON.stringify(p)); }
-};
-
-(function seedAdminData() {
-  if (DB.getProposals().length > 0) return;
-  const n = Date.now();
-  DB.setProposals([
-    { id:'p1',userId:'demo',userName:'Aliev Alisher',category:'yoritish',title:"Ko'cha chiroqlarini almashtirish",desc:"Navoiy ko'chasidagi eski chiroqlar 6 oydan beri ishlamayapti.",addr:"Navoiy MFY, Navoiy ko'chasi",image:null,status:'voting',votesFor:34,votesAgainst:8,voters:[],adminComment:"Taklif asosli, mablag' ajratildi.",createdAt:n-604800000,reviewedAt:n-345600000,budget:"45 mln so'm"},
-    { id:'p2',userId:'demo',userName:'Karimova Zilola',category:'obodon',title:"Bolalar o'yin maydonchasi qurish",desc:"Bog'bon MFY hududida bolalar uchun o'yin maydonchasi yo'q.",addr:"Bog'bon MFY, Bog'bon ko'chasi",image:null,status:'review',votesFor:0,votesAgainst:0,voters:[],adminComment:'',createdAt:n-259200000,reviewedAt:null,budget:null},
-    { id:'p3',userId:'demo',userName:'Rahimov Bobur',category:'suv',title:'Ariq tozalash ishlari',desc:"Har yozda ariq to'lib qolib, suv toshib ketadi.",addr:"Istiqlol MFY, Amir Temur ko'chasi",image:null,status:'accepted',votesFor:56,votesAgainst:12,voters:[],adminComment:"Mahalla yig'inida ma'qullandi.",createdAt:n-864000000,reviewedAt:n-518400000,budget:"12 mln so'm"},
-    { id:'p4',userId:'demo',userName:'Saidova Nodira',category:'axlat',title:'Axlat konteynerlarini ko\'chirish',desc:"Maktab yonidagi axlat konteynerlari yomon hid tarqatmoqda.",addr:"Guliston MFY, Mustaqillik ko'chasi",image:null,status:'voting',votesFor:28,votesAgainst:15,voters:[],adminComment:"Tekshirildi, ko'chirish kerak.",createdAt:n-432000000,reviewedAt:n-172800000,budget:"5 mln so'm"},
-    { id:'p5',userId:'demo',userName:'Aliev Alisher',category:'yollar',title:"Yo'l yoritqichlarini ta'mirlash",desc:"Mahalla ichki yo'llarida 3 ta yoritqich sinib qolgan.",addr:"Navoiy MFY, Navoiy ko'chasi",image:null,status:'rejected',votesFor:5,votesAgainst:18,voters:[],adminComment:"Boshqa pudrat tashkiloti ishlaydi.",createdAt:n-950400000,reviewedAt:n-691200000,budget:null},
-    { id:'p6',userId:'demo',userName:'Karimova Zilola',category:'maktab',title:'Mahalla kutubxonasini ochish',desc:"Yoshlar uchun kutubxona tashkil qilish kerak.",addr:"Bog'bon MFY, Ibn Sino ko'chasi",image:null,status:'implemented',votesFor:67,votesAgainst:3,voters:[],adminComment:"Kutubxona ochildi. 500+ kitob.",createdAt:n-1209600000,reviewedAt:n-907200000,budget:"25 mln so'm"}
-  ]);
-})();
-
-let isLoggedIn = false;
-const STATUS_LIST = ['review', 'voting', 'accepted', 'rejected', 'implemented'];
-const STATUS_LABELS = {review:"Ko'rib chiqilmoqda",voting:"Ovozga qo'yilgan",accepted:"Qabul qilingan",rejected:"Rad etilgan",implemented:"Amalga oshirilgan"};
-const CAT_LABELS = {yollar:"Yo'llar",yoritish:"Yoritish",suv:"Suv",tozalik:"Tozalik",obodon:"Obodon",maktab:"Ta'lim",axlat:"Axlatxona",boshqa:"Boshqa"};
-
-// ═══════════════════════════════════════════
-// AUTH
-// ═══════════════════════════════════════════
-function adminLogin() {
-  const l = document.getElementById('adminLogin').value.trim();
-  const p = document.getElementById('adminPass').value.trim();
-  if (l === 'admin' && p === 'admin123') {
-    isLoggedIn = true;
-    document.getElementById('adminBadge').classList.add('active');
-    document.getElementById('adminName').textContent = 'MFY rahbari';
-    toast('Xush kelibsiz!');
-    renderDashboard();
-    showScreen('dashboard');
-  } else { toast('Login yoki parol noto\'g\'ri'); }
+// ---- umumiy ma'lumotlar bazasi (fuqarolar paneli bilan bir xil kalit va dastur holati)
+const DB_KEY="ovoz_demo_v2";
+const CATS={yollar:"Yo'llar",yoritish:"Yoritish",suv:"Suv",tozalik:"Tozalik",obodon:"Obodon",maktab:"Ta'lim",axlat:"Axlatxona",boshqa:"Boshqa"};
+const STATUS={review:"Ko'rib chiqilmoqda",voting:"Ovozga qo'yilgan",accepted:"Qabul qilingan",rejected:"Rad etilgan",implemented:"Amalga oshirilgan"};
+const REGIONS=["Chilonzor","Yunusobod","Mirzo Ulug'bek","Sergeli"];
+const MFYS=["Navoiy MFY","Bog'bon MFY","Istiqlol MFY","Yangihayot MFY","Tinchlik MFY","Nurli MFY","Baraka MFY","Do'stlik MFY"];
+const STREETS=["Navoiy ko'chasi","Amir Temur ko'chasi","Mustaqillik ko'chasi","Beruniy ko'chasi","Ibn Sino ko'chasi","Bog'bon ko'chasi"];
+function hash(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h}
+function seed(){
+  const t=Date.now(),d=86400000;
+  return{v:2,users:[],currentUserId:null,proposals:[
+    {id:"s1",userId:null,userName:"Botir Qodirov",category:"yollar",title:"Asfalt yorilgan",desc:"MFY ichidagi asfalt qoplama yemirilgan, yomg'irda suv to'planadi. Bolalar maktabga shu yo'l bilan boradi.",addr:"Chilonzor, Navoiy MFY, Navoiy ko'chasi 12",status:"voting",votesFor:34,votesAgainst:3,voters:[],adminComment:"",budget:0,createdAt:t-12*d},
+    {id:"s2",userId:null,userName:"Nilufar Umarova",category:"yoritish",title:"Ulamchalar ishlamaydi",desc:"Istiqbol ko'chasida 5 ta ulamcha o'chagan, kechqurun to'q qorong'i. Xavfsizlik uchun zudlik bilan ta'mir kerak.",addr:"Yunusobod, Istiqlol MFY, Mustaqillik ko'chasi 45",status:"voting",votesFor:51,votesAgainst:2,voters:[],adminComment:"",budget:0,createdAt:t-9*d},
+    {id:"s3",userId:null,userName:"Sanjar Ergashev",category:"suv",title:"Suv ta'minoti uziladi",desc:"Har kuni soat 14:00 dan 17:00 gacha suv berilmaydi. 20 ta xonadon ta'sir qiladi.",addr:"Mirzo Ulug'bek, Tinchlik MFY, Ibn Sino ko'chasi 8",status:"review",votesFor:0,votesAgainst:0,voters:[],adminComment:"",budget:0,createdAt:t-6*d},
+    {id:"s4",userId:null,userName:"Gulnora Saidova",category:"tozalik",title:"Chiqindilar olib ketilmagan",desc:"3 kun davomida axlat konteynerlari chiqarilmagan, hid kuchaygan. Sanitariya xavfi bor.",addr:"Sergeli, Baraka MFY, Bog'bon ko'chasi 23",status:"accepted",votesFor:42,votesAgainst:5,voters:[],adminComment:"Navbatga qo'yildi, shanba kuni chiqariladi.",budget:1200000,createdAt:t-15*d},
+    {id:"s5",userId:null,userName:"Rustam Yo'ldoshev",category:"maktab",title:"Piyodalar o'tish joyi",desc:"3-maktab oldida piyodalar o'tish joyi yo'q, transportalar tez yuradi. Xavfli holatlar tez-tez sodir bo'ladi.",addr:"Chilonzor, Nurli MFY, Beruniy ko'chasi 67",status:"implemented",votesFor:67,votesAgainst:1,voters:[],adminComment:"Zebra chiziqlar chizildi, tegirmon o'rnatildi.",budget:4800000,createdAt:t-30*d},
+    {id:"s6",userId:null,userName:"Aziza Tursunova",category:"obodon",title:"Bolalar maydonchasi",desc:"Maydonchadagi gorulkalar sinagan, qum maydoni qotib qolgan. Yangilash so'raladi.",addr:"Yunusobod, Do'stlik MFY, Amir Temur ko'chasi 31",status:"rejected",votesFor:12,votesAgainst:18,voters:[],adminComment:"Maydoncha rekonstruksiya rejasiga kiritildi, alohida taklif shart emas.",budget:0,createdAt:t-20*d},
+    {id:"s7",userId:null,userName:"Jasur Hakimov",category:"axlat",title:"Qurilish axlati",desc:"Bo'sh uchastkaga qurilish axlati tashlanmoqda. Eshitish buzilgan.",addr:"Sergeli, Navoiy MFY, Navoiy ko'chasi 90",status:"voting",votesFor:28,votesAgainst:4,voters:[],adminComment:"",budget:0,createdAt:t-4*d},
+    {id:"s8",userId:null,userName:"Malika Nazarova",category:"yoritish",title:"Tunnel yorug'i",desc:"Piyodalar tunnelida yoritish ishlamaydi, tunda o'tish xavfli.",addr:"Mirzo Ulug'bek, Istiqlol MFY, Mustaqillik ko'chasi 5",status:"review",votesFor:0,votesAgainst:0,voters:[],adminComment:"",budget:0,createdAt:t-2*d}
+  ]};
 }
-
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-' + id).classList.add('active');
+let DB=null;
+function load(){
+  try{
+    const raw=localStorage.getItem(DB_KEY);
+    if(raw){const d=JSON.parse(raw);if(d&&d.v===2){DB=d;return}}
+  }catch(e){}
+  DB=seed();save();
 }
+function save(){try{localStorage.setItem(DB_KEY,JSON.stringify(DB))}catch(e){toast("Saqlashda xatolik")}}
 
-// ═══════════════════════════════════════════
-// DASHBOARD
-// ═══════════════════════════════════════════
-function renderDashboard() {
-  if (!isLoggedIn) return;
-  renderStats();
-  renderTabs();
-  renderProposals('review');
-  renderCategoryStats();
+// ---- yordamchilar
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"\x26amp;","<":"\x26lt;",">":"\x26gt;",'"':"\x26quot;","'":"\x26#39;"}[c]));
+const fmtSum=n=>n.toLocaleString("uz-UZ")+" so'm";
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("show"),2600)}
+function badge(status){return'<span class="badge b-'+status+'">'+STATUS[status]+'</span>'}
+function dateStr(ts){return new Date(ts).toLocaleDateString("uz-UZ")}
+
+// ---- holat
+let loggedIn=false;
+const DEMO_USER="admin",DEMO_PASS="admin2026";
+
+function setAuth(on){
+  loggedIn=on;
+  ["t-login","t-queue","t-stats","t-cats"].forEach(id=>$(id).classList.add("hidden"));
+  document.querySelectorAll(".seg button").forEach(b=>b.disabled=!on);
+  $("logout").classList.toggle("hidden",!on);
+  $("whoBadge").classList.toggle("hidden",!on);
+  if(on){
+    $("whoBadge").textContent="admin";
+    showTab("queue");renderAll();
+  }
 }
-
-function renderStats() {
-  const props = DB.getProposals();
-  const all = props.length;
-  const review = props.filter(p => p.status === 'review').length;
-  const voting = props.filter(p => p.status === 'voting').length;
-  const accepted = props.filter(p => p.status === 'accepted').length;
-  const rejected = props.filter(p => p.status === 'rejected').length;
-  const done = props.filter(p => p.status === 'implemented').length;
-  const totalVotes = props.reduce((s, p) => s + p.votesFor + p.votesAgainst, 0);
-  document.getElementById('statsRow').innerHTML = `
-    <div class="stat-card"><div class="num">${all}</div><div class="lbl">Jami</div></div>
-    <div class="stat-card s-yellow"><div class="num">${review}</div><div class="lbl">Ko'rib chiqilmoqda</div></div>
-    <div class="stat-card"><div class="num">${voting}</div><div class="lbl">Ovozga qo'yilgan</div></div>
-    <div class="stat-card s-green"><div class="num">${accepted + done}</div><div class="lbl">Qabul qilingan</div></div>
-    <div class="stat-card s-red"><div class="num">${rejected}</div><div class="lbl">Rad etilgan</div></div>
-    <div class="stat-card s-teal"><div class="num">${totalVotes}</div><div class="lbl">Jami ovozlar</div></div>`;
-}
-
-function renderTabs() {
-  const props = DB.getProposals();
-  const counts = {};
-  STATUS_LIST.forEach(s => counts[s] = props.filter(p => p.status === s).length);
-  document.getElementById('statusTabs').innerHTML = STATUS_LIST.map((s, i) =>
-    `<button class="tab${i===0?' active':''}" onclick="renderProposals('${s}');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');">${STATUS_LABELS[s]} <span class="count">${counts[s]}</span></button>`
-  ).join('');
-}
-
-function renderProposals(status) {
-  let props = DB.getProposals().filter(p => p.status === status);
-  props.sort((a, b) => b.createdAt - a.createdAt);
-  const list = document.getElementById('proposalList');
-  if (props.length === 0) { list.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>Bu statusda takliflar yo\'q</p></div>'; return; }
-  list.innerHTML = props.map(p => `<div class="prop-row" id="prop-${p.id}">
-    <div class="pr-top"><div><div class="pr-title">${esc(p.title)}</div><div class="pr-cat">${CAT_LABELS[p.category]||p.category} · ${esc(p.userName)} · ${dateStr(p.createdAt)}</div></div><span class="badge badge-${p.status}">${STATUS_LABELS[p.status]}</span></div>
-    <div class="pr-desc">${esc(p.desc)}</div>
-    <div class="pr-meta"><span>📍 ${esc(p.addr)}</span>${p.votesFor>0||p.votesAgainst>0?`<span>👍 ${p.votesFor} · 👎 ${p.votesAgainst}</span>`:''}${p.budget?`<span>💰 ${esc(p.budget)}</span>`:''}</div>
-    ${p.image?`<div class="pr-image"><img src="${p.image}" alt="Rasm"/></div>`:''}
-    ${p.adminComment?`<div class="pr-note">🏛 ${esc(p.adminComment)}</div>`:''}
-    <div class="pr-actions">
-      ${status==='review'?`<button class="btn btn-success btn-sm" onclick="openReview('${p.id}','accept')">✅ Qabul qilish</button><button class="btn btn-danger btn-sm" onclick="openReview('${p.id}','reject')">❌ Rad etish</button>`:''}
-      ${status==='voting'?`<button class="btn btn-success btn-sm" onclick="setStatus('${p.id}','accepted')">✅ Yakunlash</button><button class="btn btn-info btn-sm" onclick="openReview('${p.id}','implement')">🏁 Amalga oshirildi</button>`:''}
-      ${status==='accepted'?`<button class="btn btn-info btn-sm" onclick="setStatus('${p.id}','implemented')">🏁 Amalga oshirildi</button>`:''}
-    </div>
-    <div id="review-${p.id}"></div>
-  </div>`).join('');
-}
-
-// ═══════════════════════════════════════════
-// REVIEW
-// ═══════════════════════════════════════════
-function openReview(id, action) {
-  const c = document.getElementById('review-' + id);
-  const ex = c.querySelector('.review-panel');
-  if (ex) { ex.remove(); return; }
-  let title, label, placeholder, showBudget, btnLabel, btnClass, nextStatus;
-  if (action === 'accept') { title='✅ Qabul qilish'; label='Xulosa'; placeholder='Taklif haqida...'; showBudget=true; btnLabel='✅ Qabul qilish va ovozga qo\'yish'; btnClass='btn-success'; nextStatus='voting'; }
-  else if (action === 'reject') { title='❌ Rad etish'; label='Sabab'; placeholder='Nega rad etilayotganini yozing...'; showBudget=false; btnLabel='❌ Rad etish'; btnClass='btn-danger'; nextStatus='rejected'; }
-  else { title='🏁 Amalga oshirildi'; label='Izoh'; placeholder='Qanday amalga oshirildi...'; showBudget=false; btnLabel='🏁 Tasdiqlash'; btnClass='btn-info'; nextStatus='implemented'; }
-  const panel = document.createElement('div');
-  panel.className = 'review-panel';
-  panel.innerHTML = `<h4>${title}</h4>
-    <div class="form-group"><label>${label}</label><textarea id="rcomment-${id}" placeholder="${placeholder}"></textarea></div>
-    ${showBudget?`<div class="form-group"><label>Mablag'</label><input type="text" id="rbudget-${id}" placeholder="Masalan: 50 mln so'm"/></div>`:''}
-    <div class="review-actions"><button class="btn ${btnClass} btn-sm" onclick="setStatus('${id}','${nextStatus}')">${btnLabel}</button><button class="btn btn-outline btn-sm" onclick="this.closest('.review-panel').remove()">Bekor</button></div>`;
-  c.appendChild(panel);
-}
-
-function setStatus(id, newStatus) {
-  const props = DB.getProposals();
-  const p = props.find(x => x.id === id);
-  if (!p) return;
-  const commentEl = document.getElementById('rcomment-' + id);
-  const budgetEl = document.getElementById('rbudget-' + id);
-  p.status = newStatus;
-  if (commentEl && commentEl.value.trim()) p.adminComment = commentEl.value.trim();
-  if (budgetEl && budgetEl.value.trim()) p.budget = budgetEl.value.trim();
-  p.reviewedAt = Date.now();
-  DB.setProposals(props);
-  toast('Status o\'zgartirildi: ' + STATUS_LABELS[newStatus]);
-  renderDashboard();
-}
-
-// ═══════════════════════════════════════════
-// CATEGORY STATS
-// ═══════════════════════════════════════════
-function renderCategoryStats() {
-  const props = DB.getProposals();
-  const cats = {};
-  props.forEach(p => {
-    const c = CAT_LABELS[p.category] || p.category;
-    if (!cats[c]) cats[c] = {total:0,accepted:0,rejected:0};
-    cats[c].total++;
-    if (p.status==='accepted'||p.status==='implemented') cats[c].accepted++;
-    if (p.status==='rejected') cats[c].rejected++;
+function showTab(t){
+  if(!loggedIn)return;
+  ["queue","stats","cats"].forEach(k=>$("t-"+k).classList.toggle("hidden",k!==t));
+  document.querySelectorAll(".seg button").forEach(b=>{
+    if(b.dataset.tab===t)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
   });
-  const entries = Object.entries(cats);
-  if (entries.length === 0) { document.getElementById('categoryStats').innerHTML = '<div class="empty-state"><p>Ma\'lumot yo\'q</p></div>'; return; }
-  let h = '<div style="overflow-x:auto"><table class="cat-table"><thead><tr><th>Kategoriya</th><th>Jami</th><th>Qabul</th><th>Rad</th><th>Muvaffaqiyat</th></tr></thead><tbody>';
-  entries.forEach(([name, d]) => {
-    const pct = d.total > 0 ? (d.accepted / d.total * 100).toFixed(0) : 0;
-    h += `<tr><td style="font-weight:600">${name}</td><td>${d.total}</td><td style="color:var(--success)">${d.accepted}</td><td style="color:var(--danger)">${d.rejected}</td><td><span class="cat-pct ${pct>50?'high':'low'}">${pct}%</span></td></tr>`;
-  });
-  h += '</tbody></table></div>';
-  document.getElementById('categoryStats').innerHTML = h;
+  window.scrollTo(0,0);
 }
 
-// ═══════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════
-function dateStr(ts) { return ts ? new Date(ts).toLocaleDateString('uz-UZ',{day:'numeric',month:'short',year:'numeric'}) : '—'; }
-function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-function toast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 3000); }
-function adminLogout() { isLoggedIn = false; document.getElementById('adminBadge').classList.remove('active'); showScreen('login'); toast('Tizimdan chiqdingiz'); }
+// ---- navbat
+function renderQueue(){
+  const st=$("qStatus").value;
+  const list=DB.proposals.filter(p=>p.status===st).sort((a,b)=>b.createdAt-a.createdAt);
+  const wrap=$("queueList");
+  if(!list.length){wrap.innerHTML='<div class="hint">Bu holatda taklif yo\'q.</div>';return}
+  wrap.innerHTML=list.map(p=>{
+    let panel="";
+    if(p.status==="review"){
+      panel='<div class="panel"><div class="row2">'+
+        '<div><label for="rc-'+p.id+'">Izoh (rad etishda majburiy)</label><textarea id="rc-'+p.id+'" placeholder="Qaror izohi..."></textarea></div>'+
+        '<div><label for="rb-'+p.id+'">Taxminiy byudjet, so\'m</label><input id="rb-'+p.id+'" type="number" min="0" step="100000" placeholder="0"></div></div>'+
+        '<div class="actions"><button class="btn sm bad-btn" data-reject="'+p.id+'">Rad etish</button>'+
+        '<button class="btn sm ok-btn" data-tovote="'+p.id+'">Ovozga qo\'yish</button></div></div>';
+    }else if(p.status==="voting"){
+      panel='<div class="panel"><p class="sub">'+p.votesFor+" tarafdor · "+p.votesAgainst+" qarshi · "+(p.votesFor+p.votesAgainst)+" jami ovoz</p>"+
+        '<div class="actions"><button class="btn sm ok-btn" data-accept="'+p.id+'">Qabul qilish</button>'+
+        '<button class="btn sm bad-btn" data-rejectv="'+p.id+'">Rad etish</button></div></div>';
+    }else if(p.status==="accepted"){
+      panel='<div class="panel"><p class="sub">Byudjet: '+fmtSum(p.budget||0)+'</p>'+
+        '<div class="actions"><button class="btn sm ok-btn" data-done="'+p.id+'">Amalga oshirildi deb belgilash</button></div></div>';
+    }else{
+      panel='<div class="panel"><p class="sub">'+esc(p.adminComment||"Izoh yo'q")+(p.budget?" · "+fmtSum(p.budget):"")+"</p></div>";
+    }
+    return'<div class="item"><div class="item-head"><div><b>'+esc(p.title)+'</b>'+
+      '<div class="sub">'+esc(CATS[p.category])+" · "+esc(p.userName)+" · "+esc(p.addr)+" · "+dateStr(p.createdAt)+'</div></div>'+badge(p.status)+'</div>'+
+      '<div class="panel" style="border:0;margin:0;padding:0"><p>'+esc(p.desc)+'</p></div>'+panel+'</div>';
+  }).join("");
+}
 
-document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && document.getElementById('screen-login').classList.contains('active')) adminLogin(); });
+function act(id,mutate,msg){
+  const p=DB.proposals.find(x=>x.id===id);
+  if(!p)return;
+  mutate(p);save();renderAll();toast(msg);
+}
+document.addEventListener("click",e=>{
+  const tab=e.target.closest("[data-tab]");
+  if(tab){showTab(tab.dataset.tab);return}
+  const g=k=>e.target.closest("["+k+"]");
+  let el;
+  if(el=g("data-tovote")){const c=$("rc-"+el.dataset.tovote);act(el.dataset.tovote,p=>{p.status="voting";p.adminComment=c?c.value.trim():""},"Taklif ovozga qo'yildi")}
+  else if(el=g("data-accept")){act(el.dataset.accept,p=>{p.status="accepted"},"Taklif qabul qilindi")}
+  else if(el=g("data-done")){act(el.dataset.done,p=>{p.status="implemented"},"Amalga oshirilgan deb belgilandi")}
+  else if(el=g("data-reject")||g("data-rejectv")){
+    const id=el.dataset.reject||el.dataset.rejectv;
+    const c=$("rc-"+id);
+    const comment=c?c.value.trim():"";
+    if(!comment){toast("Rad etish uchun izoh majburiy");if(c)c.focus();return}
+    act(id,p=>{p.status="rejected";p.adminComment=comment},"Taklif izoh bilan rad etildi");
+  }
+});
+
+// ---- statistika
+function renderStats(){
+  const ps=DB.proposals;
+  const st={review:0,voting:0,accepted:0,rejected:0,implemented:0};
+  ps.forEach(p=>st[p.status]++);
+  const votes=ps.reduce((s,p)=>s+p.votesFor+p.votesAgainst,0);
+  const budget=ps.filter(p=>p.budget>0).reduce((s,p)=>s+p.budget,0);
+  $("statCards").innerHTML=[
+    ["Jami taklif",ps.length],
+    ["Ovoz berilmoqda",st.voting],
+    ["Berilgan ovoz",votes],
+    ["Rejalashtirilgan byudjet",budget?fmtSum(budget):"—"]
+  ].map(([k,v])=>'<div class="stat"><span>'+k+'</span><b>'+v+'</b></div>').join("");
+
+  const mxS=Math.max(...Object.values(st),1);
+  $("statusBars").innerHTML=Object.entries(st).map(([k,v])=>
+    '<div class="share"><div class="row"><span>'+STATUS[k]+'</span><b>'+v+'</b></div><div class="meter"><i style="width:'+(v/mxS*100)+'%"></i></div></div>').join("");
+
+  const mxV=Math.max(...ps.map(p=>p.votesFor+p.votesAgainst),1);
+  $("voteBars").innerHTML=ps.slice().sort((a,b)=>(b.votesFor+b.votesAgainst)-(a.votesFor+a.votesAgainst)).slice(0,6).map(p=>
+    '<div class="share"><div class="row"><span>'+esc(p.title)+'</span><b>'+(p.votesFor+p.votesAgainst)+'</b></div><div class="meter"><i style="width:'+((p.votesFor+p.votesAgainst)/mxV*100)+'%"></i></div></div>').join("")||'<div class="hint">Ma\'lumot yo\'q</div>';
+}
+
+function renderCats(){
+  const counts={};
+  DB.proposals.forEach(p=>{
+    const c=counts[p.category]=counts[p.category]||{total:0,acc:0,rej:0,votes:0};
+    c.total++;
+    if(p.status==="accepted"||p.status==="implemented")c.acc++;
+    if(p.status==="rejected")c.rej++;
+    c.votes+=p.votesFor+p.votesAgainst;
+  });
+  const rows=Object.entries(counts).sort((a,b)=>b[1].total-a[1].total);
+  const tb=$("catTable").querySelector("tbody");
+  tb.innerHTML=rows.map(([k,c])=>{
+    const pct=c.total?Math.round(c.acc/c.total*100):0;
+    return"<tr><td>"+CATS[k]+'</td><td class="num">'+c.total+'</td><td class="num">'+c.acc+'</td><td class="num">'+c.rej+'</td><td class="num">'+pct+"%</td></tr>";
+  }).join("")||'<tr><td colspan="5" class="sub">Ma\'lumot yo\'q</td></tr>';
+  const mx=Math.max(...rows.map(r=>r[1].total),1);
+  $("catShare").innerHTML=rows.map(([k,c])=>
+    '<div class="share"><div class="row"><span>'+CATS[k]+'</span><b>'+c.total+'</b></div><div class="meter"><i style="width:'+(c.total/mx*100)+'%"></i></div></div>').join("");
+}
+
+function renderAll(){renderQueue();renderStats();renderCats()}
+
+// ---- kirish
+$("loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const l=$("adminLogin").value.trim(),p=$("adminPass").value;
+  const ok=l===DEMO_USER&&p===DEMO_PASS;
+  $("loginErr").style.display=ok?"none":"block";
+  $("fLogin").classList.toggle("invalid",!ok);
+  if(ok){setAuth(true);toast("Xush kelibsiz, admin")}
+});
+$("adminLogin").addEventListener("input",()=>$("fLogin").classList.remove("invalid"));
+$("logout").onclick=()=>{setAuth(false);$("adminPass").value="";toast("Tizimdan chiqdingiz")};
+$("qStatus").addEventListener("input",renderQueue);
+
+// ---- ishga tushirish
+load();
 </script>
 </body>
 </html>
